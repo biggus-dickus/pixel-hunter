@@ -12,6 +12,8 @@ const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
 
+gulp.task('test', function () {});
+
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
     .pipe(plumber())
@@ -39,9 +41,6 @@ gulp.task('scripts', function () {
   return gulp.src('js/**/*.js')
     .pipe(plumber())
     .pipe(gulp.dest('build/js/'));
-});
-
-gulp.task('test', function () {
 });
 
 gulp.task('imagemin', ['copy'], function () {
