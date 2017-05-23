@@ -1,0 +1,45 @@
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result__table {
+  width: 670px;
+
+  margin-bottom: 40px;
+
+  td {
+    border: 10px solid transparent;
+  }
+
+  .stats {
+    justify-content: flex-end;
+  }
+}
+
+.result__number {
+  @include bold-text;
+  font-size: 22px;
+}
+
+.result__extra {
+  min-width: 50px;
+  text-align: right;
+
+}
+
+.result__total {
+  min-width: 40px;
+
+  text-align: right;
+  text-transform: uppercase;
+
+  &--final {
+    @include bold-text;
+  }
+}
+
+
+

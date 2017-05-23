@@ -1,0 +1,30 @@
+@import "central";
+@import "intro";
+@import "greeting";
+@import "rules";
+@import "header";
+@import "social";
+@import "footer";
+@import "game";
+@import "colors";
+@import "fonts";
+@import "stats";
+@import "result";
+
+html {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #a8c8c4 linear-gradient(to bottom left, #ccdeeb, #84b39e) no-repeat;
+
+  @include regular-text;
+  color: $main-font-color;
+  min-height: 100%;
+}
+
+a {
+  color: $main-font-color;
+}

@@ -1,0 +1,34 @@
+@import "fonts";
+@import "colors";
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 50px;
+}
+
+.footer__made-in {
+  display: block;
+
+  margin-top: 5px;
+  margin-bottom: 15px;
+
+  @include small-text;
+}
+
+.footer__link {
+
+  @include small-text;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+
+  &:active {
+    color: $link-active-color;
+  }
+}

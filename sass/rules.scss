@@ -1,0 +1,76 @@
+@import "fonts";
+
+.rules {
+  padding-top: 100px;
+  text-align: center;
+}
+
+.rules__title {
+  @include bold-text;
+}
+
+.rules__description {
+  @include regular-text;
+}
+
+.rules__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rules__input {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  line-height: 30px;
+
+  height: 50px;
+
+  text-align: center;
+
+  border-radius: 5px;
+  border: 2px transparent;
+  border-style: solid;
+
+  &:hover {
+    border-color: #e2a0a1;
+  }
+
+  &:focus {
+    border-color: #d74040;
+  }
+}
+
+.rules__button {
+  margin-top: 50px;
+  width: 90px;
+  height: 90px;
+
+  cursor: pointer;
+  display: block;
+
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  line-height: 60px;
+
+  color: #ffffff;
+  background-color: #df4e4e;
+
+  border-width: 0;
+  border-radius: 45px;
+
+  &:enabled:hover {
+    background-color: #ff6969;
+  }
+
+  &:active {
+    background-color: #af3636;
+  }
+
+  &:disabled {
+    background-color: #c6a5a5;
+  }
+}

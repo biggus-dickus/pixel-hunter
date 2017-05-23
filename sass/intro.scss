@@ -1,0 +1,37 @@
+@import "colors";
+
+.intro {
+  width: 800px;
+  height: 740px;
+  background: url("../img/egg_big.png") no-repeat center;
+  background-size: contain;
+
+  position: relative;
+}
+
+.intro__asterisk {
+  text-align: center;
+
+  font-size: 172px;
+  color: $main-red-color;
+  cursor: pointer;
+
+  position: relative;
+  top: 220px;
+  left: 30px;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+
+  &:active {
+    color: $link-active-color;
+  }
+}
+
+.intro__motto {
+  font-size: 18px;
+
+  position: absolute;
+  bottom: 0;
+}

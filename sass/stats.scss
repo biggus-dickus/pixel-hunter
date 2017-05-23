@@ -1,0 +1,57 @@
+.stats {
+  padding: 0;
+
+  list-style: none;
+  font-size: 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.stats__result {
+  display: inline-block;
+  vertical-align: bottom;
+
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+
+  margin: 5px;
+
+  &--unknown {
+    background: url("../img/unknown.svg") no-repeat center;
+  }
+
+  &--wrong {
+    background: url("../img/wrong.svg") no-repeat center;
+  }
+
+  &--correct {
+    background: url("../img/correct.svg") no-repeat center;
+  }
+
+  &--slow {
+    background: url("../img/turtle.svg") no-repeat center;
+  }
+
+  &--fast {
+    position: relative;
+    background: url("../img/correct.svg") no-repeat center;
+    &::after {
+      content: "";
+
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 30px;
+
+      background: url("../img/flash.svg") no-repeat center;
+    }
+  }
+
+  &--heart {
+    background: url("../img/heart__full.svg") no-repeat center;
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "pixel-hunter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Личный проект «Пиксель хантер» от HTML Academy",
+  "scripts": {
+    "eslint": "eslint js/",
+    "build": "gulp build",
+    "start": "gulp serve",
+    "test": "npm run eslint && gulp test"
+  },
+  "devDependencies": {
+    "autoprefixer": "6.7.7",
+    "browser-sync": "2.18.8",
+    "css-mqpacker": "6.0.0",
+    "del": "2.2.2",
+    "eslint": "3.19.0",
+    "eslint-config-htmlacademy": "0.2.x",
+    "gulp": "3.9.1",
+    "gulp-csso": "3.0.0",
+    "gulp-imagemin": "3.2.0",
+    "gulp-plumber": "1.1.0",
+    "gulp-postcss": "7.0.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "3.1.0",
+    "gulp-sourcemaps": "2.6.0"
+  },
+  "engines": {
+    "node": "6.10"
+  }
+}

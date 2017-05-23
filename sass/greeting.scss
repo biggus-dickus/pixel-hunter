@@ -1,0 +1,46 @@
+@import "colors";
+@import "fonts";
+
+.greeting {
+  position: relative;
+  width: 780px;
+  height: 740px;
+
+  transition: background-image 1s ease-in-out;
+  background: url("../img/egg_distort.png") no-repeat center;
+  background-size: contain;
+}
+
+.greeting__asterisk {
+  font-size: 80px;
+  color: $main-red-color;
+
+  text-align: center;
+}
+
+.greeting__logo {
+  text-align: center;
+}
+
+.greeting__challenge {
+  margin: 0 auto;
+
+  text-align: center;
+  h3 {
+    @include bold-text;
+  }
+
+  p {
+    @include regular-text;
+  }
+
+}
+
+.greeting__continue {
+  position: absolute;
+
+  right: -20px;
+  top: 300px;
+
+  cursor: pointer;
+}
