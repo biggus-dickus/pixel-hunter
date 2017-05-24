@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Макс Масленко](https://up.htmlacademy.ru/ecmascript/2/user/107049).
-* Наставник: `Неизвестно`.
+* Наставник: [Виталий Яковенко](https://htmlacademy.ru/profile/id376639).
 
 ---
 
