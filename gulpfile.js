@@ -17,7 +17,8 @@ gulp.task('test', function () {});
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(sass({ sourceComments: true })
+      .on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
         browsers: [
@@ -86,7 +87,11 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
