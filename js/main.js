@@ -1,27 +1,47 @@
 (function () {
   const main = document.querySelector(`main.central`);
   const templates = document.querySelectorAll(`template`);
+  let currentStep = 0;
 
-  window.addEventListener(`keydown`, (evt) => {
+  document.addEventListener(`keydown`, (evt) => {
     if (evt.altKey && evt.keyCode === 39) {
-      let currentStep = 0;
-
-      while (main.firstChild) {
-        main.removeChild(main.firstChild);
-      }
-
-      main.appendChild(templates[currentStep].content.children[0].cloneNode(true));
+      evt.preventDefault();
       currentStep++;
 
-      if (currentStep > templates.length || currentStep < 0) {
+      if (currentStep < templates.length) {
+        while (main.firstChild) {
+          main.removeChild(main.firstChild);
+        }
+
+        console.log(currentStep);
+
+        insertTemplateContents(currentStep);
+
+      } else {
         return;
       }
     }
 
-    // function iterateThroughElement(elem) {
-    //   for (let i = 0; i < elem.length; i++) {
-    //     return elem[i];
-    //   }
-    // }
+    if (evt.altKey && evt.keyCode === 37) {
+      evt.preventDefault();
+      currentStep--;
+
+      if (currentStep > 0) {
+        while (main.firstChild) {
+          main.removeChild(main.firstChild);
+        }
+
+        console.log(currentStep);
+        insertTemplateContents(currentStep);
+      } else {
+        return;
+      }
+    }
   });
+
+  function insertTemplateContents(id) {
+    for (let i = 0; i < templates[id].content.children.length; i++) {
+      main.appendChild(templates[id].content.children[i].cloneNode(true));
+    }
+  }
 })();

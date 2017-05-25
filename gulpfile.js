@@ -95,3 +95,4 @@ gulp.task('assemble', ['clean'], function () {
 });
 
 gulp.task('build', ['assemble', 'imagemin']);
+gulp.task('default', ['serve']);
