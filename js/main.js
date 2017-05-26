@@ -5,7 +5,7 @@
       return document.getElementById(`${template}`);
     });
 
-  let currentScreen = 0;
+  let currentScreen = -1; // the "Greeting" (0) slide must be shown first
 
 
   document.addEventListener(`keydown`, (evt) => {
@@ -30,6 +30,9 @@
 
     if (currentScreen === templates.length) {
       currentScreen = templates.length - 1;
+      return;
+    } else if (currentScreen === -2) {
+      currentScreen = -1;
       return;
     } else if (currentScreen === -1) {
       currentScreen = 0;
@@ -56,17 +59,7 @@
    * @param {Object} container
    */
   function insertTemplateContents(templateId, container = main) {
-    let templateContents;
-
-    // Ensure compatibility with IE11-
-    if (`content` in templates[templateId]) {
-      templateContents = templates[templateId].content.children;
-    } else {
-      templateContents = templates[templateId].children;
-    }
-
-    for (let i = 0; i < templateContents.length; i++) {
-      container.appendChild(templateContents[i].cloneNode(true));
-    }
+    let templateContents = templates[templateId].content;
+    container.appendChild(templateContents.cloneNode(true));
   }
 })();
