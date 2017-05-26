@@ -5,8 +5,11 @@
       return document.getElementById(`${template}`);
     });
 
-  let currentScreen = -1; // the "Greeting" (0) slide must be shown first
+  let currentScreen = 0;
 
+  // Feign app loading: we show the default screen first and then
+  // switch to greeting (template 0), as per spec.md
+  setTimeout(showScreen, 3000, currentScreen);
 
   document.addEventListener(`keydown`, (evt) => {
     if (evt.altKey) {
@@ -30,9 +33,6 @@
 
     if (currentScreen === templates.length) {
       currentScreen = templates.length - 1;
-      return;
-    } else if (currentScreen === -2) {
-      currentScreen = -1;
       return;
     } else if (currentScreen === -1) {
       currentScreen = 0;

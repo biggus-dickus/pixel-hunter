@@ -11,6 +11,7 @@ const mqpacker = require('css-mqpacker');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
+const htmlmin = require('gulp-htmlmin');
 
 gulp.task('test', function () {});
 
@@ -56,6 +57,7 @@ gulp.task('imagemin', ['copy'], function () {
 
 gulp.task('copy-html', function () {
   return gulp.src('*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
@@ -63,7 +65,7 @@ gulp.task('copy-html', function () {
 gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
   return gulp.src([
     'fonts/**/*.{woff,woff2}',
-    'img/*.*'
+    'img/**/*.*'
   ], {base: '.'})
     .pipe(gulp.dest('build'));
 });
