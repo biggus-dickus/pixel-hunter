@@ -1,23 +1,30 @@
 'use strict';
 
-const del = require('del');
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const plumber = require('gulp-plumber');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const server = require('browser-sync').create();
-const mqpacker = require('css-mqpacker');
-const minify = require('gulp-csso');
-const rename = require('gulp-rename');
-const imagemin = require('gulp-imagemin');
+const del = require('del'),
+      gulp = require('gulp'),
+      sass = require('gulp-sass'),
+      plumber = require('gulp-plumber'),
+      postcss = require('gulp-postcss'),
+      autoprefixer = require('autoprefixer'),
+      server = require('browser-sync').create(),
+      mqpacker = require('css-mqpacker'),
+      minify = require('gulp-csso'),
+      rename = require('gulp-rename'),
+      imagemin = require('gulp-imagemin'),
+      htmlmin = require('gulp-htmlmin'),
+      rollup = require('gulp-better-rollup'),
+      babel = require('rollup-plugin-babel'),
+      sourcemaps = require('gulp-sourcemaps'),
+      uglify = require('gulp-uglify');
+
 
 gulp.task('test', function () {});
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(sass({ sourceComments: true })
+      .on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
         browsers: [
@@ -38,8 +45,13 @@ gulp.task('style', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('js/**/*.js')
+  return gulp.src('js/main.js')
     .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(rollup({plugins: [babel()]}, 'iife'))
+    .pipe(uglify())
+    .pipe(rename('bundle.min.js'))
+    .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js/'));
 });
 
@@ -55,6 +67,7 @@ gulp.task('imagemin', ['copy'], function () {
 
 gulp.task('copy-html', function () {
   return gulp.src('*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
@@ -62,7 +75,7 @@ gulp.task('copy-html', function () {
 gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
   return gulp.src([
     'fonts/**/*.{woff,woff2}',
-    'img/*.*'
+    'img/**/*.*'
   ], {base: '.'})
     .pipe(gulp.dest('build'));
 });
@@ -86,7 +99,11 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
@@ -95,3 +112,4 @@ gulp.task('assemble', ['clean'], function () {
 });
 
 gulp.task('build', ['assemble', 'imagemin']);
+gulp.task('default', ['serve']);
