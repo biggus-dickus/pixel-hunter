@@ -1,5 +1,7 @@
-import getElementFromTemplate from '../getElementFromTemplate';
-// import insertTemplate from '../insertTemplate';
+import getElementFromTemplate from '../get-element-from-template';
+import goBackClickHandler from '../back-to-start';
+import insertTemplate from '../insert-template';
+import game3 from './game-3.js';
 
 const template = getElementFromTemplate(`
   <header class="header">
@@ -22,11 +24,11 @@ const template = getElementFromTemplate(`
       <div class="game__option">
         <img src="//placehold.it/705x455" alt="Option 1" width="705" height="455">
         <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
+          <input name="question1" type="radio" value="photo" required>
           <span>Фото</span>
         </label>
         <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
+          <input name="question1" type="radio" value="paint" required>
           <span>Рисунок</span>
         </label>
       </div>
@@ -46,6 +48,17 @@ const template = getElementFromTemplate(`
       </ul>
     </div>
   </div>`);
+
+goBackClickHandler(template.querySelector(`.header__back`));
+
+const form = template.querySelector(`.game__content`);
+
+form.addEventListener(`change`, () => {
+  if (form.checkValidity()) {
+    insertTemplate(game3);
+    form.reset();
+  }
+});
 
 
 export default template;

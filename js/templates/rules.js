@@ -1,7 +1,7 @@
-import getElementFromTemplate from '../getElementFromTemplate.js';
-import insertTemplate from '../insertTemplate.js';
+import getElementFromTemplate from '../get-element-from-template.js';
+import insertTemplate from '../insert-template.js';
 import game1 from './game-1.js';
-import findBackBtn from '../backToStart.js';
+import goBackClickHandler from '../back-to-start';
 
 const template = getElementFromTemplate(`
   <header class="header">
@@ -14,7 +14,7 @@ const template = getElementFromTemplate(`
   </header>
   <div class="rules">
     <h1 class="rules__title">Правила</h1>
-    <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
+    <p class="rules__description">Угадай 10 раз для каждого изображения, фото это <img
       src="img/photo_icon.png" width="16" height="16"> или рисунок <img
       src="img/paint_icon.png" width="16" height="16" alt="">.<br>
       Фотографиями или рисунками могут быть оба изображения.<br>
@@ -29,11 +29,10 @@ const template = getElementFromTemplate(`
     </form>
   </div>`);
 
-const backBtn = template.querySelector(`.header__back`);
 const form = template.querySelector(`.rules__form`);
 const submit = template.querySelector(`.rules__button`);
 
-findBackBtn(backBtn, 1000);
+goBackClickHandler(template.querySelector(`.header__back`));
 
 form.addEventListener(`input`, () => {
   submit.disabled = !form.checkValidity();
@@ -42,6 +41,7 @@ form.addEventListener(`input`, () => {
 form.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
   insertTemplate(game1);
+  form.reset();
 });
 
 

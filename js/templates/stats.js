@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../getElementFromTemplate';
-// import insertTemplate from '../insertTemplate';
+import getElementFromTemplate from '../get-element-from-template';
+import goBackClickHandler from '../back-to-start';
 
 const template = getElementFromTemplate(`
   <header class="header">
@@ -110,6 +110,8 @@ const template = getElementFromTemplate(`
       </tr>
     </table>
   </div>`);
+
+goBackClickHandler(template.querySelector(`.header__back`));
 
 
 export default template;

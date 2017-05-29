@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../getElementFromTemplate';
-import insertTemplate from '../insertTemplate';
+import getElementFromTemplate from '../get-element-from-template';
+import insertTemplate from '../insert-template';
 import rules from './rules';
 
 const template = getElementFromTemplate(`

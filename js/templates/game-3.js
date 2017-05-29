@@ -1,5 +1,7 @@
-import getElementFromTemplate from '../getElementFromTemplate';
-// import insertTemplate from '../insertTemplate';
+import getElementFromTemplate from '../get-element-from-template';
+import goBackClickHandler from '../back-to-start';
+import insertTemplate from '../insert-template';
+import stats from './stats.js';
 
 const template = getElementFromTemplate(`
   <header class="header">
@@ -44,6 +46,14 @@ const template = getElementFromTemplate(`
       </ul>
     </div>
   </div>`);
+
+goBackClickHandler(template.querySelector(`.header__back`));
+
+const answers = template.querySelectorAll(`.game__content .game__option`);
+
+for (let i = 0; i < answers.length; i++) {
+  answers[i].addEventListener(`click`, () => insertTemplate(stats));
+}
 
 
 export default template;
