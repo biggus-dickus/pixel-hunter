@@ -11,13 +11,15 @@ const mqpacker = require('css-mqpacker');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
+const htmlmin = require('gulp-htmlmin');
 
 gulp.task('test', function () {});
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(sass({ sourceComments: true })
+      .on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
         browsers: [
@@ -55,6 +57,7 @@ gulp.task('imagemin', ['copy'], function () {
 
 gulp.task('copy-html', function () {
   return gulp.src('*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
@@ -62,7 +65,7 @@ gulp.task('copy-html', function () {
 gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
   return gulp.src([
     'fonts/**/*.{woff,woff2}',
-    'img/*.*'
+    'img/**/*.*'
   ], {base: '.'})
     .pipe(gulp.dest('build'));
 });
@@ -86,7 +89,11 @@ gulp.task('serve', ['assemble'], function () {
   });
 
   gulp.watch('sass/**/*.{scss,sass}', ['style']);
-  gulp.watch('*.html', ['copy-html']);
+  gulp.watch('*.html').on('change', (e) => {
+    if (e.type !== 'deleted') {
+      gulp.start('copy-html');
+    }
+  });
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
@@ -95,3 +102,4 @@ gulp.task('assemble', ['clean'], function () {
 });
 
 gulp.task('build', ['assemble', 'imagemin']);
+gulp.task('default', ['serve']);
