@@ -1,6 +1,6 @@
-import getElementFromTemplate from '../getElementFromTemplate.js';
-import insertTemplate from '../insertTemplate.js';
-import rules from './rules.js';
+import getElementFromTemplate from '../getElementFromTemplate';
+import insertTemplate from '../insertTemplate';
+import rules from './rules';
 
 const template = getElementFromTemplate(`
   <div class="greeting central--blur">

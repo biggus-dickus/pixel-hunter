@@ -1,9 +1,10 @@
-import getElementFromTemplate from '../getElementFromTemplate.js';
-// import insertTemplate from '../insertTemplate.js';
+import getElementFromTemplate from '../getElementFromTemplate';
+import findBackBtn from '../backToStart.js';
+// import insertTemplate from '../insertTemplate';
 
 const template = getElementFromTemplate(`
   <header class="header">
-    <div class="header__back">
+    <div class="header__back" title="В начало игры">
       <span class="back">
         <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
         <img src="img/logo_small.png" width="101" height="44">
@@ -57,6 +58,10 @@ const template = getElementFromTemplate(`
         </ul>
       </div>
     </div>`);
+
+const backBtn = template.querySelector(`.header__back`);
+
+findBackBtn(backBtn, 1000);
 
 
 export default template;

@@ -1,4 +1,4 @@
-import insertTemplate from './insertTemplate.js';
-import intro from './templates/intro.js';
+import insertTemplate from './insertTemplate';
+import intro from './templates/intro';
 
 insertTemplate(intro);

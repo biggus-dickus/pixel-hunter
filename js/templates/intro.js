@@ -1,6 +1,6 @@
-import getElementFromTemplate from '../getElementFromTemplate.js';
-import insertTemplate from '../insertTemplate.js';
-import greeting from './greeting.js';
+import getElementFromTemplate from '../getElementFromTemplate';
+import insertTemplate from '../insertTemplate';
+import greeting from './greeting';
 
 const template = getElementFromTemplate(`
   <div id="main" class="central__content">
