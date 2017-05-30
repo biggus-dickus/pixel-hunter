@@ -1,17 +1,22 @@
 'use strict';
 
-const del = require('del');
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const plumber = require('gulp-plumber');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const server = require('browser-sync').create();
-const mqpacker = require('css-mqpacker');
-const minify = require('gulp-csso');
-const rename = require('gulp-rename');
-const imagemin = require('gulp-imagemin');
-const htmlmin = require('gulp-htmlmin');
+const del = require('del'),
+      gulp = require('gulp'),
+      sass = require('gulp-sass'),
+      plumber = require('gulp-plumber'),
+      postcss = require('gulp-postcss'),
+      autoprefixer = require('autoprefixer'),
+      server = require('browser-sync').create(),
+      mqpacker = require('css-mqpacker'),
+      minify = require('gulp-csso'),
+      rename = require('gulp-rename'),
+      imagemin = require('gulp-imagemin'),
+      htmlmin = require('gulp-htmlmin'),
+      rollup = require('gulp-better-rollup'),
+      babel = require('rollup-plugin-babel'),
+      sourcemaps = require('gulp-sourcemaps'),
+      uglify = require('gulp-uglify');
+
 
 gulp.task('test', function () {});
 
@@ -40,8 +45,13 @@ gulp.task('style', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src('js/**/*.js')
+  return gulp.src('js/main.js')
     .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(rollup({plugins: [babel()]}, 'iife'))
+    .pipe(uglify())
+    .pipe(rename('bundle.min.js'))
+    .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js/'));
 });
 
