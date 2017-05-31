@@ -12,6 +12,6 @@ const template = getElementFromTemplate(`
 
 const startBtn = template.querySelector(`.intro__asterisk`);
 
-startBtn.addEventListener(`click`, () => insertTemplate(greeting));
+startBtn.addEventListener(`click`, () => insertTemplate(greeting()));
 
 export default template;

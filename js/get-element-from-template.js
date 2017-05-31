@@ -4,8 +4,8 @@
  * @return {Element}
  */
 export default (markup) => {
-  const wrapper = document.createElement(`div`);
-  wrapper.innerHTML = markup;
+  const template = document.createElement(`template`);
+  template.innerHTML = markup;
 
-  return wrapper;
+  return template.content;
 };
