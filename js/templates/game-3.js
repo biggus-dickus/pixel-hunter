@@ -45,13 +45,10 @@ const renderTemplate = () => {
     </div>`);
 
   const btnBack = template.querySelector(`.header__back`);
-  const answers = template.querySelectorAll(`.game__content .game__option`);
+  const form = template.querySelector(`.game__content`);
 
   btnBack.addEventListener(`click`, () => insertTemplate(greeting()));
-
-  for (let i = 0; i < answers.length; i++) {
-    answers[i].addEventListener(`click`, () => insertTemplate(stats()));
-  }
+  form.addEventListener(`click`, () => insertTemplate(stats()));
 
   return template;
 };

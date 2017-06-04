@@ -113,25 +113,17 @@
 }
 
 .game__content--triple .game__option {
-  cursor: pointer;
-
   width: 304px;
   height: 455px;
+  cursor: pointer;
 
-  &:hover {
-    border-color: #df4e4e;
-  }
-
-  &:active::after {
+  &::after {
     content: "";
     position: absolute;
-
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(223, 78, 78, 0.4);
+    top: 0;  right: 0;  bottom: 0;  left: 0;
   }
 
+  &:hover {  border-color: #df4e4e;  }
+
+  &:active::after {  background-color: rgba(223, 78, 78, 0.4);  }
 }
