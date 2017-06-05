@@ -1,11 +1,11 @@
-import gameData from './gamedata';
+import {initialState} from './gamedata';
 
 /**
  * Sets game timer and injects current value into the specified DOM node.
  * @param {Element} node
  * @param {number} time (30 seconds by default)
  */
-export default (node, time = gameData.time) => {
+export default (node, time = initialState.time) => {
   const interval = setInterval(() => {
     time--;
 
