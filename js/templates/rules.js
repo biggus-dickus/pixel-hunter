@@ -1,14 +1,11 @@
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
-import game1 from './game-1';
-import greeting from './greeting';
-import goBackTemplate from '../back-to-start';
+import renderGame1 from './game-1';
+import renderBackBtn from './partials/back-to-start';
 
-const renderTemplate = () => {
+export default () => {
   const template = getElementFromTemplate(`
-    <header class="header">
-      ${goBackTemplate}
-    </header>
+    <header class="header"></header>
     <div class="rules">
       <h1 class="rules__title">Правила</h1>
       <p class="rules__description">Угадай 10 раз для каждого изображения, фото это <img
@@ -26,12 +23,11 @@ const renderTemplate = () => {
       </form>
     </div>`);
 
-  const btnBack = template.querySelector(`.header__back`);
+  const header = template.querySelector(`.header`);
   const form = template.querySelector(`.rules__form`);
   const submit = template.querySelector(`.rules__button`);
 
-
-  btnBack.addEventListener(`click`, () => insertTemplate(greeting()));
+  header.insertBefore(renderBackBtn(), header.childNodes[0]);
 
   form.addEventListener(`input`, () => {
     submit.disabled = !form.checkValidity();
@@ -39,12 +35,9 @@ const renderTemplate = () => {
 
   form.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    insertTemplate(game1());
+    insertTemplate(renderGame1());
     form.reset();
   });
 
   return template;
 };
-
-
-export default renderTemplate;

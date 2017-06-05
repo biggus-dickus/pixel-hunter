@@ -1,13 +1,8 @@
 import getElementFromTemplate from '../get-element-from-template';
-import insertTemplate from '../insert-template';
-import goBackTemplate from '../back-to-start';
-import greeting from './greeting';
+import renderBackBtn from './partials/back-to-start';
 
-const renderTemplate = () => {
-  const template = getElementFromTemplate(`
-    <header class="header">
-      ${goBackTemplate}
-    </header>
+export default () => {
+  const template = getElementFromTemplate(`<header class="header"></header>
     <div class="result">
       <h1>Победа!</h1>
       <table class="result__table">
@@ -109,11 +104,9 @@ const renderTemplate = () => {
       </table>
     </div>`);
 
-  const btnBack = template.querySelector(`.header__back`);
-  btnBack.addEventListener(`click`, () => insertTemplate(greeting()));
+  const header = template.querySelector(`.header`);
+
+  header.insertBefore(renderBackBtn(), header.childNodes[0]);
 
   return template;
 };
-
-
-export default renderTemplate;

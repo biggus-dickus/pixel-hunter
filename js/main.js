@@ -1,4 +1,4 @@
 import insertTemplate from './insert-template';
-import intro from './templates/intro';
+import renderIntro from './templates/intro';
 
-insertTemplate(intro);
+insertTemplate(renderIntro());

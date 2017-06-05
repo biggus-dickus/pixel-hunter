@@ -1,8 +1,8 @@
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
-import rules from './rules';
+import renderRules from './rules';
 
-const renderTemplate = () => {
+export default () => {
   const template = getElementFromTemplate(`
     <div class="greeting central--blur">
       <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
@@ -20,9 +20,7 @@ const renderTemplate = () => {
 
   const proceedBtn = template.querySelector(`.greeting__continue`);
 
-  proceedBtn.addEventListener(`click`, () => insertTemplate(rules()));
+  proceedBtn.addEventListener(`click`, () => insertTemplate(renderRules()));
 
   return template;
 };
-
-export default renderTemplate;
