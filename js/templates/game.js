@@ -6,24 +6,31 @@ import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
 
 
-const renderGame = (state) => {
+const renderGame = (currentGame, currentState) => {
   const template = getElementFromTemplate(`
     <div class="game">
-      <p class="game__task">${state.task}</p>
-      <form class="game__content ${state.classModifier}">
-        ${state.options.join(``)}
+      <p class="game__task">${currentGame.task}</p>
+      <form class="game__content ${currentGame.classModifier}">
+        ${currentGame.options.join(``)}
       </form>
     </div>`);
 
   const game = template.querySelector(`.game`);
   const form = template.querySelector(`.game__content`);
 
-  template.insertBefore(renderInfoBar(initialState), template.childNodes[0]); // header
-  game.appendChild(renderStatusBar(initialState, state)); // footer
+  // Header
+  template.insertBefore(renderInfoBar(initialState), template.childNodes[0]);
+
+  // Footer
+  if (currentState) {
+    game.appendChild(renderStatusBar(currentState));
+  } else {
+    game.appendChild(renderStatusBar(initialState));
+  }
 
   form.addEventListener(`click`, () => {
     if (form.checkValidity()) {
-      renderNextScreen(state.gameNumber);
+      renderNextScreen(currentGame.gameNumber);
       form.reset();
     }
   });
@@ -38,11 +45,11 @@ const renderGame = (state) => {
     gameNumber++;
 
     if (gameNumber < games.length) {
-      const newState = Object.assign({}, initialState, {
+      currentState = Object.assign({}, initialState, {
         currentGame: gameNumber,
         correctAnswers: gameNumber // all answers are correct for now
       });
-      insertTemplate(renderGame(games[newState.currentGame]));
+      insertTemplate(renderGame(games[currentState.currentGame], currentState));
     } else {
       insertTemplate(renderStats());
     }
