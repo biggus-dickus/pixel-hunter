@@ -1,10 +1,10 @@
-import {questions} from './gamedata';
+import {picsCollection} from './gamedata';
 
 /**
- * Get random image url from gamedata questions collection.
+ * Get random image url from gamedata pics collection.
  * @param {string} key
  * @return {string}
  */
 export default (key) => {
-  return questions[key][Math.floor(Math.random() * questions[key].length)];
+  return picsCollection[key][Math.floor(Math.random() * picsCollection[key].length)];
 };

@@ -46,6 +46,7 @@
     width: 468px;
     height: 458px;
     font-size: 0;
+    background: url("../img/spinner.svg") 50% 50% no-repeat; // quick solution to show spinner without AJAX request for image
 
     img {
       position: absolute;

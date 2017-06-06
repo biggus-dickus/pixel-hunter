@@ -6,39 +6,56 @@ import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
 
 
-const renderGame = (currentGame, currentState) => {
+const renderGame = (game, state) => {
+  let currentState = (state) ? state : initialState;
+
   const template = getElementFromTemplate(`
     <div class="game">
-      <p class="game__task">${currentGame.task}</p>
-      <form class="game__content ${currentGame.classModifier}">
-        ${currentGame.options.join(``)}
+      <p class="game__task">${game.task}</p>
+      <form class="game__content ${game.classModifier}">
+        ${renderGameOptions(currentState.currentGame)}
       </form>
     </div>`);
 
-  const game = template.querySelector(`.game`);
-  const form = template.querySelector(`.game__content`);
-
-  // Header
-  template.insertBefore(renderInfoBar(initialState), template.childNodes[0]);
-
-  // Footer
-  if (currentState) {
-    game.appendChild(renderStatusBar(currentState));
-  } else {
-    game.appendChild(renderStatusBar(initialState));
+  function renderGameOptions(gameNumber) {
+    if (gameNumber === 0 || gameNumber === 1) {
+      return game.picUrls.map((url, i) => {
+        return `<div class="game__option">
+                    <img src="${url}" alt="Option ${++i}">
+                    <label class="game__answer game__answer--photo">
+                      <input name="question1" type="radio" value="photo" required>
+                      <span>Фото</span>
+                    </label>
+                    <label class="game__answer game__answer--paint">
+                      <input name="question1" type="radio" value="paint" required>
+                      <span>Рисунок</span>
+                    </label>
+                  </div>`;
+      }).join(``);
+    } else {
+      return game.picUrls.map((url, i) => {
+        return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
+      }).join(``);
+    }
   }
 
-  form.addEventListener(`click`, () => {
-    if (form.checkValidity()) {
-      renderNextScreen(currentGame.gameNumber);
-      form.reset();
+  const gameElem = template.querySelector(`.game`);
+  const formElem = template.querySelector(`.game__content`);
+
+  template.insertBefore(renderInfoBar(initialState), template.childNodes[0]); // Header
+  gameElem.appendChild(renderStatusBar(currentState)); // Footer
+
+  formElem.addEventListener(`click`, () => {
+    if (formElem.checkValidity()) {
+      renderNextScreen(currentState.currentGame);
+      formElem.reset();
     }
   });
 
 
   /**
    * Renders next game screen or results (based on supplied game screen number).
-   * This number is then used to override the initialState.game, while copying all other properties.
+   * This number is then used to override the specified initialState properties, while copying all others.
    * @param {number} gameNumber
    */
   function renderNextScreen(gameNumber) {
