@@ -12,7 +12,9 @@
   "devDependencies": {
     "autoprefixer": "6.7.7",
     "babel-plugin-external-helpers": "6.22.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.24.1",
     "babel-preset-latest": "6.24.1",
+    "babel-register": "6.24.1",
     "browser-sync": "2.18.8",
     "css-mqpacker": "6.0.0",
     "del": "2.2.2",
@@ -23,6 +25,7 @@
     "gulp-csso": "3.0.0",
     "gulp-htmlmin": "3.0.0",
     "gulp-imagemin": "3.2.0",
+    "gulp-mocha": "4.3.1",
     "gulp-plumber": "1.1.0",
     "gulp-postcss": "7.0.0",
     "gulp-rename": "1.2.2",
@@ -33,5 +36,10 @@
   },
   "engines": {
     "node": "6.10"
+  },
+  "babel": {
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
   }
 }
