@@ -23,11 +23,11 @@ const renderGame = (game, state) => {
         return `<div class="game__option">
                     <img src="${url}" alt="Option ${++i}">
                     <label class="game__answer game__answer--photo">
-                      <input name="question1" type="radio" value="photo" required>
+                      <input name="question-${i}" type="radio" value="photo" required>
                       <span>Фото</span>
                     </label>
                     <label class="game__answer game__answer--paint">
-                      <input name="question1" type="radio" value="paint" required>
+                      <input name="question-${i}" type="radio" value="paint" required>
                       <span>Рисунок</span>
                     </label>
                   </div>`;
