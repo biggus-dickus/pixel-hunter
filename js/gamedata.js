@@ -13,7 +13,7 @@ const picsCollection = {
     `//i.imgur.com/1KegWPz.jpg`,
     `//i.imgur.com/DiHM5Zb.jpg`,
     `//i.imgur.com/DKR1HtB.jpg`,
-    `//2ch.hk/b/arch/2017-01-10/src/144161951/14840597638600.jpg`,
+    `//i.imgur.com/uPk6m0M.jpg`,
     `//lurkmore.so/images/c/c8/Krestianka.jpg`,
     `//img.artlebedev.ru/kovodstvo/idioteka/i/A56D4759-9566-44D4-9D9D-568C0AFAC5A5.jpg`
   ]
@@ -24,21 +24,18 @@ const TYPE_PICTURE = `picture_game`;
 
 const games = [
   {
-    gameNumber: 0,
     type: TYPE_RADIO,
     task: `Угадайте для каждого изображения, фото это или рисунок?`,
     classModifier: ``,
     picUrls: [getRandomPic(`paintings`), getRandomPic(`photos`)]
   },
   {
-    gameNumber: 1,
     type: TYPE_RADIO,
     task: `Угадай, фото или рисунок?`,
     classModifier: `game__content--wide`,
     picUrls: [getRandomPic(`paintings`)]
   },
   {
-    gameNumber: 2,
     type: TYPE_PICTURE,
     task: `Найдите рисунок среди изображений`,
     classModifier: `game__content--triple`,
@@ -47,8 +44,9 @@ const games = [
 ];
 
 const initialState = Object.freeze({
-  currentGame: games[0],
-  gamesTotal: games.length,
+  gameType: games[0],
+  gameNumber: 0,
+  gamesTotal: 10,
   lives: 3,
   time: 30,
   correctAnswers: 0,

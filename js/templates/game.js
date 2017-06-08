@@ -9,9 +9,9 @@ import renderStats from './stats';
 const renderGame = (state) => {
   const template = getElementFromTemplate(`
     <div class="game">
-      <p class="game__task">${state.currentGame.task}</p>
-      <form class="game__content ${state.currentGame.classModifier}">
-        ${renderGameOptions(state.currentGame.type)}
+      <p class="game__task">${state.gameType.task}</p>
+      <form class="game__content ${state.gameType.classModifier}">
+        ${renderGameOptions(state.gameType.type)}
       </form>
     </div>`);
 
@@ -20,7 +20,7 @@ const renderGame = (state) => {
 
     switch (type) {
       case TYPE_RADIO:
-        templateString = state.currentGame.picUrls.map((url, i) => {
+        templateString = state.gameType.picUrls.map((url, i) => {
           return `<div class="game__option">
                   <img src="${url}" alt="Option ${++i}">
                   <label class="game__answer game__answer--photo">
@@ -36,7 +36,7 @@ const renderGame = (state) => {
         break;
 
       case TYPE_PICTURE:
-        templateString = state.currentGame.picUrls.map((url, i) => {
+        templateString = state.gameType.picUrls.map((url, i) => {
           return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
         }).join(``);
     }
@@ -52,7 +52,7 @@ const renderGame = (state) => {
 
   formElem.addEventListener(`click`, () => {
     if (formElem.checkValidity()) {
-      renderNextScreen(state.currentGame.gameNumber);
+      renderNextScreen(state.gameNumber);
       formElem.reset();
     }
   });
@@ -61,15 +61,18 @@ const renderGame = (state) => {
   /**
    * Renders next game screen or results (based on supplied game screen number).
    * This number is then used to override the specified initialState properties, while copying all others.
-   * @param {number} gameNumber
+   * @param {number} count
    */
-  function renderNextScreen(gameNumber) {
-    gameNumber++;
+  function renderNextScreen(count) {
+    count++;
 
-    if (gameNumber < games.length) {
+    let screenNumber = (count < games.length) ? count : 0;
+
+    if (count < state.gamesTotal) {
       state = Object.assign({}, initialState, {
-        currentGame: games[gameNumber],
-        correctAnswers: gameNumber // all answers are correct for now
+        gameType: games[screenNumber],
+        gameNumber: count,
+        correctAnswers: count // all answers are correct for now
       });
       insertTemplate(renderGame(state));
     } else {
