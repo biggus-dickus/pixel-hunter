@@ -15,10 +15,17 @@ const del = require('del'),
       rollup = require('gulp-better-rollup'),
       babel = require('rollup-plugin-babel'),
       sourcemaps = require('gulp-sourcemaps'),
-      uglify = require('gulp-uglify');
+      uglify = require('gulp-uglify'),
+      mocha = require('gulp-mocha');
 
 
-gulp.task('test', function () {});
+gulp.task('test', function () {
+  gulp.src(['js/**/*.test.js'], { read: false })
+    .pipe(mocha({
+      compilers: ['js:babel-register'],
+      reporter: 'nyan'
+    }));
+});
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -48,8 +55,9 @@ gulp.task('scripts', function () {
   return gulp.src('js/main.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(rollup({plugins: [babel()]}, 'iife'))
-    .pipe(uglify())
+    // .pipe(rollup({plugins: [babel()]}, 'iife'))
+    .pipe(rollup('iife'))
+    // .pipe(uglify())
     .pipe(rename('bundle.min.js'))
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js/'));
