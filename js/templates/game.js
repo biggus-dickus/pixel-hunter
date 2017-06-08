@@ -1,4 +1,4 @@
-import {initialState, games} from '../gamedata';
+import {initialState, games, TYPE_RADIO, TYPE_PICTURE} from '../gamedata';
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderInfoBar from './partials/info-bar';
@@ -11,14 +11,17 @@ const renderGame = (state) => {
     <div class="game">
       <p class="game__task">${state.currentGame.task}</p>
       <form class="game__content ${state.currentGame.classModifier}">
-        ${renderGameOptions(state)}
+        ${renderGameOptions(state.currentGame.type)}
       </form>
     </div>`);
 
-  function renderGameOptions(currentState) {
-    if (currentState.currentGame.alias === `two pics` || currentState.currentGame.alias === `one pic`) {
-      return state.currentGame.picUrls.map((url, i) => {
-        return `<div class="game__option">
+  function renderGameOptions(type) {
+    let templateString;
+
+    switch (type) {
+      case TYPE_RADIO:
+        templateString = state.currentGame.picUrls.map((url, i) => {
+          return `<div class="game__option">
                   <img src="${url}" alt="Option ${++i}">
                   <label class="game__answer game__answer--photo">
                     <input name="question-${i}" type="radio" value="photo" required>
@@ -29,12 +32,16 @@ const renderGame = (state) => {
                     <span>Рисунок</span>
                   </label>
                 </div>`;
-      }).join(``);
-    } else {
-      return state.currentGame.picUrls.map((url, i) => {
-        return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
-      }).join(``);
+        }).join(``);
+        break;
+
+      case TYPE_PICTURE:
+        templateString = state.currentGame.picUrls.map((url, i) => {
+          return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
+        }).join(``);
     }
+
+    return templateString;
   }
 
   const gameElem = template.querySelector(`.game`);

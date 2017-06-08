@@ -19,24 +19,27 @@ const picsCollection = {
   ]
 };
 
+const TYPE_RADIO = `radio_game`;
+const TYPE_PICTURE = `picture_game`;
+
 const games = [
   {
     gameNumber: 0,
-    alias: `two pics`,
+    type: TYPE_RADIO,
     task: `Угадайте для каждого изображения, фото это или рисунок?`,
     classModifier: ``,
     picUrls: [getRandomPic(`paintings`), getRandomPic(`photos`)]
   },
   {
     gameNumber: 1,
-    alias: `one pic`,
+    type: TYPE_RADIO,
     task: `Угадай, фото или рисунок?`,
     classModifier: `game__content--wide`,
     picUrls: [getRandomPic(`paintings`)]
   },
   {
     gameNumber: 2,
-    alias: `three pics`,
+    type: TYPE_PICTURE,
     task: `Найдите рисунок среди изображений`,
     classModifier: `game__content--triple`,
     picUrls: [getRandomPic(`photos`), getRandomPic(`paintings`), getRandomPic(`photos`)]
@@ -54,4 +57,4 @@ const initialState = Object.freeze({
   fastAnswers: 0
 });
 
-export {initialState, picsCollection, games};
+export {initialState, picsCollection, games, TYPE_RADIO, TYPE_PICTURE};
