@@ -6,34 +6,32 @@ import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
 
 
-const renderGame = (game, state) => {
-  let currentState = (state) ? state : initialState;
-
+const renderGame = (state) => {
   const template = getElementFromTemplate(`
     <div class="game">
-      <p class="game__task">${game.task}</p>
-      <form class="game__content ${game.classModifier}">
-        ${renderGameOptions(currentState.currentGame)}
+      <p class="game__task">${state.currentGame.task}</p>
+      <form class="game__content ${state.currentGame.classModifier}">
+        ${renderGameOptions(state)}
       </form>
     </div>`);
 
-  function renderGameOptions(gameNumber) {
-    if (gameNumber === 0 || gameNumber === 1) {
-      return game.picUrls.map((url, i) => {
+  function renderGameOptions(currentState) {
+    if (currentState.currentGame.alias === `two pics` || currentState.currentGame.alias === `one pic`) {
+      return state.currentGame.picUrls.map((url, i) => {
         return `<div class="game__option">
-                    <img src="${url}" alt="Option ${++i}">
-                    <label class="game__answer game__answer--photo">
-                      <input name="question-${i}" type="radio" value="photo" required>
-                      <span>Фото</span>
-                    </label>
-                    <label class="game__answer game__answer--paint">
-                      <input name="question-${i}" type="radio" value="paint" required>
-                      <span>Рисунок</span>
-                    </label>
-                  </div>`;
+                  <img src="${url}" alt="Option ${++i}">
+                  <label class="game__answer game__answer--photo">
+                    <input name="question-${i}" type="radio" value="photo" required>
+                    <span>Фото</span>
+                  </label>
+                  <label class="game__answer game__answer--paint">
+                    <input name="question-${i}" type="radio" value="paint" required>
+                    <span>Рисунок</span>
+                  </label>
+                </div>`;
       }).join(``);
     } else {
-      return game.picUrls.map((url, i) => {
+      return state.currentGame.picUrls.map((url, i) => {
         return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
       }).join(``);
     }
@@ -43,11 +41,11 @@ const renderGame = (game, state) => {
   const formElem = template.querySelector(`.game__content`);
 
   template.insertBefore(renderInfoBar(initialState), template.childNodes[0]); // Header
-  gameElem.appendChild(renderStatusBar(currentState)); // Footer
+  gameElem.appendChild(renderStatusBar(state)); // Footer
 
   formElem.addEventListener(`click`, () => {
     if (formElem.checkValidity()) {
-      renderNextScreen(currentState.currentGame);
+      renderNextScreen(state.currentGame.gameNumber);
       formElem.reset();
     }
   });
@@ -62,11 +60,11 @@ const renderGame = (game, state) => {
     gameNumber++;
 
     if (gameNumber < games.length) {
-      currentState = Object.assign({}, initialState, {
-        currentGame: gameNumber,
+      state = Object.assign({}, initialState, {
+        currentGame: games[gameNumber],
         correctAnswers: gameNumber // all answers are correct for now
       });
-      insertTemplate(renderGame(games[currentState.currentGame], currentState));
+      insertTemplate(renderGame(state));
     } else {
       insertTemplate(renderStats());
     }

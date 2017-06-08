@@ -7,7 +7,7 @@ export default (state) => {
             ${new Array(state.slowAnswers).fill(`<li class="stats__result stats__result--slow"></li>`).join(``)}
             ${new Array(state.incorrectAnswers).fill(`<li class="stats__result stats__result--wrong"></li>`).join(``)}
             ${new Array(state.correctAnswers).fill(`<li class="stats__result stats__result--correct"></li>`).join(``)}
-            ${new Array(state.gamesTotal - state.currentGame).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
+            ${new Array(state.gamesTotal - state.currentGame.gameNumber).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
           </ul>
         </div>`);
 };

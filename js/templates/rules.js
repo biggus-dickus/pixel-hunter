@@ -1,4 +1,4 @@
-import {initialState, games} from '../gamedata';
+import {initialState} from '../gamedata';
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderGame from './game';
@@ -36,7 +36,7 @@ export default () => {
 
   form.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    insertTemplate(renderGame(games[initialState.currentGame]));
+    insertTemplate(renderGame(initialState));
     form.reset();
   });
 
