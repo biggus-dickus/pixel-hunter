@@ -5,90 +5,101 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
 
-.game__timer {
-  @include bold-text;
-  font-size: 60px;
-  position: absolute;
-  margin-top: 0;
-  top: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  &__heart {
+    width: 32px;
+    height: 32px;
+  }
 
-.game__lives {
-  position: absolute;
-  top: 20px;
-  right: 0;
-}
+  &__timer {
+    @include bold-text;
+    font-size: 60px;
+    margin-top: 25px;
 
-.game__task {
-  font-size: 22px;
-  line-height: 35px;
-}
+    &.game__timer--flashing,
+    &.game__timer--timeup {  color: #df4e4e;  }
 
-.game__content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
+    &.game__timer--flashing {  animation: flash 1s infinite;  }
 
-.game__option {
-  position: relative;
-  border: 10px solid transparent;
+    &.game__timer--timeup {  transform: scale(1.45);  }
+  }
 
-  width: 468px;
-  height: 458px;
-  font-size: 0;
+  &__lives {
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
 
-  text-align: center;
-  vertical-align: middle;
-}
+  &__task {
+    font-size: 22px;
+    line-height: 35px;
+  }
 
-.game__answer input {
-  position: absolute;
-  left: -99999px;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+  }
 
-  & + span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 70px;
-    background: rgba(0, 0, 0, 0.5) no-repeat center;
-
-    &:hover {
-      background-color: #000000;
-    }
-
+  &__option {
+    position: relative;
+    border: 10px solid transparent;
+    width: 468px;
+    height: 458px;
     font-size: 0;
-  }
+    background: url("../img/spinner.svg") 50% 50% no-repeat; // quick solution to show spinner without AJAX request for image
 
-  &:checked + span {
-    background-color: #df4e4e;
-  }
-}
-
-.game__answer {
-  position: absolute;
-  width: 78px;
-  height: 78px;
-
-  bottom: 30px;
-
-  &--photo {
-    input + span {
-      background-image: url("../img/photo_big.png");
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 100%;
     }
-    left: 30px;
   }
 
-  &--paint {
-    input + span {
-      background-image: url("../img/paint_big.png");
+  &__answer input {
+    position: absolute;
+    left: -99999px;
+
+    & + span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 70px;
+      background: rgba(0, 0, 0, 0.5) no-repeat center;
+
+      &:hover {
+        background-color: #000000;
+      }
+
+      font-size: 0;
     }
-    right: 30px;
+
+    &:checked + span {
+      background-color: #df4e4e;
+    }
+  }
+
+  &__answer {
+    position: absolute;
+    width: 78px;
+    height: 78px;
+
+    bottom: 30px;
+
+    &--photo {
+      input + span {
+        background-image: url("../img/photo_big.png");
+      }
+      left: 30px;
+    }
+
+    &--paint {
+      input + span {
+        background-image: url("../img/paint_big.png");
+      }
+      right: 30px;
+    }
   }
 }
 
@@ -113,25 +124,17 @@
 }
 
 .game__content--triple .game__option {
-  cursor: pointer;
-
   width: 304px;
   height: 455px;
+  cursor: pointer;
 
-  &:hover {
-    border-color: #df4e4e;
-  }
-
-  &:active::after {
+  &::after {
     content: "";
     position: absolute;
-
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(223, 78, 78, 0.4);
+    top: 0;  right: 0;  bottom: 0;  left: 0;
   }
 
+  &:hover {  border-color: #df4e4e;  }
+
+  &:active::after {  background-color: rgba(223, 78, 78, 0.4);  }
 }

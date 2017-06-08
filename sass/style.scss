@@ -1,3 +1,4 @@
+@import "animations";
 @import "central";
 @import "intro";
 @import "greeting";
@@ -27,4 +28,9 @@ body {
 
 a {
   color: $main-font-color;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

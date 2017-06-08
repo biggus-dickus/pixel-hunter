@@ -1,8 +1,9 @@
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
-import greeting from './greeting';
+import renderGreeting from './greeting';
 
-const template = getElementFromTemplate(`
+export default () => {
+  const template = getElementFromTemplate(`
   <div id="main" class="central__content">
     <div id="intro" class="intro">
       <h1 class="intro__asterisk" title="Начать игру">*</h1>
@@ -10,8 +11,9 @@ const template = getElementFromTemplate(`
     </div>
   </div>`);
 
-const startBtn = template.querySelector(`.intro__asterisk`);
+  const startBtn = template.querySelector(`.intro__asterisk`);
 
-startBtn.addEventListener(`click`, () => insertTemplate(greeting));
+  startBtn.addEventListener(`click`, () => insertTemplate(renderGreeting()));
 
-export default template;
+  return template;
+};

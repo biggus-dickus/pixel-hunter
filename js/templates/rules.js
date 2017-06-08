@@ -1,48 +1,44 @@
-import getElementFromTemplate from '../get-element-from-template.js';
-import insertTemplate from '../insert-template.js';
-import game1 from './game-1.js';
-import goBackClickHandler from '../back-to-start';
+import {initialState} from '../gamedata';
+import getElementFromTemplate from '../get-element-from-template';
+import insertTemplate from '../insert-template';
+import renderGame from './game';
+import renderBackBtn from './partials/back-to-start';
 
-const template = getElementFromTemplate(`
-  <header class="header">
-    <div class="header__back" title="В начало игры">
-      <span class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.png" width="101" height="44">
-      </span>
-    </div>
-  </header>
-  <div class="rules">
-    <h1 class="rules__title">Правила</h1>
-    <p class="rules__description">Угадай 10 раз для каждого изображения, фото это <img
-      src="img/photo_icon.png" width="16" height="16"> или рисунок <img
-      src="img/paint_icon.png" width="16" height="16" alt="">.<br>
-      Фотографиями или рисунками могут быть оба изображения.<br>
-      На каждую попытку отводится 30 секунд.<br>
-      Ошибиться можно не более 3 раз.<br>
-      <br>
-      Готовы?
-    </p>
-    <form class="rules__form">
-      <input class="rules__input" type="text" placeholder="Ваше имя" required>
-      <button class="rules__button  continue" disabled>Go!</button>
-    </form>
-  </div>`);
+export default () => {
+  const template = getElementFromTemplate(`
+    <header class="header"></header>
+    <div class="rules">
+      <h1 class="rules__title">Правила</h1>
+      <p class="rules__description">Угадай 10 раз для каждого изображения, фото это <img
+        src="img/photo_icon.png" width="16" height="16"> или рисунок <img
+        src="img/paint_icon.png" width="16" height="16" alt="">.<br>
+        Фотографиями или рисунками могут быть оба изображения.<br>
+        На каждую попытку отводится 30 секунд.<br>
+        Ошибиться можно не более 3 раз.<br>
+        <br>
+        Готовы?
+      </p>
+      <form class="rules__form">
+        <input class="rules__input" type="text" placeholder="Ваше имя" required>
+        <button class="rules__button  continue" disabled>Go!</button>
+      </form>
+    </div>`);
 
-const form = template.querySelector(`.rules__form`);
-const submit = template.querySelector(`.rules__button`);
+  const header = template.querySelector(`.header`);
+  const form = template.querySelector(`.rules__form`);
+  const submit = template.querySelector(`.rules__button`);
 
-goBackClickHandler(template.querySelector(`.header__back`));
+  header.insertBefore(renderBackBtn(), header.childNodes[0]);
 
-form.addEventListener(`input`, () => {
-  submit.disabled = !form.checkValidity();
-});
+  form.addEventListener(`input`, () => {
+    submit.disabled = !form.checkValidity();
+  });
 
-form.addEventListener(`submit`, (evt) => {
-  evt.preventDefault();
-  insertTemplate(game1);
-  form.reset();
-});
+  form.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    insertTemplate(renderGame(initialState));
+    form.reset();
+  });
 
-
-export default template;
+  return template;
+};
