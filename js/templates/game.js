@@ -5,6 +5,7 @@ import renderInfoBar from './partials/info-bar';
 import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
 
+let gameScreen = 0;
 
 const renderGame = (state) => {
   const template = getElementFromTemplate(`
@@ -52,6 +53,7 @@ const renderGame = (state) => {
 
   formElem.addEventListener(`click`, () => {
     if (formElem.checkValidity()) {
+      gameScreen++;
       renderNextScreen(state.gameNumber);
       formElem.reset();
     }
@@ -66,17 +68,20 @@ const renderGame = (state) => {
   function renderNextScreen(count) {
     count++;
 
-    let screenNumber = (count < games.length) ? count : 0;
+    if (gameScreen >= games.length) {
+      gameScreen = 0;
+    }
 
     if (count < state.gamesTotal) {
       state = Object.assign({}, initialState, {
-        gameType: games[screenNumber],
+        gameType: games[gameScreen],
         gameNumber: count,
         correctAnswers: count // all answers are correct for now
       });
       insertTemplate(renderGame(state));
     } else {
       insertTemplate(renderStats());
+      gameScreen = 0;
     }
   }
 
