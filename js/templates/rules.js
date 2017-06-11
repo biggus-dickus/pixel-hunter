@@ -1,4 +1,4 @@
-import {initialState} from '../gamedata';
+import {initialState} from '../data/gamedata';
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderGame from './game';

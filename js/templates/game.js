@@ -1,4 +1,4 @@
-import {initialState, games, TYPE_RADIO, TYPE_PICTURE} from '../gamedata';
+import {initialState, games, TYPE_RADIO, TYPE_PICTURE} from '../data/gamedata';
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderInfoBar from './partials/info-bar';
@@ -40,6 +40,10 @@ const renderGame = (state) => {
         templateString = state.gameType.picUrls.map((url, i) => {
           return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
         }).join(``);
+        break;
+
+      default:
+        throw new Error(`'type' key (TYPE_RADIO or TYPE_PICTURE) must be set in games Array`);
     }
 
     return templateString;
@@ -48,7 +52,7 @@ const renderGame = (state) => {
   const gameElem = template.querySelector(`.game`);
   const formElem = template.querySelector(`.game__content`);
 
-  template.insertBefore(renderInfoBar(initialState), template.childNodes[0]); // Header
+  template.insertBefore(renderInfoBar(state), template.childNodes[0]); // Header
   gameElem.appendChild(renderStatusBar(state)); // Footer
 
   formElem.addEventListener(`click`, () => {

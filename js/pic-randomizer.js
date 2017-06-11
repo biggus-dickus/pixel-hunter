@@ -1,4 +1,4 @@
-import {picsCollection} from './gamedata';
+import {picsCollection} from './data/gamedata';
 
 /**
  * Get random image url from gamedata pics collection.

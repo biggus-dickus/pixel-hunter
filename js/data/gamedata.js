@@ -1,4 +1,4 @@
-import getRandomPic from './pic-randomizer';
+import getRandomPic from '../pic-randomizer';
 
 const picsCollection = {
   paintings: [
