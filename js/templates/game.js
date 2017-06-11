@@ -21,29 +21,31 @@ const renderGame = (state) => {
 
     switch (type) {
       case TYPE_RADIO:
-        templateString = state.gameType.picUrls.map((url, i) => {
+        templateString = state.gameType.pics.map((item, i) => {
           return `<div class="game__option">
-                  <img src="${url}" alt="Option ${++i}">
-                  <label class="game__answer game__answer--photo">
-                    <input name="question-${i}" type="radio" value="photo" required>
-                    <span>Фото</span>
-                  </label>
-                  <label class="game__answer game__answer--paint">
-                    <input name="question-${i}" type="radio" value="paint" required>
-                    <span>Рисунок</span>
-                  </label>
-                </div>`;
+                    <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
+                    <label class="game__answer game__answer--photo">
+                      <input name="question-${i}" type="radio" value="photos" required>
+                      <span>Фото</span>
+                    </label>
+                    <label class="game__answer game__answer--paint">
+                      <input name="question-${i}" type="radio" value="paintings" required>
+                      <span>Рисунок</span>
+                    </label>
+                  </div>`;
         }).join(``);
         break;
 
       case TYPE_PICTURE:
-        templateString = state.gameType.picUrls.map((url, i) => {
-          return `<div class="game__option"><img src="${url}" alt="Option ${++i}"></div>`;
+        templateString = state.gameType.pics.map((item, i) => {
+          return `<div class="game__option" data-origin="paintings">
+                    <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
+                  </div>`;
         }).join(``);
         break;
 
       default:
-        throw new Error(`'type' key (TYPE_RADIO or TYPE_PICTURE) must be set in games Array`);
+        throw new Error(`'type' key (TYPE_RADIO or TYPE_PICTURE) must be set in games Array (gamedata.js)`);
     }
 
     return templateString;
@@ -55,7 +57,21 @@ const renderGame = (state) => {
   template.insertBefore(renderInfoBar(state), template.childNodes[0]); // Header
   gameElem.appendChild(renderStatusBar(state)); // Footer
 
-  formElem.addEventListener(`click`, () => {
+  formElem.addEventListener(`click`, (evt) => {
+    if (evt.target.tagName === `INPUT`) {
+      if (evt.target.value === evt.target.parentNode.parentNode.firstElementChild.dataset.origin) {
+        console.log(`Correct`);
+      } else {
+        console.log(`Incorrect`);
+      }
+    } else if (evt.target.tagName === `IMG` && evt.target.parentNode.hasAttribute(`data-origin`)) {
+      if (evt.target.dataset.origin === evt.target.parentNode.dataset.origin) {
+        console.log(`Correct`);
+      } else {
+        console.log(`Incorrect`);
+      }
+    }
+
     if (formElem.checkValidity()) {
       gameScreen++;
       renderNextScreen(state.gameNumber);

@@ -27,26 +27,47 @@ const games = [
     type: TYPE_RADIO,
     task: `Угадайте для каждого изображения, фото это или рисунок?`,
     classModifier: ``,
-    picUrls: [getRandomPic(`paintings`), getRandomPic(`photos`)]
+    pics: [{
+      origin: `paintings`,
+      url: getRandomPic(`paintings`)
+    },
+    {
+      origin: `photos`,
+      url: getRandomPic(`photos`)
+    }]
   },
   {
     type: TYPE_RADIO,
     task: `Угадай, фото или рисунок?`,
     classModifier: `game__content--wide`,
-    picUrls: [getRandomPic(`paintings`)]
+    pics: [{
+      origin: `paintings`,
+      url: getRandomPic(`paintings`)
+    }]
   },
   {
     type: TYPE_PICTURE,
     task: `Найдите рисунок среди изображений`,
     classModifier: `game__content--triple`,
-    picUrls: [getRandomPic(`photos`), getRandomPic(`paintings`), getRandomPic(`photos`)]
+    pics: [{
+      origin: `photos`,
+      url: getRandomPic(`photos`)
+    },
+    {
+      origin: `paintings`,
+      url: getRandomPic(`paintings`)
+    },
+    {
+      origin: `photos`,
+      url: getRandomPic(`photos`)
+    }]
   }
 ];
 
 const initialState = Object.freeze({
   gameType: games[0],
   gameNumber: 0,
-  gamesTotal: 10,
+  gamesTotal: 3,
   lives: 3,
   time: 30,
   correctAnswers: 0,
