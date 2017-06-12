@@ -1,4 +1,5 @@
 import {initialState, games, TYPE_RADIO, TYPE_PICTURE} from '../data/gamedata';
+import getRandomPic from '../pic-randomizer';
 import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderInfoBar from './partials/info-bar';
@@ -18,10 +19,11 @@ const renderGame = (state) => {
 
   function renderGameOptions(type) {
     let templateString;
+    let randomPics = getRandomPic(state.gameType.options, state.gameType.requiredOrigin);
 
     switch (type) {
       case TYPE_RADIO:
-        templateString = state.gameType.pics.map((item, i) => {
+        templateString = randomPics.map((item, i) => {
           return `<div class="game__option">
                     <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                     <label class="game__answer game__answer--photo">
@@ -37,7 +39,7 @@ const renderGame = (state) => {
         break;
 
       case TYPE_PICTURE:
-        templateString = state.gameType.pics.map((item, i) => {
+        templateString = randomPics.map((item, i) => {
           return `<div class="game__option" data-origin="paintings">
                     <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                   </div>`;
