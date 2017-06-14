@@ -27,14 +27,13 @@ const games = [
     type: TYPE_RADIO,
     task: `Угадайте для каждого изображения, фото это или рисунок?`,
     classModifier: ``,
-    requiredOrigin: ``,
+    isOptionBlockable: true,
     options: 2
   },
   {
     type: TYPE_RADIO,
     task: `Угадай, фото или рисунок?`,
     classModifier: `game__content--wide`,
-    requiredOrigin: ``,
     options: 1
   },
   {

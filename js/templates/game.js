@@ -5,6 +5,8 @@ import insertTemplate from '../insert-template';
 import renderInfoBar from './partials/info-bar';
 import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
+import collectUserAnswers from '../utils/collect-answers';
+
 
 let gameScreen = 0;
 
@@ -29,16 +31,13 @@ const renderGame = (state) => {
         templateString = randomPics.map((item, i) => {
           return `<div class="game__option">
                     <img src="${item.url}" alt="Option ${++i}">
-                    <label class="game__answer game__answer--photo">
-                      <input name="question-${i}" type="radio" value="photos" required>
-                      <span>Фото</span>
-                    </label>
-                    <label class="game__answer game__answer--paint">
-                      <input name="question-${i}" type="radio" value="paintings" required>
-                      <span>Рисунок</span>
-                    </label>
+                    <input id="photo-${i}" name="question-${i}" type="radio" value="photos" required>
+                    <label for="photo-${i}" class="game__answer game__answer--photo">Фото</label>
+                    <input id="paintings-${i}" name="question-${i}" type="radio" value="paintings" required>
+                    <label for="paintings-${i}" class="game__answer game__answer--paint">Рисунок</label>
                   </div>`;
         }).join(``);
+
         randomPics.forEach((item) => correctAnswers.push(item.origin));
         break;
 
@@ -48,7 +47,8 @@ const renderGame = (state) => {
                     <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                   </div>`;
         }).join(``);
-        correctAnswers.push(`paintings`); // spec.md: only paintings is a correct answer in this type of game
+
+        correctAnswers.push(`paintings`); // spec.md: only paintings is a correct answer for this type of game
         break;
 
       default:
@@ -58,6 +58,8 @@ const renderGame = (state) => {
     return templateString;
   }
 
+  // console.log(correctAnswers);
+
   const gameElem = template.querySelector(`.game`);
   const formElem = template.querySelector(`.game__content`);
 
@@ -65,34 +67,15 @@ const renderGame = (state) => {
   gameElem.appendChild(renderStatusBar(state)); // Footer
 
   formElem.addEventListener(`click`, (evt) => {
-    collectUserAnswers(evt);
+    collectUserAnswers(evt, state, userAnswers);
 
     if (formElem.checkValidity()) {
+      // console.log(userAnswers);
       gameScreen++;
       renderNextScreen(state.gameNumber);
       formElem.reset();
     }
   });
-
-  function collectUserAnswers(e) {
-    let event = e.target;
-
-    switch (event.tagName) {
-      case `INPUT`:
-        userAnswers.push(event.value);
-        break;
-
-      case `IMG`:
-        if (state.gameType.type === TYPE_PICTURE) {
-          userAnswers.push(event.dataset.origin);
-        }
-        break;
-
-      default: return null;
-    }
-
-    return userAnswers;
-  }
 
 
   /**

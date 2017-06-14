@@ -2,6 +2,7 @@ import getElementFromTemplate from '../../get-element-from-template';
 import setTimer from '../../timer';
 import renderBackBtn from './back-to-start';
 
+
 export default (state) => {
   const MAX_LIVES = 3;
 

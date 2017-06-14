@@ -2,6 +2,7 @@ import getElementFromTemplate from '../../get-element-from-template';
 import insertTemplate from '../../insert-template';
 import renderGreeting from '../greeting';
 
+
 export default () => {
   const template = getElementFromTemplate(`<div class="header__back" title="В начало игры">
     <span class="back">

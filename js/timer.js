@@ -1,5 +1,6 @@
 import {initialState} from './data/gamedata';
 
+
 /**
  * Sets game timer and injects current value into the specified DOM node.
  * @param {Element} node

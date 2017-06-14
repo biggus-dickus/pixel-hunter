@@ -2,7 +2,7 @@ import {picsCollection} from './data/gamedata';
 
 /**
  * Get a random array of unique objects with image urls and their origins
- * (ex.: {origin: 'pictures', url: '//imgur.com/blabla.jpg'} ).
+ * (ex.: {origin: 'pictures', url: '//imgur.com/blablabla.jpg'} ).
  *
  * @param {number} quantity
  * @param {string} requiredOrigin - optional argument, which will initiate the check for a picture from required category

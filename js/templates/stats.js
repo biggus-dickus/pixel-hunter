@@ -1,6 +1,7 @@
 import getElementFromTemplate from '../get-element-from-template';
 import renderBackBtn from './partials/back-to-start';
 
+
 export default () => {
   const template = getElementFromTemplate(`<header class="header"></header>
     <div class="result">

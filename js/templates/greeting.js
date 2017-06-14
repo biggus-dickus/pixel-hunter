@@ -2,6 +2,7 @@ import getElementFromTemplate from '../get-element-from-template';
 import insertTemplate from '../insert-template';
 import renderRules from './rules';
 
+
 export default () => {
   const template = getElementFromTemplate(`
     <div class="greeting central--blur">

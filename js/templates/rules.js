@@ -4,6 +4,7 @@ import insertTemplate from '../insert-template';
 import renderGame from './game';
 import renderBackBtn from './partials/back-to-start';
 
+
 export default () => {
   const template = getElementFromTemplate(`
     <header class="header"></header>

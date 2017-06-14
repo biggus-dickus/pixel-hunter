@@ -1,5 +1,6 @@
 import getElementFromTemplate from '../../get-element-from-template';
 
+
 export default (state) => {
   return getElementFromTemplate(`<div class="stats">
           <ul class="stats">
