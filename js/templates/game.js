@@ -9,6 +9,9 @@ import renderStats from './stats';
 let gameScreen = 0;
 
 const renderGame = (state) => {
+  const correctAnswers = [];
+  const userAnswers = [];
+
   const template = getElementFromTemplate(`
     <div class="game">
       <p class="game__task">${state.gameType.task}</p>
@@ -25,7 +28,7 @@ const renderGame = (state) => {
       case TYPE_RADIO:
         templateString = randomPics.map((item, i) => {
           return `<div class="game__option">
-                    <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
+                    <img src="${item.url}" alt="Option ${++i}">
                     <label class="game__answer game__answer--photo">
                       <input name="question-${i}" type="radio" value="photos" required>
                       <span>Фото</span>
@@ -36,14 +39,16 @@ const renderGame = (state) => {
                     </label>
                   </div>`;
         }).join(``);
+        randomPics.forEach((item) => correctAnswers.push(item.origin));
         break;
 
       case TYPE_PICTURE:
         templateString = randomPics.map((item, i) => {
-          return `<div class="game__option" data-origin="paintings">
+          return `<div class="game__option">
                     <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                   </div>`;
         }).join(``);
+        correctAnswers.push(`paintings`); // spec.md: only paintings is a correct answer in this type of game
         break;
 
       default:
@@ -60,19 +65,7 @@ const renderGame = (state) => {
   gameElem.appendChild(renderStatusBar(state)); // Footer
 
   formElem.addEventListener(`click`, (evt) => {
-    if (evt.target.tagName === `INPUT`) {
-      if (evt.target.value === evt.target.parentNode.parentNode.firstElementChild.dataset.origin) {
-        console.log(`Correct`);
-      } else {
-        console.log(`Incorrect`);
-      }
-    } else if (evt.target.tagName === `IMG` && evt.target.parentNode.hasAttribute(`data-origin`)) {
-      if (evt.target.dataset.origin === evt.target.parentNode.dataset.origin) {
-        console.log(`Correct`);
-      } else {
-        console.log(`Incorrect`);
-      }
-    }
+    collectUserAnswers(evt);
 
     if (formElem.checkValidity()) {
       gameScreen++;
@@ -80,6 +73,26 @@ const renderGame = (state) => {
       formElem.reset();
     }
   });
+
+  function collectUserAnswers(e) {
+    let event = e.target;
+
+    switch (event.tagName) {
+      case `INPUT`:
+        userAnswers.push(event.value);
+        break;
+
+      case `IMG`:
+        if (state.gameType.type === TYPE_PICTURE) {
+          userAnswers.push(event.dataset.origin);
+        }
+        break;
+
+      default: return null;
+    }
+
+    return userAnswers;
+  }
 
 
   /**
