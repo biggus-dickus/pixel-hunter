@@ -1,6 +1,6 @@
 import {initialState} from '../data/gamedata';
-import getElementFromTemplate from '../get-element-from-template';
-import insertTemplate from '../insert-template';
+import getElementFromTemplate from '../utils/get-element-from-template';
+import insertTemplate from '../utils/insert-template';
 import renderGame from './game';
 import renderBackBtn from './partials/back-to-start';
 

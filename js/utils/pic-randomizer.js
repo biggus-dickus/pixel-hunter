@@ -1,4 +1,4 @@
-import {picsCollection} from './data/gamedata';
+import {picsCollection} from '../data/gamedata';
 
 /**
  * Get a random array of unique objects with image urls and their origins
@@ -33,7 +33,7 @@ export default (quantity, requiredOrigin) => {
     return item.origin === requiredOrigin;
   }
 
-  // Do not let the Array contain only photos or pictures (if that's the issue)
+  // TODO: provide for the possibility of TYPE_PICTURE game to contain either two paintings and one photo or vice versa
   if (requiredOrigin && !picSet.some(hasRequiredOrigin)) {
     let index = Math.floor(Math.random() * picsCollection[requiredOrigin].length);
 

@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../get-element-from-template';
-import insertTemplate from '../insert-template';
+import getElementFromTemplate from '../utils/get-element-from-template';
+import insertTemplate from '../utils/insert-template';
 import renderGreeting from './greeting';
 
 

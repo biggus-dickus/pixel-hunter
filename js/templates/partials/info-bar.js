@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../../get-element-from-template';
-import setTimer from '../../timer';
+import getElementFromTemplate from '../../utils/get-element-from-template';
+import setTimer from '../../utils/timer';
 import renderBackBtn from './back-to-start';
 
 

@@ -9,7 +9,7 @@ import {TYPE_PICTURE} from '../data/gamedata';
  * @param {Array} arr - array to push answers into
  * @return {Array}
  */
-export default (e, state, arr) => {
+const collectUserAnswers = (e, state, arr) => {
   let event = e.target;
 
   switch (event.tagName) {
@@ -20,9 +20,9 @@ export default (e, state, arr) => {
       }
       break;
 
-    case `IMG`:
+    case `DIV`:
       if (state.gameType.type === TYPE_PICTURE) {
-        arr.push(event.dataset.origin);
+        arr.push(event.firstElementChild.dataset.origin);
       }
       break;
 
@@ -44,3 +44,20 @@ export default (e, state, arr) => {
 
   return arr;
 };
+
+
+/**
+ * Stringify and compare two arrays of answers.
+ * @param {Array} benchmarkArr
+ * @param {Array} suppliedArr
+ * @return {Boolean}
+ */
+const checkForCorrectAnswer = (benchmarkArr, suppliedArr) => {
+  if (benchmarkArr.sort().join(``) === suppliedArr.sort().join(``)) {
+    return true;
+  }
+
+  return null;
+};
+
+export {collectUserAnswers, checkForCorrectAnswer};

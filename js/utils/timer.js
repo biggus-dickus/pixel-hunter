@@ -1,4 +1,4 @@
-import {initialState} from './data/gamedata';
+import {initialState} from '../data/gamedata';
 
 
 /**
@@ -21,9 +21,5 @@ export default (node, timeLeft = initialState.time) => {
     }
 
     node.innerHTML = `${timeLeft}`;
-
-    return Object.assign({}, initialState, {
-      time: timeLeft
-    });
   }, 1000);
 };

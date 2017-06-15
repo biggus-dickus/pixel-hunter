@@ -1,11 +1,11 @@
-import {initialState, games, TYPE_RADIO, TYPE_PICTURE} from '../data/gamedata';
-import getRandomPic from '../pic-randomizer';
-import getElementFromTemplate from '../get-element-from-template';
-import insertTemplate from '../insert-template';
+import {initialState, games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
+import getRandomPic from '../utils/pic-randomizer';
+import getElementFromTemplate from '../utils/get-element-from-template';
+import insertTemplate from '../utils/insert-template';
 import renderInfoBar from './partials/info-bar';
 import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
-import collectUserAnswers from '../utils/collect-answers';
+import {collectUserAnswers, checkForCorrectAnswer} from '../utils/collect-and-check-answers';
 
 
 let gameScreen = 0;
@@ -13,6 +13,25 @@ let gameScreen = 0;
 const renderGame = (state) => {
   const correctAnswers = [];
   const userAnswers = [];
+
+  // function countTime(time = state.time) {
+  //   const interval = setInterval(() => {
+  //     time--;
+  //
+  //     if (time === 0) {
+  //       clearInterval(interval);
+  //     }
+  //
+  //     return time;
+  //     // console.log(time);
+  //   }, 1000);
+  // }
+  //
+  // console.log(countTime());
+
+  let correctCount = state.correctAnswers;
+  let incorrectCount = state.incorrectAnswers;
+  let livesCount = state.lives;
 
   const template = getElementFromTemplate(`
     <div class="game">
@@ -27,7 +46,8 @@ const renderGame = (state) => {
     let randomPics = getRandomPic(state.gameType.options, state.gameType.requiredOrigin);
 
     switch (type) {
-      case TYPE_RADIO:
+      case TYPE_RADIO_1:
+      case TYPE_RADIO_2:
         templateString = randomPics.map((item, i) => {
           return `<div class="game__option">
                     <img src="${item.url}" alt="Option ${++i}">
@@ -48,7 +68,7 @@ const renderGame = (state) => {
                   </div>`;
         }).join(``);
 
-        correctAnswers.push(`paintings`); // spec.md: only paintings is a correct answer for this type of game
+        correctAnswers.push(`paintings`); // TODO: will be implemented later
         break;
 
       default:
@@ -57,8 +77,6 @@ const renderGame = (state) => {
 
     return templateString;
   }
-
-  // console.log(correctAnswers);
 
   const gameElem = template.querySelector(`.game`);
   const formElem = template.querySelector(`.game__content`);
@@ -70,7 +88,7 @@ const renderGame = (state) => {
     collectUserAnswers(evt, state, userAnswers);
 
     if (formElem.checkValidity()) {
-      // console.log(userAnswers);
+      processUserAnswers(correctAnswers, userAnswers);
       gameScreen++;
       renderNextScreen(state.gameNumber);
       formElem.reset();
@@ -79,8 +97,22 @@ const renderGame = (state) => {
 
 
   /**
-   * Renders next game screen or results (based on supplied game screen number).
-   * This number is then used to override the specified initialState properties, while copying all others.
+   * Process correct and incorrect answers and change vars from closure, which will be used to modify game state.
+   * @param {Array} rightAnswers
+   * @param {Array} receivedAnswers
+   */
+  function processUserAnswers(rightAnswers, receivedAnswers) {
+    if (checkForCorrectAnswer(rightAnswers, receivedAnswers)) {
+      correctCount++;
+    } else {
+      incorrectCount++;
+      livesCount--;
+    }
+  }
+
+
+  /**
+   * Renders next game screen or results (based on supplied game screen number; if there are lives left).
    * @param {number} count
    */
   function renderNextScreen(count) {
@@ -90,15 +122,17 @@ const renderGame = (state) => {
       gameScreen = 0;
     }
 
-    if (count < state.gamesTotal) {
+    if (count < state.gamesTotal && livesCount > 0) {
       state = Object.assign({}, initialState, {
         gameType: games[gameScreen],
         gameNumber: count,
-        correctAnswers: count // all answers are correct for now
+        lives: livesCount,
+        correctAnswers: correctCount,
+        incorrectAnswers: incorrectCount
       });
       insertTemplate(renderGame(state));
     } else {
-      insertTemplate(renderStats());
+      insertTemplate(renderStats(state));
       gameScreen = 0;
     }
   }

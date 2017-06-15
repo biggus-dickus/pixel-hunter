@@ -1,6 +1,6 @@
-import getElementFromTemplate from '../../get-element-from-template';
+import getElementFromTemplate from '../../utils/get-element-from-template';
 
-
+// TODO: <li>'s with stats are inserted consecutively, change their order to reflect user actions
 export default (state) => {
   return getElementFromTemplate(`<div class="stats">
           <ul class="stats">
