@@ -1,5 +1,5 @@
 import {initialState, games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
-import getRandomPic from '../utils/pic-randomizer';
+import {getRandomPic, findUniqueEntry} from '../utils/pic-randomizer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import insertTemplate from '../utils/insert-template';
 import renderInfoBar from './partials/info-bar';
@@ -13,21 +13,6 @@ let gameScreen = 0;
 const renderGame = (state) => {
   const correctAnswers = [];
   const userAnswers = [];
-
-  // function countTime(time = state.time) {
-  //   const interval = setInterval(() => {
-  //     time--;
-  //
-  //     if (time === 0) {
-  //       clearInterval(interval);
-  //     }
-  //
-  //     return time;
-  //     // console.log(time);
-  //   }, 1000);
-  // }
-  //
-  // console.log(countTime());
 
   let correctCount = state.correctAnswers;
   let incorrectCount = state.incorrectAnswers;
@@ -43,7 +28,7 @@ const renderGame = (state) => {
 
   function renderGameOptions(type) {
     let templateString;
-    let randomPics = getRandomPic(state.gameType.options, state.gameType.requiredOrigin);
+    let randomPics = getRandomPic(state.gameType.options, type);
 
     switch (type) {
       case TYPE_RADIO_1:
@@ -68,7 +53,13 @@ const renderGame = (state) => {
                   </div>`;
         }).join(``);
 
-        correctAnswers.push(`paintings`); // TODO: will be implemented later
+        // Correct answer is the answer, which length differs from two others.
+        let origins = randomPics.map((item) => item.origin);
+        let originsLengths = randomPics.map((item) => item.origin.length);
+        let uniqueLength = findUniqueEntry(originsLengths);
+        let uniquePic = origins.filter((item) => item.length === uniqueLength).join(``);
+
+        correctAnswers.push(uniquePic);
         break;
 
       default:
@@ -94,7 +85,6 @@ const renderGame = (state) => {
       formElem.reset();
     }
   });
-
 
   /**
    * Process correct and incorrect answers and change vars from closure, which will be used to modify game state.
@@ -122,7 +112,7 @@ const renderGame = (state) => {
       gameScreen = 0;
     }
 
-    if (count < state.gamesTotal && livesCount > 0) {
+    if (count < state.gamesTotal && livesCount > 0 && state.time > 0) {
       state = Object.assign({}, initialState, {
         gameType: games[gameScreen],
         gameNumber: count,

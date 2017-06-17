@@ -1,16 +1,15 @@
-import {picsCollection} from '../data/gamedata';
+import {picsCollection, TYPE_PICTURE} from '../data/gamedata';
 
 /**
  * Get a random array of unique objects with image urls and their origins
  * (ex.: {origin: 'pictures', url: '//imgur.com/blablabla.jpg'} ).
  *
  * @param {number} quantity
- * @param {string} requiredOrigin - optional argument, which will initiate the check for a picture from required category
- * and its subsequent insertion into array (randomly generated array might contain ONLY photos or paintings).
+ * @param {string} gameType
  *
  * @return {Array}
  */
-export default (quantity, requiredOrigin) => {
+function getRandomPic(quantity, gameType) {
   const picSet = [];
   const addedIndex = [];
 
@@ -23,23 +22,52 @@ export default (quantity, requiredOrigin) => {
     }
 
     addedIndex.push(picIndex);
+    addedIndex.push(key);
 
     let urlString = picsCollection[key][picIndex];
 
     picSet.push({origin: key, url: urlString});
   }
 
-  function hasRequiredOrigin(item) {
-    return item.origin === requiredOrigin;
+  const keysArr = addedIndex.filter((el) => el.length);
+
+  function areAllKeysIdentical(arr) {
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] !== arr[0]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
-  // TODO: provide for the possibility of TYPE_PICTURE game to contain either two paintings and one photo or vice versa
-  if (requiredOrigin && !picSet.some(hasRequiredOrigin)) {
-    let index = Math.floor(Math.random() * picsCollection[requiredOrigin].length);
+  if (areAllKeysIdentical(keysArr) && gameType === TYPE_PICTURE) {
+    const redundantKey = keysArr[0];
+    const newKey = (redundantKey === `photos`) ? `paintings` : `photos`;
+    let index = Math.floor(Math.random() * picsCollection[newKey].length);
 
     picSet.pop();
-    picSet.push({origin: requiredOrigin, url: picsCollection[requiredOrigin][index]});
+    picSet.push({origin: newKey, url: picsCollection[newKey][index]});
   }
 
   return picSet;
-};
+}
+
+
+/**
+ * Find and return the single unique value from array of duplicates.
+ * Works with numbers only.
+ * @param {Array} arr
+ * @return {number}
+ */
+function findUniqueEntry(arr) {
+  let result = 0;
+
+  for (let entry of arr) {
+    result ^= entry;
+  }
+
+  return result;
+}
+
+export {getRandomPic, findUniqueEntry};

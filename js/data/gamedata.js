@@ -41,7 +41,6 @@ const games = [
     type: TYPE_PICTURE,
     task: `Среди изображений есть только один рисунок или фотография. Найдите его.`,
     classModifier: `game__content--triple`,
-    requiredOrigin: `paintings`,
     options: 3
   }
 ];
@@ -49,7 +48,7 @@ const games = [
 const initialState = Object.freeze({
   gameType: games[0],
   gameNumber: 0,
-  gamesTotal: 3,
+  gamesTotal: 10,
   lives: 3,
   time: 30,
   correctAnswers: 0,

@@ -37,8 +37,8 @@ const collectUserAnswers = (e, state, arr) => {
     const parent = elem.parentNode;
     const options = parent.querySelectorAll(`input[type="radio"]`);
 
-    for (let i = 0; i < options.length; i++) {
-      options[i].disabled = true;
+    for (let option of options) {
+      option.disabled = true;
     }
   }
 
