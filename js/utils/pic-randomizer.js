@@ -9,7 +9,7 @@ import {picsCollection, TYPE_PICTURE} from '../data/gamedata';
  *
  * @return {Array}
  */
-function getRandomPic(quantity, gameType) {
+export default (quantity, gameType) => {
   const picSet = [];
   const addedIndex = [];
 
@@ -51,23 +51,4 @@ function getRandomPic(quantity, gameType) {
   }
 
   return picSet;
-}
-
-
-/**
- * Find and return the single unique value from array of duplicates.
- * Works with numbers only.
- * @param {Array} arr
- * @return {number}
- */
-function findUniqueEntry(arr) {
-  let result = 0;
-
-  for (let entry of arr) {
-    result ^= entry;
-  }
-
-  return result;
-}
-
-export {getRandomPic, findUniqueEntry};
+};

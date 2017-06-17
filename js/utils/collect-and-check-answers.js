@@ -1,28 +1,36 @@
-import {TYPE_PICTURE} from '../data/gamedata';
+import {TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
 
 
 /**
- * Collect and return an array with user answers, which will be used for comparison with correct answers.
+ * Process user answers and return a simple array: ['correct', 'incorrect'...]
  *
  * @param {Object} e - DOM event
  * @param {Object} state - current game state
- * @param {Array} arr - array to push answers into
+ * @param {Array} arr - array to push results into
  * @return {Array}
  */
-const collectUserAnswers = (e, state, arr) => {
+const collectAnswerTypes = (e, state, arr) => {
   let event = e.target;
 
   switch (event.tagName) {
     case `INPUT`:
-      arr.push(event.value);
       if (state.gameType.isOptionBlockable) {
         blockInputsOnAnswer(event);
       }
+
+      if (event.value === event.parentNode.children[0].dataset.origin) {
+        arr.push(CORRECT_ANSWER_FLAG);
+      } else {
+        arr.push(INCORRECT_ANSWER_FLAG);
+      }
+
       break;
 
     case `DIV`:
-      if (state.gameType.type === TYPE_PICTURE) {
-        arr.push(event.firstElementChild.dataset.origin);
+      if (state.gameType.type === TYPE_PICTURE && event.dataset.origin === event.firstElementChild.dataset.origin) {
+        arr.push(CORRECT_ANSWER_FLAG);
+      } else {
+        arr.push(INCORRECT_ANSWER_FLAG);
       }
       break;
 
@@ -47,17 +55,16 @@ const collectUserAnswers = (e, state, arr) => {
 
 
 /**
- * Stringify and compare two arrays of answers.
- * @param {Array} benchmarkArr
- * @param {Array} suppliedArr
+ * Check if there are incorrect answers in those supplied by user.
+ * @param {Array} arr
  * @return {Boolean}
  */
-const checkForCorrectAnswer = (benchmarkArr, suppliedArr) => {
-  if (benchmarkArr.sort().join(``) === suppliedArr.sort().join(``)) {
+const checkForCorrectAnswer = (arr) => {
+  if (arr.indexOf(INCORRECT_ANSWER_FLAG) === -1) {
     return true;
   }
 
   return null;
 };
 
-export {collectUserAnswers, checkForCorrectAnswer};
+export {collectAnswerTypes, checkForCorrectAnswer};

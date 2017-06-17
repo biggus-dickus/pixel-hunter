@@ -1,17 +1,16 @@
 import {initialState, games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
-import {getRandomPic, findUniqueEntry} from '../utils/pic-randomizer';
+import getRandomPic from '../utils/pic-randomizer';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import insertTemplate from '../utils/insert-template';
 import renderInfoBar from './partials/info-bar';
 import renderStatusBar from './partials/status-bar';
 import renderStats from './stats';
-import {collectUserAnswers, checkForCorrectAnswer} from '../utils/collect-and-check-answers';
+import {collectAnswerTypes, checkForCorrectAnswer} from '../utils/collect-and-check-answers';
 
 
 let gameScreen = 0;
 
 const renderGame = (state) => {
-  const correctAnswers = [];
   const userAnswers = [];
 
   let correctCount = state.correctAnswers;
@@ -35,31 +34,21 @@ const renderGame = (state) => {
       case TYPE_RADIO_2:
         templateString = randomPics.map((item, i) => {
           return `<div class="game__option">
-                    <img src="${item.url}" alt="Option ${++i}">
+                    <img src="${item.url}" data-origin="${item.origin}" alt="Option ${++i}">
                     <input id="photo-${i}" name="question-${i}" type="radio" value="photos" required>
                     <label for="photo-${i}" class="game__answer game__answer--photo">Фото</label>
                     <input id="paintings-${i}" name="question-${i}" type="radio" value="paintings" required>
                     <label for="paintings-${i}" class="game__answer game__answer--paint">Рисунок</label>
                   </div>`;
         }).join(``);
-
-        randomPics.forEach((item) => correctAnswers.push(item.origin));
         break;
 
       case TYPE_PICTURE:
         templateString = randomPics.map((item, i) => {
-          return `<div class="game__option">
+          return `<div class="game__option" data-origin="${item.origin}">
                     <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                   </div>`;
         }).join(``);
-
-        // Correct answer is the answer, which length differs from two others.
-        let origins = randomPics.map((item) => item.origin);
-        let originsLengths = randomPics.map((item) => item.origin.length);
-        let uniqueLength = findUniqueEntry(originsLengths);
-        let uniquePic = origins.filter((item) => item.length === uniqueLength).join(``);
-
-        correctAnswers.push(uniquePic);
         break;
 
       default:
@@ -76,10 +65,10 @@ const renderGame = (state) => {
   gameElem.appendChild(renderStatusBar(state)); // Footer
 
   formElem.addEventListener(`click`, (evt) => {
-    collectUserAnswers(evt, state, userAnswers);
+    collectAnswerTypes(evt, state, userAnswers);
 
     if (formElem.checkValidity()) {
-      processUserAnswers(correctAnswers, userAnswers);
+      processUserAnswers(userAnswers);
       gameScreen++;
       renderNextScreen(state.gameNumber);
       formElem.reset();
@@ -88,11 +77,10 @@ const renderGame = (state) => {
 
   /**
    * Process correct and incorrect answers and change vars from closure, which will be used to modify game state.
-   * @param {Array} rightAnswers
    * @param {Array} receivedAnswers
    */
-  function processUserAnswers(rightAnswers, receivedAnswers) {
-    if (checkForCorrectAnswer(rightAnswers, receivedAnswers)) {
+  function processUserAnswers(receivedAnswers) {
+    if (checkForCorrectAnswer(receivedAnswers)) {
       correctCount++;
     } else {
       incorrectCount++;

@@ -23,6 +23,9 @@ const TYPE_RADIO_1 = `Выбор типа представленного изо�
 const TYPE_RADIO_2 = `Выбор типа для каждого из двух вариантов: фотографии или фотореалистичного рисунка.`;
 const TYPE_PICTURE = `Выбор из трех вариантов изображения одного типа: фотографии или фотореалистичного рисунка.`;
 
+const CORRECT_ANSWER_FLAG = `correct`;
+const INCORRECT_ANSWER_FLAG = `incorrect`;
+
 const games = [
   {
     type: TYPE_RADIO_2,
@@ -64,4 +67,4 @@ const rates = {
   lifeBonusPoints: 50
 };
 
-export {initialState, picsCollection, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE};
+export {initialState, picsCollection, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG};
