@@ -1,4 +1,4 @@
-import {initialState} from '../data/gamedata';
+import {views, initialState} from '../data/gamedata';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import insertTemplate from '../utils/insert-template';
 import renderRules from './rules';
@@ -28,7 +28,7 @@ export default (state) => {
   // Go to rules
   proceedBtn.addEventListener(`click`, () => {
     state = Object.assign({}, initialState, {
-      template: `rules`
+      template: views.rules
     });
 
     insertTemplate(renderRules(state));
@@ -37,7 +37,7 @@ export default (state) => {
   // Go to stats
   statsBtn.addEventListener(`click`, (evt) => {
     state = Object.assign({}, initialState, {
-      template: `stats`
+      template: views.stats
     });
 
     evt.preventDefault();

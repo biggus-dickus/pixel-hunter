@@ -1,4 +1,4 @@
-import {initialState} from '../data/gamedata';
+import {views, initialState} from '../data/gamedata';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import insertTemplate from '../utils/insert-template';
 import renderGreeting from './greeting';
@@ -18,7 +18,7 @@ export default (state) => {
 
   startBtn.addEventListener(`click`, () => {
     state = Object.assign({}, initialState, {
-      template: `greeting`
+      template: views.greeting
     });
 
     insertTemplate(renderGreeting(state));

@@ -1,4 +1,4 @@
-import {initialState, games} from '../data/gamedata';
+import {views, initialState, games} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
 import renderStats from '../templates/stats';
 import renderGame from '../templates/game';
@@ -16,7 +16,7 @@ export default (currentState, currentScreen, newState, count) => {
 
   if (count < currentState.gamesTotal && newState.livesCount > 0 && currentState.time > 0) {
     currentState = Object.assign({}, initialState, {
-      template: `game`,
+      template: views.game,
       gameType: games[currentScreen],
       gameNumber: count,
       lives: newState.livesCount,

@@ -1,4 +1,4 @@
-import {initialState} from '../data/gamedata';
+import {views, initialState} from '../data/gamedata';
 import getElementFromTemplate from '../utils/get-element-from-template';
 import insertTemplate from '../utils/insert-template';
 import renderGame from './game';
@@ -37,7 +37,7 @@ export default (state) => {
 
   form.addEventListener(`submit`, (evt) => {
     state = Object.assign({}, initialState, {
-      template: `game`
+      template: views.game
     });
 
     evt.preventDefault();

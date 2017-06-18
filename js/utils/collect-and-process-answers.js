@@ -23,7 +23,6 @@ const collectAnswerTypes = (e, state, arr) => {
       } else {
         arr.push(INCORRECT_ANSWER_FLAG);
       }
-
       break;
 
     case `DIV`:
