@@ -67,4 +67,29 @@ const checkForCorrectAnswer = (arr) => {
   return null;
 };
 
-export {collectAnswerTypes, checkForCorrectAnswer};
+
+/**
+ * Process correct and incorrect answers and change current answer stats, which will be used to modify game state.
+ * @param {Array} receivedAnswers
+ * @param {number} time
+ * @param {Object} answerStats
+ * @return {Object}
+ */
+const processUserAnswers = (receivedAnswers, time, answerStats) => {
+  if (checkForCorrectAnswer(receivedAnswers)) {
+    answerStats.correctCount++;
+
+    if (time > 20) {
+      answerStats.fastCount++;
+    } else if (time < 10) {
+      answerStats.slowCount++;
+    }
+  } else {
+    answerStats.incorrectCount++;
+    answerStats.livesCount--;
+  }
+
+  return answerStats;
+};
+
+export {collectAnswerTypes, checkForCorrectAnswer, processUserAnswers};

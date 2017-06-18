@@ -1,3 +1,4 @@
+import {initialState} from '../../data/gamedata';
 import getElementFromTemplate from '../../utils/get-element-from-template';
 import insertTemplate from '../../utils/insert-template';
 import renderGreeting from '../greeting';
@@ -12,7 +13,11 @@ export default () => {
    </div>`);
 
   const btnBack = template.querySelector(`.header__back`);
-  btnBack.addEventListener(`click`, () => insertTemplate(renderGreeting()));
+  const state = Object.assign({}, initialState, {
+    template: `greeting`
+  });
+
+  btnBack.addEventListener(`click`, () => insertTemplate(renderGreeting(state)));
 
   return template;
 };

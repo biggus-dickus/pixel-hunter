@@ -1,11 +1,10 @@
-import {initialState, games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
+import {games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
 import getRandomPic from '../utils/pic-randomizer';
 import getElementFromTemplate from '../utils/get-element-from-template';
-import insertTemplate from '../utils/insert-template';
 import renderInfoBar from './partials/info-bar';
 import renderStatusBar from './partials/status-bar';
-import renderStats from './stats';
-import {collectAnswerTypes, checkForCorrectAnswer} from '../utils/collect-and-check-answers';
+import renderNextScreen from '../utils/render-next-screen';
+import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
 
 
 let gameScreen = 0;
@@ -13,9 +12,16 @@ let gameScreen = 0;
 const renderGame = (state) => {
   const userAnswers = [];
 
-  let correctCount = state.correctAnswers;
-  let incorrectCount = state.incorrectAnswers;
-  let livesCount = state.lives;
+  const statsCounter = {
+    correctCount: state.correctAnswers,
+    incorrectCount: state.incorrectAnswers,
+    fastCount: state.fastAnswers,
+    slowCount: state.slowAnswers,
+    livesCount: state.lives
+  };
+
+  gameScreen = (state.gameNumber === 0) ? 0 : gameScreen;
+
 
   const template = getElementFromTemplate(`
     <div class="game">
@@ -68,49 +74,17 @@ const renderGame = (state) => {
     collectAnswerTypes(evt, state, userAnswers);
 
     if (formElem.checkValidity()) {
-      processUserAnswers(userAnswers);
-      gameScreen++;
-      renderNextScreen(state.gameNumber);
+      processUserAnswers(userAnswers, 15, statsCounter);
+      incrementGameScreen();
+      renderNextScreen(state, gameScreen, statsCounter, state.gameNumber);
       formElem.reset();
     }
   });
 
-  /**
-   * Process correct and incorrect answers and change vars from closure, which will be used to modify game state.
-   * @param {Array} receivedAnswers
-   */
-  function processUserAnswers(receivedAnswers) {
-    if (checkForCorrectAnswer(receivedAnswers)) {
-      correctCount++;
-    } else {
-      incorrectCount++;
-      livesCount--;
-    }
-  }
-
-
-  /**
-   * Renders next game screen or results (based on supplied game screen number; if there are lives left).
-   * @param {number} count
-   */
-  function renderNextScreen(count) {
-    count++;
+  function incrementGameScreen() {
+    gameScreen++;
 
     if (gameScreen >= games.length) {
-      gameScreen = 0;
-    }
-
-    if (count < state.gamesTotal && livesCount > 0 && state.time > 0) {
-      state = Object.assign({}, initialState, {
-        gameType: games[gameScreen],
-        gameNumber: count,
-        lives: livesCount,
-        correctAnswers: correctCount,
-        incorrectAnswers: incorrectCount
-      });
-      insertTemplate(renderGame(state));
-    } else {
-      insertTemplate(renderStats(state));
       gameScreen = 0;
     }
   }

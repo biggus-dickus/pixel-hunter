@@ -5,7 +5,7 @@ import renderGame from './game';
 import renderBackBtn from './partials/back-to-start';
 
 
-export default () => {
+export default (state) => {
   const template = getElementFromTemplate(`
     <header class="header"></header>
     <div class="rules">
@@ -36,8 +36,12 @@ export default () => {
   });
 
   form.addEventListener(`submit`, (evt) => {
+    state = Object.assign({}, initialState, {
+      template: `game`
+    });
+
     evt.preventDefault();
-    insertTemplate(renderGame(initialState));
+    insertTemplate(renderGame(state));
     form.reset();
   });
 

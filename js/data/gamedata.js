@@ -49,6 +49,7 @@ const games = [
 ];
 
 const initialState = Object.freeze({
+  template: `intro`,
   gameType: games[0],
   gameNumber: 0,
   gamesTotal: 10,
