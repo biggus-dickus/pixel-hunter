@@ -1,10 +1,11 @@
-import {initialState} from '../gamedata';
-import getElementFromTemplate from '../get-element-from-template';
-import insertTemplate from '../insert-template';
+import {views, initialState} from '../data/gamedata';
+import getElementFromTemplate from '../utils/get-element-from-template';
+import insertTemplate from '../utils/insert-template';
 import renderGame from './game';
 import renderBackBtn from './partials/back-to-start';
 
-export default () => {
+
+export default (state) => {
   const template = getElementFromTemplate(`
     <header class="header"></header>
     <div class="rules">
@@ -35,8 +36,12 @@ export default () => {
   });
 
   form.addEventListener(`submit`, (evt) => {
+    state = Object.assign({}, initialState, {
+      template: views.game
+    });
+
     evt.preventDefault();
-    insertTemplate(renderGame(initialState));
+    insertTemplate(renderGame(state));
     form.reset();
   });
 

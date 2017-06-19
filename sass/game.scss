@@ -55,50 +55,43 @@
       transform: translate(-50%, -50%);
       max-height: 100%;
     }
-  }
 
-  &__answer input {
-    position: absolute;
-    left: -99999px;
+    input {
+      display: none;
 
-    & + span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 70px;
-      background: rgba(0, 0, 0, 0.5) no-repeat center;
+      &:disabled:not(:checked) {
+        + label {
+          opacity: .5;
+          cursor: not-allowed;
+        }
 
-      &:hover {
-        background-color: #000000;
+        + label:hover {  background-color: rgba(0, 0, 0, .5);  }
       }
 
-      font-size: 0;
-    }
-
-    &:checked + span {
-      background-color: #df4e4e;
+      &:checked + label {  background-color: #df4e4e;  }
     }
   }
 
   &__answer {
     position: absolute;
+    bottom: 30px;
     width: 78px;
     height: 78px;
+    border-radius: 70px;
+    font-size: 0;
+    background: rgba(0, 0, 0, .5) no-repeat center;
+    cursor: pointer;
 
-    bottom: 30px;
+    &:hover {  background-color: #000;  }
 
     &--photo {
-      input + span {
-        background-image: url("../img/photo_big.png");
-      }
       left: 30px;
+      background-image: url("../img/photo_big.png");
     }
 
     &--paint {
-      input + span {
-        background-image: url("../img/paint_big.png");
-      }
       right: 30px;
+      background-image: url("../img/paint_big.png");
     }
   }
 }

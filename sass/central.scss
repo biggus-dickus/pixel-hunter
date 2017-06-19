@@ -6,6 +6,11 @@
   position: relative;
   max-width: 1000px;
   margin: 0 auto;
+
+  &__loading-msg {
+    margin-top: 25vh;
+    margin-bottom: 25vh;
+  }
 }
 
 .central__content {

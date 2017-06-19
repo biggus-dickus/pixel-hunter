@@ -1,6 +1,8 @@
-import getElementFromTemplate from '../../get-element-from-template';
-import insertTemplate from '../../insert-template';
+import {initialState} from '../../data/gamedata';
+import getElementFromTemplate from '../../utils/get-element-from-template';
+import insertTemplate from '../../utils/insert-template';
 import renderGreeting from '../greeting';
+
 
 export default () => {
   const template = getElementFromTemplate(`<div class="header__back" title="В начало игры">
@@ -11,7 +13,11 @@ export default () => {
    </div>`);
 
   const btnBack = template.querySelector(`.header__back`);
-  btnBack.addEventListener(`click`, () => insertTemplate(renderGreeting()));
+  const state = Object.assign({}, initialState, {
+    template: `greeting`
+  });
+
+  btnBack.addEventListener(`click`, () => insertTemplate(renderGreeting(state)));
 
   return template;
 };
