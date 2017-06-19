@@ -1,4 +1,4 @@
-import AbstractView from '../abstract-view';
+import AbstractView from '../utils/abstract-view';
 
 export default class IntroView extends AbstractView {
   get template() {
@@ -6,7 +6,7 @@ export default class IntroView extends AbstractView {
     <div id="intro" class="intro">
       <h1 class="intro__asterisk" title="Начать игру">*</h1>
       <p class="intro__motto">
-        <sup>*</sup> Это не&nbsp;фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.
+        <sup>*</sup> Это не&nbsp;фото. Это картина маслом нидерландского художника-фотореалиста Tjalf Sparnaay.
       </p>
     </div>
   </div>`;
@@ -14,8 +14,6 @@ export default class IntroView extends AbstractView {
 
   bind() {
     const startBtn = this.element.querySelector(`.intro__asterisk`);
-    startBtn.onclick = () => this.onClick();
+    startBtn.onclick = () => this.onStartClick();
   }
-
-  onClick() {}
 }
