@@ -14,7 +14,8 @@ export default(state) => {
     incorrectCount: state.incorrectAnswers,
     fastCount: state.fastAnswers,
     slowCount: state.slowAnswers,
-    livesCount: state.lives
+    livesCount: state.lives,
+    userAnswers: state.userAnswers
   };
 
   const game = new GameView(state);
