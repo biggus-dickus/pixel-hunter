@@ -1,6 +1,6 @@
 export default class AbstractView {
   get template() {
-    throw new Error(`Template string must be provided to render the view.`);
+    throw new Error(`Abstract method. Template string must be provided to render the view.`);
   }
 
   get element() {

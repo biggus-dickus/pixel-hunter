@@ -1,4 +1,4 @@
-import {TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG} from '../data/gamedata';
+import {initialState, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../data/gamedata';
 
 
 /**
@@ -78,19 +78,19 @@ const checkForCorrectAnswer = (arr) => {
 const processUserAnswers = (receivedAnswers, time, answerStats) => {
   if (checkForCorrectAnswer(receivedAnswers)) {
     answerStats.correctCount++;
-    answerStats.userAnswers.push(CORRECT_ANSWER_FLAG);
+    recordedAnswers.push(CORRECT_ANSWER_FLAG);
 
-    if (time > 20) {
+    if (time > initialState.fastAnswerThreshold) {
       answerStats.fastCount++;
-      answerStats.userAnswers.push(FAST_ANSWER_FLAG);
-    } else if (time < 10) {
+      recordedAnswers.push(FAST_ANSWER_FLAG);
+    } else if (time < initialState.slowAnswerThreshold) {
       answerStats.slowCount++;
-      answerStats.userAnswers.push(SLOW_ANSWER_FLAG);
+      recordedAnswers.push(SLOW_ANSWER_FLAG);
     }
   } else {
     answerStats.incorrectCount++;
     answerStats.livesCount--;
-    answerStats.userAnswers.push(INCORRECT_ANSWER_FLAG);
+    recordedAnswers.push(INCORRECT_ANSWER_FLAG);
   }
 
   return answerStats;

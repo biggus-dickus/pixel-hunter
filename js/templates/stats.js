@@ -1,6 +1,7 @@
 import {rates} from '../data/gamedata';
 import AbstractView from '../utils/abstract-view';
 import renderBackBtn from './partials/back-to-start';
+import renderStatusBar from './partials/status-bar';
 import getResults from '../utils/calculate-score';
 
 
@@ -19,20 +20,7 @@ class StatsView extends AbstractView {
         <table class="result__table">
           <tr>
             <td class="result__number">1.</td>
-            <td colspan="2">
-              <ul class="stats">
-                <li class="stats__result stats__result--wrong"></li>
-                <li class="stats__result stats__result--slow"></li>
-                <li class="stats__result stats__result--fast"></li>
-                <li class="stats__result stats__result--correct"></li>
-                <li class="stats__result stats__result--wrong"></li>
-                <li class="stats__result stats__result--unknown"></li>
-                <li class="stats__result stats__result--slow"></li>
-                <li class="stats__result stats__result--unknown"></li>
-                <li class="stats__result stats__result--fast"></li>
-                <li class="stats__result stats__result--unknown"></li>
-              </ul>
-            </td>
+            <td colspan="2" id="stats-td"></td>
             <td class="result__points">×&nbsp;${rates.correctAnswerPoints}</td>
             <td class="result__total">${results.correctPoints}</td>
           </tr>
@@ -66,8 +54,10 @@ class StatsView extends AbstractView {
 
   bind() {
     const header = this.element.querySelector(`.header`);
+    const statsContainer = this.element.getElementById(`stats-td`);
 
     header.insertBefore(renderBackBtn(), header.childNodes[0]);
+    statsContainer.appendChild(renderStatusBar(this._state));
   }
 }
 

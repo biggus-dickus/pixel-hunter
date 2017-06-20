@@ -25,7 +25,7 @@ export default (currentState, currentScreen, newState, count) => {
     });
     insertTemplate(renderGame(currentState));
   } else {
-    currentState.template = `stats`;
+    currentState.template = views.stats;
     insertTemplate(renderStats(currentState));
   }
 };
