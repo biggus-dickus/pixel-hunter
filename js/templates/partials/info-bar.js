@@ -1,25 +1,37 @@
-import getElementFromTemplate from '../../utils/get-element-from-template';
+import {MAX_LIVES} from '../../data/gamedata';
+import AbstractView from '../../utils/abstract-view';
 import setTimer from '../../utils/timer';
 import renderBackBtn from './back-to-start';
 
 
+class InfoBarView extends AbstractView {
+  constructor(state) {
+    super();
+    this._state = state;
+  }
+
+  get template() {
+    return `<header class="header">
+        <h1 class="game__timer">${this._state.time}</h1>
+        <div class="game__lives">
+           ${new Array(MAX_LIVES - this._state.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Empty life">`).join(``)}
+           ${new Array(this._state.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life">`).join(``)}
+        </div>
+      </header>`;
+  }
+
+  bind() {
+    const header = this.element.querySelector(`.header`);
+    const timerElem = this.element.querySelector(`.game__timer`);
+
+    header.insertBefore(renderBackBtn(), header.childNodes[0]);
+
+    setTimer(timerElem);
+  }
+}
+
 export default (state) => {
-  const MAX_LIVES = 3;
+  const infoBar = new InfoBarView(state);
 
-  const template = getElementFromTemplate(`<header class="header">
-       <h1 class="game__timer">${state.time}</h1>
-       <div class="game__lives">
-          ${new Array(MAX_LIVES - state.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Empty life">`).join(``)}
-          ${new Array(state.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life">`).join(``)}
-       </div>
-     </header>`);
-
-  const header = template.querySelector(`.header`);
-  const timerElem = template.querySelector(`.game__timer`);
-
-  header.insertBefore(renderBackBtn(), header.childNodes[0]);
-
-  setTimer(timerElem);
-
-  return template;
+  return infoBar.element;
 };

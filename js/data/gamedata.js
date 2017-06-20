@@ -26,6 +26,8 @@ const TYPE_PICTURE = `Выбор из трех вариантов изображ
 const CORRECT_ANSWER_FLAG = `correct`;
 const INCORRECT_ANSWER_FLAG = `incorrect`;
 
+const MAX_LIVES = 3;
+
 const views = {
   intro: `intro`,
   greeting: `greeting`,
@@ -61,7 +63,7 @@ const initialState = Object.freeze({
   gameType: games[0],
   gameNumber: 0,
   gamesTotal: 10,
-  lives: 3,
+  lives: MAX_LIVES,
   time: 30,
   correctAnswers: 0,
   incorrectAnswers: 0,
@@ -76,4 +78,4 @@ const rates = {
   lifeBonusPoints: 50
 };
 
-export {initialState, picsCollection, views, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG};
+export {initialState, picsCollection, views, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, MAX_LIVES};
