@@ -1,5 +1,5 @@
 import {games} from '../data/gamedata';
-import GameView from './game-view';
+import GameView from '../views/game-view';
 import renderNextScreen from '../utils/render-next-screen';
 import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
 

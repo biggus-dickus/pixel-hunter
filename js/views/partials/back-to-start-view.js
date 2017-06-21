@@ -1,4 +1,4 @@
-import AbstractView from '../../utils/abstract-view';
+import AbstractView from '../abstract-view';
 
 export default class BackToStartView extends AbstractView {
   get template() {
@@ -12,6 +12,12 @@ export default class BackToStartView extends AbstractView {
 
   bind() {
     const btnBack = this.element.querySelector(`.header__back`);
-    btnBack.onclick = () => this.onBtnClick();
+
+    btnBack.onclick = (evt) => {
+      evt.preventDefault();
+      this.onBtnClick();
+    };
   }
+
+  onBtnClick() {}
 }

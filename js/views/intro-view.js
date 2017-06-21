@@ -1,4 +1,4 @@
-import AbstractView from '../utils/abstract-view';
+import AbstractView from './abstract-view';
 
 export default class IntroView extends AbstractView {
   get template() {
@@ -14,6 +14,11 @@ export default class IntroView extends AbstractView {
 
   bind() {
     const startBtn = this.element.querySelector(`.intro__asterisk`);
-    startBtn.onclick = () => this.onStartClick();
+    startBtn.onclick = (evt) => {
+      evt.preventDefault();
+      this.onStartClick();
+    };
   }
+
+  onStartClick() {}
 }

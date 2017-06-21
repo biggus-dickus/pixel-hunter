@@ -1,5 +1,5 @@
-import AbstractView from '../utils/abstract-view';
-import renderBackBtn from './partials/back-to-start';
+import AbstractView from './abstract-view';
+import renderBackBtn from '../controllers/back-to-start';
 
 
 export default class RulesView extends AbstractView {
@@ -37,4 +37,8 @@ export default class RulesView extends AbstractView {
       form.reset();
     };
   }
+
+  onFormInput() {}
+
+  onFormSubmit() {}
 }

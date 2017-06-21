@@ -1,5 +1,5 @@
 import {views, initialState} from '../data/gamedata';
-import RulesView from './rules-view';
+import RulesView from '../views/rules-view';
 import insertTemplate from '../utils/insert-template';
 import renderGame from './game';
 

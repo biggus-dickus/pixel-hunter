@@ -1,5 +1,5 @@
 import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers, views} from '../../data/gamedata';
-import AbstractView from '../../utils/abstract-view';
+import AbstractView from '../abstract-view';
 
 const statsMarkup = new Map([
   [CORRECT_ANSWER_FLAG, `<li class="stats__result stats__result--correct"></li>`],
@@ -9,17 +9,17 @@ const statsMarkup = new Map([
 ]);
 
 
-class StatusBarView extends AbstractView {
+export default class StatusBarView extends AbstractView {
   constructor(state) {
     super();
     this._state = state;
 
-    this.answersMarkup = recordedAnswers.map((item) => statsMarkup.get(item));
+    this._answersMarkup = recordedAnswers.map((item) => statsMarkup.get(item));
   }
 
   get template() {
     return `<ul class="stats">
-              ${this.answersMarkup.join(``)}
+              ${this._answersMarkup.join(``)}
               ${this._renderRemainingSteps()}
             </ul>`;
   }
@@ -32,9 +32,3 @@ class StatusBarView extends AbstractView {
     return null;
   }
 }
-
-export default (state) => {
-  const statusBar = new StatusBarView(state);
-
-  return statusBar.element;
-};
