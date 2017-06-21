@@ -31,24 +31,57 @@ export default (quantity, gameType) => {
 
   const keysArr = addedIndex.filter((el) => el.length);
 
-  function areAllKeysIdentical(arr) {
-    for (let i = 1; i < arr.length; i++) {
-      if (arr[i] !== arr[0]) {
-        return false;
-      }
+  if (gameType === TYPE_PICTURE) {
+    if (areAllKeysIdentical(keysArr)) {
+      const redundantKey = keysArr[0];
+      const newKey = (redundantKey === `photos`) ? `paintings` : `photos`;
+      let index = Math.floor(Math.random() * picsCollection[newKey].length);
+
+      picSet.pop();
+      picSet.push({origin: newKey, url: picsCollection[newKey][index]});
     }
 
-    return true;
-  }
+    // The idea here is that correct answer is the answer, which length is different from two others,
+    // e. g. [photos, photos, paintings] => [6 ,6, 9] => paintings are correct answer
+    const finalKeys = picSet.map((item) => item.origin).map((item) => item.length);
+    const uniqueKey = findUniqueValue(finalKeys);
+    const correctAnswer = picSet[finalKeys.indexOf(uniqueKey)].origin;
 
-  if (areAllKeysIdentical(keysArr) && gameType === TYPE_PICTURE) {
-    const redundantKey = keysArr[0];
-    const newKey = (redundantKey === `photos`) ? `paintings` : `photos`;
-    let index = Math.floor(Math.random() * picsCollection[newKey].length);
-
-    picSet.pop();
-    picSet.push({origin: newKey, url: picsCollection[newKey][index]});
+    for (let pic of picSet) {
+      pic.uniqueOrigin = correctAnswer;
+    }
   }
 
   return picSet;
 };
+
+
+/**
+ * Check if all array items are identical
+ * @param {Array} arr
+ * @return {boolean}
+ */
+function areAllKeysIdentical(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] !== arr[0]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Find the single unique item in array of duplicates (works with numerical arrays only)
+ * @param {Array} arr
+ * @return {number}
+ */
+function findUniqueValue(arr) {
+  let result = 0;
+
+  for (let item of arr) {
+    result ^= item;
+  }
+
+  return result;
+}

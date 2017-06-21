@@ -25,10 +25,12 @@ export default class StatusBarView extends AbstractView {
   }
 
   _renderRemainingSteps() {
+    const unknownResult = `<li class="stats__result stats__result--unknown"></li>`;
+
     if (this._state.template === views.game) {
-      return new Array(this._state.gamesTotal - this._state.gameNumber).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``);
+      return new Array(this._state.gamesTotal - this._state.gameNumber).fill(unknownResult).join(``);
     }
 
-    return null;
+    return new Array(this._state.gamesTotal - (this._state.gameNumber + 1)).fill(unknownResult).join(``);
   }
 }

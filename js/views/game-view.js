@@ -64,7 +64,7 @@ function renderGameOptions(options, type) {
 
     case TYPE_PICTURE:
       templateString = randomPics.map((item, i) => {
-        return `<div class="game__option" data-origin="${item.origin}">
+        return `<div class="game__option" data-origin="${item.uniqueOrigin}">
                   <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                 </div>`;
       }).join(``);
