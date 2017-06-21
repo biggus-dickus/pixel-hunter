@@ -1,7 +1,7 @@
 import {views, initialState, games} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
-import renderStats from '../templates/stats';
-import renderGame from '../templates/game';
+import renderStats from '../controllers/stats';
+import renderGame from '../controllers/game';
 
 
 /**
@@ -25,7 +25,7 @@ export default (currentState, currentScreen, newState, count) => {
     });
     insertTemplate(renderGame(currentState));
   } else {
-    currentState.template = `stats`;
+    currentState.template = views.stats;
     insertTemplate(renderStats(currentState));
   }
 };

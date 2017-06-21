@@ -1,4 +1,4 @@
-import {TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
+import {initialState, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../data/gamedata';
 
 
 /**
@@ -14,6 +14,7 @@ const collectAnswerTypes = (e, state, arr) => {
 
   switch (event.tagName) {
     case `INPUT`:
+      event.setAttribute(`checked`, `checked`);
       if (state.gameType.isOptionBlockable) {
         blockInputsOnAnswer(event);
       }
@@ -77,15 +78,19 @@ const checkForCorrectAnswer = (arr) => {
 const processUserAnswers = (receivedAnswers, time, answerStats) => {
   if (checkForCorrectAnswer(receivedAnswers)) {
     answerStats.correctCount++;
+    recordedAnswers.push(CORRECT_ANSWER_FLAG);
 
-    if (time > 20) {
+    if (time > initialState.fastAnswerThreshold) {
       answerStats.fastCount++;
-    } else if (time < 10) {
+      recordedAnswers.push(FAST_ANSWER_FLAG);
+    } else if (time < initialState.slowAnswerThreshold) {
       answerStats.slowCount++;
+      recordedAnswers.push(SLOW_ANSWER_FLAG);
     }
   } else {
     answerStats.incorrectCount++;
     answerStats.livesCount--;
+    recordedAnswers.push(INCORRECT_ANSWER_FLAG);
   }
 
   return answerStats;

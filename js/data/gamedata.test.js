@@ -93,7 +93,7 @@ describe(`Game`, () => {
     };
     let score;
 
-    // 9 correct answers only
+    // 9 correct answers
     testStats.correctAnswers = 9;
     score = getResults(testStats);
     assert.equal(900, score.correctPoints);
