@@ -3,7 +3,6 @@ import GameView from '../views/game-view';
 import renderNextScreen from '../utils/render-next-screen';
 import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
 
-
 let gameScreen = 0;
 
 export default(state) => {
@@ -35,7 +34,7 @@ export default(state) => {
   function incrementGameScreen() {
     gameScreen++;
 
-    if (gameScreen >= games.length) {
+    if (gameScreen === games.length) {
       gameScreen = 0;
     }
   }

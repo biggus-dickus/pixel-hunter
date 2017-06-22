@@ -1,7 +1,7 @@
 import {views, initialState, games} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
-import renderStats from '../controllers/stats';
-import renderGame from '../controllers/game';
+import renderStats from '../containers/stats';
+import renderGame from '../containers/game';
 
 
 /**
@@ -14,15 +14,16 @@ import renderGame from '../controllers/game';
 export default (currentState, currentScreen, newState, count) => {
   count++;
 
-  if (count < currentState.gamesTotal && newState.livesCount > 0 && currentState.time > 0) {
-    currentState = Object.assign({}, initialState, {
-      template: views.game,
-      gameType: games[currentScreen],
-      gameNumber: count,
-      lives: newState.livesCount,
-      correctAnswers: newState.correctCount,
-      incorrectAnswers: newState.incorrectCount
-    });
+  currentState = Object.assign({}, initialState, {
+    template: views.game,
+    gameType: games[currentScreen],
+    gameNumber: count,
+    lives: newState.livesCount,
+    correctAnswers: newState.correctCount,
+    incorrectAnswers: newState.incorrectCount
+  });
+
+  if (count < currentState.gamesTotal && currentState.lives > 0 && currentState.time > 0) {
     insertTemplate(renderGame(currentState));
   } else {
     currentState.template = views.stats;

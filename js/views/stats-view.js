@@ -1,7 +1,7 @@
 import {rates} from '../data/gamedata';
 import AbstractView from '../views/abstract-view';
-import renderBackBtn from '../controllers/back-to-start';
-import renderStatusBar from '../controllers/status-bar';
+import renderBackBtn from '../containers/back-to-start';
+import renderStatusBar from '../containers/status-bar';
 import getResults from '../utils/calculate-score';
 
 

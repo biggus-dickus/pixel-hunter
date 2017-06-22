@@ -1,7 +1,7 @@
 import {MAX_LIVES} from '../../data/gamedata';
 import AbstractView from '../abstract-view';
 import setTimer from '../../utils/timer';
-import renderBackBtn from '../../controllers/back-to-start';
+import renderBackBtn from '../../containers/back-to-start';
 
 
 export default class InfoBarView extends AbstractView {

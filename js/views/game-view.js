@@ -1,7 +1,7 @@
 import {TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
 import AbstractView from './abstract-view';
-import renderInfoBar from '../controllers/info-bar';
-import renderStatusBar from '../controllers/status-bar';
+import renderInfoBar from '../containers/info-bar';
+import renderStatusBar from '../containers/status-bar';
 import getRandomPic from '../utils/pic-randomizer';
 
 

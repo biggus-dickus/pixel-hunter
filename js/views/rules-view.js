@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view';
-import renderBackBtn from '../controllers/back-to-start';
+import renderBackBtn from '../containers/back-to-start';
 
 
 export default class RulesView extends AbstractView {
