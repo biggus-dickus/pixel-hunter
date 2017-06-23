@@ -1,4 +1,4 @@
-import {games} from '../data/gamedata';
+import {games, recordedAnswers, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
 import GameView from '../views/game-view';
 import renderNextScreen from '../utils/render-next-screen';
 import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
@@ -16,7 +16,28 @@ export default(state) => {
     livesCount: state.lives
   };
 
+  let time = state.time;
+
+  const interval = setInterval(() => {
+    time--;
+
+    if (time === 0) {
+      clearInterval(interval);
+      statsCounter.incorrectCount++;
+      statsCounter.livesCount--;
+      recordedAnswers.push(INCORRECT_ANSWER_FLAG);
+      incrementGameScreen();
+      renderNextScreen(state, gameScreen, statsCounter, state.gameNumber);
+    }
+  }, 1000);
+
+  function getTime() {
+    clearInterval(interval);
+    return time;
+  }
+
   const game = new GameView(state);
+
   const formElem = game.element.querySelector(`.game__content`);
 
   gameScreen = (state.gameNumber === 0) ? 0 : gameScreen;
@@ -25,7 +46,7 @@ export default(state) => {
     collectAnswerTypes(evt, state, userAnswers);
 
     if (formElem.checkValidity()) {
-      processUserAnswers(userAnswers, 15, statsCounter);
+      processUserAnswers(userAnswers, getTime(), statsCounter);
       incrementGameScreen();
       renderNextScreen(state, gameScreen, statsCounter, state.gameNumber);
     }

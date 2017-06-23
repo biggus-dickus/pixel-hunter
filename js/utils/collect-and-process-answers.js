@@ -2,7 +2,7 @@ import {initialState, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, 
 
 
 /**
- * Process user answers and return a simple array: ['correct', 'incorrect'...]
+ * Collect user answers and return a simple array: ['correct', 'incorrect'...]
  *
  * @param {Object} e - DOM event
  * @param {Object} state - current game state
@@ -78,9 +78,10 @@ const checkForCorrectAnswer = (arr) => {
 const processUserAnswers = (receivedAnswers, time, answerStats) => {
   if (checkForCorrectAnswer(receivedAnswers)) {
     answerStats.correctCount++;
-    recordedAnswers.push(CORRECT_ANSWER_FLAG);
 
-    if (time > initialState.fastAnswerThreshold) {
+    if (time >= initialState.slowAnswerThreshold && time <= initialState.fastAnswerThreshold) {
+      recordedAnswers.push(CORRECT_ANSWER_FLAG);
+    } else if (time > initialState.fastAnswerThreshold) {
       answerStats.fastCount++;
       recordedAnswers.push(FAST_ANSWER_FLAG);
     } else if (time < initialState.slowAnswerThreshold) {

@@ -20,10 +20,12 @@ export default (currentState, currentScreen, newState, count) => {
     gameNumber: count,
     lives: newState.livesCount,
     correctAnswers: newState.correctCount,
-    incorrectAnswers: newState.incorrectCount
+    incorrectAnswers: newState.incorrectCount,
+    slowAnswers: newState.slowCount,
+    fastAnswers: newState.fastCount
   });
 
-  if (count < currentState.gamesTotal && currentState.lives > 0 && currentState.time > 0) {
+  if (count < currentState.gamesTotal && currentState.lives > 0) {
     insertTemplate(renderGame(currentState));
   } else {
     currentState.template = views.stats;
