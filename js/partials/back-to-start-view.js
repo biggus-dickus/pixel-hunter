@@ -1,4 +1,4 @@
-import AbstractView from '../abstract-view';
+import AbstractView from '../view';
 
 export default class BackToStartView extends AbstractView {
   get template() {

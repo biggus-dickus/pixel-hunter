@@ -1,5 +1,5 @@
 import {games, recordedAnswers, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
-import GameView from '../views/game-view';
+import GameView from './game-view';
 import renderNextScreen from '../utils/render-next-screen';
 import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
 

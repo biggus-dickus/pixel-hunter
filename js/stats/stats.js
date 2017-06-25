@@ -1,4 +1,4 @@
-import StatsView from '../views/stats-view';
+import StatsView from './stats-view';
 
 
 export default (state) => {

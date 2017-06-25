@@ -1,7 +1,7 @@
 const main = document.querySelector(`main.central`);
 
 /**
- * Insert all template contents into provided DOM node (<main> by default).
+ * Insert all template contents into specified DOM node (<main> by default).
  * @param {Element} templateContents
  * @param {Element} container
  */

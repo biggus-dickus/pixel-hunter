@@ -1,7 +1,7 @@
 import {views, initialState, games} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
-import renderStats from '../containers/stats';
-import renderGame from '../containers/game';
+import renderStats from '../stats/stats';
+import renderGame from '../game/game';
 
 
 /**

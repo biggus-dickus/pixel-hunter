@@ -1,5 +1,5 @@
-import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../../data/gamedata';
-import AbstractView from '../abstract-view';
+import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../data/gamedata';
+import AbstractView from '../view';
 
 const statsMarkup = new Map([
   [CORRECT_ANSWER_FLAG, `<li class="stats__result stats__result--correct"></li>`],

@@ -1,7 +1,7 @@
 import {initialState, views, recordedAnswers} from '../data/gamedata';
-import BackToStartView from '../views/partials/back-to-start-view';
+import BackToStartView from './back-to-start-view';
 import insertTemplate from '../utils/insert-template';
-import renderGreeting from './greeting';
+import renderGreeting from '../greeting/greeting';
 
 
 export default () => {

@@ -1,7 +1,7 @@
 import {views, initialState} from '../data/gamedata';
-import RulesView from '../views/rules-view';
+import RulesView from './rules-view';
 import insertTemplate from '../utils/insert-template';
-import renderGame from './game';
+import renderGame from '../game/game';
 
 
 export default (state) => {
