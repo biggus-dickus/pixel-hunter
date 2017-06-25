@@ -1,8 +1,7 @@
 import {views, initialState} from '../data/gamedata';
 import GreetingView from './greeting-view';
 import insertTemplate from '../utils/insert-template';
-import renderRules from '../rules/rules';
-import renderStats from '../stats/stats';
+import App from '../main';
 
 
 export default class GreetingScreen {
@@ -20,7 +19,7 @@ export default class GreetingScreen {
         template: views.rules
       });
 
-      insertTemplate(renderRules(this._state));
+      App.showRules(this._state);
     };
 
     // Go to stats
@@ -29,7 +28,7 @@ export default class GreetingScreen {
         template: views.stats
       });
 
-      insertTemplate(renderStats(this._state));
+      App.showStats(this._state);
     };
   }
 }

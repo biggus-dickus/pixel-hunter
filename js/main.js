@@ -10,20 +10,20 @@ export default class Application {
     new IntroScreen().init();
   }
 
-  static showGreeting() {
-    new GreetingScreen().init();
+  static showGreeting(state) {
+    new GreetingScreen(state).init();
   }
 
-  static showRules() {
-    new RulesScreen().init();
+  static showRules(state) {
+    new RulesScreen(state).init();
   }
 
-  static showGame() {
-    new GameScreen().init();
+  static showGame(state) {
+    new GameScreen(state).init();
   }
 
   static showStats(stats) {
-    new StatsScreen().init();
+    new StatsScreen(stats).init();
   }
 }
 

@@ -21,17 +21,17 @@ export default class GameView extends AbstractView {
   }
 
   bind() {
+    this.formElem = this.element.querySelector(`.game__content`);
     const gameElem = this.element.querySelector(`.game`);
-    const formElem = this.element.querySelector(`.game__content`);
 
     // Header
     this.element.insertBefore(renderInfoBar(this._state), this.element.childNodes[0]);
     // Footer
     gameElem.appendChild(renderStatusBar(this._state));
 
-    formElem.onclick = (evt) => {
+    this.formElem.onclick = (evt) => {
       this.onFormClick(evt);
-      formElem.reset();
+      this.formElem.reset();
     };
   }
 

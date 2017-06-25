@@ -1,25 +1,28 @@
 import {views, initialState} from '../data/gamedata';
 import RulesView from './rules-view';
 import insertTemplate from '../utils/insert-template';
-import renderGame from '../game/game';
+import App from '../main';
 
 
-export default (state) => {
-  const rules = new RulesView();
-  const form = rules.element.querySelector(`.rules__form`);
-  const submit = rules.element.querySelector(`.rules__button`);
+export default class RulesScreen {
+  constructor(state) {
+    this._state = state;
+    this._view = new RulesView();
+  }
 
-  rules.onFormInput = () => {
-    submit.disabled = !form.checkValidity();
-  };
+  init() {
+    insertTemplate(this._view.element);
 
-  rules.onFormSubmit = () => {
-    state = Object.assign({}, initialState, {
-      template: views.game
-    });
+    this._view.onFormInput = () => {
+      this._view.submit.disabled = !this._view.form.checkValidity();
+    };
 
-    insertTemplate(renderGame(state));
-  };
+    this._view.onFormSubmit = () => {
+      this._state = Object.assign({}, initialState, {
+        template: views.game
+      });
 
-  return rules.element;
-};
+      App.showGame(this._state);
+    };
+  }
+}

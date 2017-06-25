@@ -1,7 +1,5 @@
 import {views, initialState, games} from '../data/gamedata';
-import insertTemplate from '../utils/insert-template';
-import renderStats from '../stats/stats';
-import renderGame from '../game/game';
+import App from '../main';
 
 
 /**
@@ -26,9 +24,9 @@ export default (currentState, currentScreen, newState, count) => {
   });
 
   if (count < currentState.gamesTotal && currentState.lives > 0) {
-    insertTemplate(renderGame(currentState));
+    App.showGame(currentState);
   } else {
     currentState.template = views.stats;
-    insertTemplate(renderStats(currentState));
+    App.showStats(currentState);
   }
 };

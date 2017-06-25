@@ -24,17 +24,18 @@ export default class RulesView extends AbstractView {
   }
 
   bind() {
-    const header = this.element.querySelector(`.header`);
-    const form = this.element.querySelector(`.rules__form`);
+    this.header = this.element.querySelector(`.header`);
+    this.form = this.element.querySelector(`.rules__form`);
+    this.submit = this.element.querySelector(`.rules__button`);
 
-    header.insertBefore(renderBackBtn(), header.childNodes[0]);
+    this.header.insertBefore(renderBackBtn(), this.header.childNodes[0]);
 
-    form.oninput = () => this.onFormInput();
+    this.form.oninput = () => this.onFormInput();
 
-    form.onsubmit = (evt) => {
+    this.form.onsubmit = (evt) => {
       evt.preventDefault();
       this.onFormSubmit();
-      form.reset();
+      this.form.reset();
     };
   }
 

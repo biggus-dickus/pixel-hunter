@@ -19,8 +19,7 @@ export default (gameState) => {
 
   score.slowPokePoints = -gameState.slowAnswers * rates.slowAnswerPoints;
 
-  score.total = (gameState.lives > 0) ? (gameState.correctAnswers * rates.correctAnswerPoints) + (gameState.fastAnswers * rates.fastAnswerPoints)
-  + (gameState.lives * rates.lifeBonusPoints) - (gameState.slowAnswers * rates.slowAnswerPoints) : `Fail`;
+  score.total = (gameState.lives > 0) ? (gameState.correctAnswers * rates.correctAnswerPoints) + (gameState.fastAnswers * rates.fastAnswerPoints) + (gameState.lives * rates.lifeBonusPoints) - (gameState.slowAnswers * rates.slowAnswerPoints) : `Fail`;
 
   return score;
 };
