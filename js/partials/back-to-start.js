@@ -1,7 +1,6 @@
 import {initialState, views, recordedAnswers} from '../data/gamedata';
-import BackToStartView from '../views/partials/back-to-start-view';
-import insertTemplate from '../utils/insert-template';
-import renderGreeting from './greeting';
+import BackToStartView from './back-to-start-view';
+import App from '../main';
 
 
 export default () => {
@@ -13,7 +12,7 @@ export default () => {
 
   goBack.onBtnClick = () => {
     recordedAnswers.length = 0;
-    insertTemplate(renderGreeting(state));
+    App.showGreeting(state);
   };
 
   return goBack.element;

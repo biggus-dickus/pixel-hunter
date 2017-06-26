@@ -11,7 +11,7 @@ export default (gameState) => {
 
   score.caption = (gameState.lives > 0) ? `Победа!` : `POTRACHENO!`;
 
-  score.correctPoints = (gameState.lives > 0) ? gameState.correctAnswers * rates.correctAnswerPoints : `Fail`;
+  score.correctPoints = gameState.correctAnswers * rates.correctAnswerPoints;
 
   score.fastPoints = gameState.fastAnswers * rates.fastAnswerPoints;
 
@@ -19,8 +19,7 @@ export default (gameState) => {
 
   score.slowPokePoints = -gameState.slowAnswers * rates.slowAnswerPoints;
 
-  score.total = (gameState.correctAnswers * rates.correctAnswerPoints) + (gameState.fastAnswers * rates.fastAnswerPoints)
-  + (gameState.lives * rates.lifeBonusPoints) - (gameState.slowAnswers * rates.slowAnswerPoints);
+  score.total = (gameState.lives > 0) ? (gameState.correctAnswers * rates.correctAnswerPoints) + (gameState.fastAnswers * rates.fastAnswerPoints) + (gameState.lives * rates.lifeBonusPoints) - (gameState.slowAnswers * rates.slowAnswerPoints) : `Fail`;
 
   return score;
 };

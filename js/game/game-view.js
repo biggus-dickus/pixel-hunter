@@ -1,7 +1,7 @@
 import {TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE} from '../data/gamedata';
-import AbstractView from './abstract-view';
-import renderInfoBar from '../controllers/info-bar';
-import renderStatusBar from '../controllers/status-bar';
+import AbstractView from '../view';
+import renderInfoBar from '../partials/info-bar';
+import renderStatusBar from '../partials/status-bar';
 import getRandomPic from '../utils/pic-randomizer';
 
 
@@ -21,17 +21,17 @@ export default class GameView extends AbstractView {
   }
 
   bind() {
+    this.formElem = this.element.querySelector(`.game__content`);
     const gameElem = this.element.querySelector(`.game`);
-    const formElem = this.element.querySelector(`.game__content`);
 
     // Header
     this.element.insertBefore(renderInfoBar(this._state), this.element.childNodes[0]);
     // Footer
     gameElem.appendChild(renderStatusBar(this._state));
 
-    formElem.onclick = (evt) => {
+    this.formElem.onclick = (evt) => {
       this.onFormClick(evt);
-      formElem.reset();
+      this.formElem.reset();
     };
   }
 
@@ -64,7 +64,7 @@ function renderGameOptions(options, type) {
 
     case TYPE_PICTURE:
       templateString = randomPics.map((item, i) => {
-        return `<div class="game__option" data-origin="${item.origin}">
+        return `<div class="game__option" data-origin="${item.uniqueOrigin}">
                   <img src="${item.url}" alt="Option ${++i}" data-origin="${item.origin}">
                 </div>`;
       }).join(``);

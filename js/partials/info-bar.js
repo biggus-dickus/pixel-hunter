@@ -1,4 +1,4 @@
-import InfoBarView from '../views/partials/info-bar-view';
+import InfoBarView from './info-bar-view';
 
 export default (state) => {
   const infoBar = new InfoBarView(state);
