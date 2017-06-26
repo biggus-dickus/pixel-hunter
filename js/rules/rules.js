@@ -1,12 +1,13 @@
-import {views, initialState} from '../data/gamedata';
+import {views} from '../data/gamedata';
 import RulesView from './rules-view';
 import insertTemplate from '../utils/insert-template';
+import ScreenPresenter from '../screen';
 import App from '../main';
 
 
-export default class RulesScreen {
+export default class RulesScreen extends ScreenPresenter {
   constructor(state) {
-    this._state = state;
+    super(state);
     this._view = new RulesView();
   }
 
@@ -18,7 +19,7 @@ export default class RulesScreen {
     };
 
     this._view.onFormSubmit = () => {
-      this._state = Object.assign({}, initialState, {
+      this._state = Object.assign({}, this._state, {
         template: views.game
       });
 

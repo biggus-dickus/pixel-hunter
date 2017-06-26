@@ -3,13 +3,14 @@ import insertTemplate from '../utils/insert-template';
 import GameView from './game-view';
 import renderNextScreen from '../utils/render-next-screen';
 import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-process-answers';
+import ScreenPresenter from '../screen';
 
 let gameScreen = 0;
 
 
-export default class GameScreen {
+export default class GameScreen extends ScreenPresenter {
   constructor(state) {
-    this._state = state;
+    super(state);
     this._time = this._state.time;
     this._view = new GameView(this._state);
 

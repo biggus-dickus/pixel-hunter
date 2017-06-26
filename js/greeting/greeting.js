@@ -1,13 +1,14 @@
-import {views, initialState} from '../data/gamedata';
+import {views} from '../data/gamedata';
 import GreetingView from './greeting-view';
 import insertTemplate from '../utils/insert-template';
+import ScreenPresenter from '../screen';
 import App from '../main';
 
 
-export default class GreetingScreen {
+export default class GreetingScreen extends ScreenPresenter {
   constructor(state) {
+    super(state);
     this._view = new GreetingView();
-    this._state = state;
   }
 
   init() {
@@ -15,7 +16,7 @@ export default class GreetingScreen {
 
     // Go to rules
     this._view.onProceedBtnClick = () => {
-      this._state = Object.assign({}, initialState, {
+      this._state = Object.assign({}, this._state, {
         template: views.rules
       });
 
@@ -24,7 +25,7 @@ export default class GreetingScreen {
 
     // Go to stats
     this._view.onStatsBtnClick = () => {
-      this._state = Object.assign({}, initialState, {
+      this._state = Object.assign({}, this._state, {
         template: views.stats
       });
 

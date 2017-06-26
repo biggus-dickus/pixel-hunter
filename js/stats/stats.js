@@ -1,10 +1,12 @@
 import insertTemplate from '../utils/insert-template';
 import StatsView from './stats-view';
+import ScreenPresenter from '../screen';
 
 
-export default class StatsScreen {
+export default class StatsScreen extends ScreenPresenter {
   constructor(state) {
-    this._view = new StatsView(state);
+    super(state);
+    this._view = new StatsView(this._state);
   }
 
   init() {
