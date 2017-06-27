@@ -1,4 +1,5 @@
 import {views, initialState, games} from '../data/gamedata';
+import Game from '../game/game';
 import app from '../main';
 
 
@@ -24,7 +25,7 @@ export default (currentState, currentScreen, newState, count) => {
   });
 
   if (count < currentState.gamesTotal && currentState.lives > 0) {
-    app.showGame(currentState);
+    new Game(currentState).init();
   } else {
     currentState.template = views.stats;
     app.showStats(currentState);

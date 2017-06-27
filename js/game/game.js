@@ -1,4 +1,4 @@
-import {initialState, games, recordedAnswers, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
+import {games, recordedAnswers, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
 import GameView from './game-view';
 import renderNextScreen from '../utils/render-next-screen';
@@ -11,8 +11,7 @@ let gameScreen = 0;
 export default class GameScreen extends ScreenPresenter {
   constructor(state) {
     super(state);
-    // this._time = this._state.time;
-    this._time = initialState.time;
+    this._time = this._state.time;
     this._view = new GameView(this._state);
 
     this._statsCounter = {
@@ -23,9 +22,8 @@ export default class GameScreen extends ScreenPresenter {
       livesCount: this._state.lives
     };
 
-    this._startTimer = setInterval(() => {
+    window.gameTimer = setInterval(() => {
       this._time--;
-      console.log(this._time);
 
       if (this._time === 0) {
         this._stopTimer();
@@ -57,7 +55,7 @@ export default class GameScreen extends ScreenPresenter {
   }
 
   _stopTimer() {
-    clearInterval(this._startTimer);
+    clearInterval(window.gameTimer);
     return this._time;
   }
 

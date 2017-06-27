@@ -11,6 +11,10 @@ export default () => {
   });
 
   goBack.onBtnClick = () => {
+    if (window.gameTimer) {
+      window.clearInterval(window.gameTimer);
+    }
+
     recordedAnswers.length = 0;
     App.showGreeting(state);
   };
