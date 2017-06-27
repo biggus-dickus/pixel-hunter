@@ -1,3 +1,4 @@
+import ScreenPresenter from './screen';
 import IntroScreen from './intro/intro';
 import GreetingScreen from './greeting/greeting';
 import RulesScreen from './rules/rules';
@@ -18,7 +19,7 @@ const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
 
 export default class Application {
-  constructor() {
+  constructor(state) {
     this.routes = {
       [ControllerID.INTRO]: IntroScreen,
       [ControllerID.GREETING]: GreetingScreen,
@@ -27,22 +28,24 @@ export default class Application {
       [ControllerID.STATS]: StatsScreen,
     };
 
-    this.currentState = initialState;
+    this.currentState = state;
 
     window.onhashchange = () => {
-      this.changeController(getControllerIDFromHash(location.hash));
+      this.changeController(getControllerIDFromHash(location.hash, this.currentState));
     };
-  }
-
-  changeController(route = ``) {
-    const Controller = this.routes[route];
-
-    new Controller(this.currentState).init();
   }
 
   init() {
     Application.showIntro();
     this.changeController(getControllerIDFromHash(location.hash));
+  }
+
+  changeController(route = ``) {
+    const Controller = this.routes[route];
+
+    if (new Controller() instanceof ScreenPresenter) {
+      new Controller(this.currentState).init();
+    }
   }
 
   static showIntro() {
@@ -53,7 +56,7 @@ export default class Application {
   static showGreeting(state) {
     // new GreetingScreen(state).init();
     this.currentState = state;
-    location.hash = ControllerID.INTRO;
+    location.hash = ControllerID.GREETING;
   }
 
   static showRules(state) {
@@ -75,6 +78,6 @@ export default class Application {
   }
 }
 
-new Application().init();
+new Application(initialState).init();
 
 // Application.showIntro();
