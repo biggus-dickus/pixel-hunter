@@ -2,7 +2,7 @@ import {views} from '../data/gamedata';
 import GreetingView from './greeting-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
-import App from '../main';
+import app from '../main';
 
 
 export default class GreetingScreen extends ScreenPresenter {
@@ -20,7 +20,7 @@ export default class GreetingScreen extends ScreenPresenter {
         template: views.rules
       });
 
-      App.showRules(this._state);
+      app.showRules(this._state);
     };
 
     // Go to stats
@@ -29,7 +29,7 @@ export default class GreetingScreen extends ScreenPresenter {
         template: views.stats
       });
 
-      App.showStats(this._state);
+      app.showStats(this._state);
     };
   }
 }

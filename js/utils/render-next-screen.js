@@ -1,5 +1,5 @@
 import {views, initialState, games} from '../data/gamedata';
-import App from '../main';
+import app from '../main';
 
 
 /**
@@ -24,9 +24,9 @@ export default (currentState, currentScreen, newState, count) => {
   });
 
   if (count < currentState.gamesTotal && currentState.lives > 0) {
-    App.showGame(currentState);
+    app.showGame(currentState);
   } else {
     currentState.template = views.stats;
-    App.showStats(currentState);
+    app.showStats(currentState);
   }
 };

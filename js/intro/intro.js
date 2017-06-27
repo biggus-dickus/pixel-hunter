@@ -2,7 +2,7 @@ import {views} from '../data/gamedata';
 import IntroView from './intro-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
-import App from '../main';
+import app from '../main';
 
 
 export default class IntroScreen extends ScreenPresenter {
@@ -19,7 +19,7 @@ export default class IntroScreen extends ScreenPresenter {
         template: views.greeting
       });
 
-      App.showGreeting(this._state);
+      app.showGreeting(this._state);
     };
   }
 }

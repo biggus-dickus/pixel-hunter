@@ -18,9 +18,9 @@ const ControllerID = {
 const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
 
-export default class Application {
-  constructor(state) {
-    this.routes = {
+class Application {
+  constructor() {
+    this._routes = {
       [ControllerID.INTRO]: IntroScreen,
       [ControllerID.GREETING]: GreetingScreen,
       [ControllerID.RULES]: RulesScreen,
@@ -28,56 +28,53 @@ export default class Application {
       [ControllerID.STATS]: StatsScreen,
     };
 
-    this.currentState = state;
-
     window.onhashchange = () => {
-      this.changeController(getControllerIDFromHash(location.hash, this.currentState));
+      this.changeController(getControllerIDFromHash(location.hash));
     };
   }
 
   init() {
-    Application.showIntro();
+    this.showIntro();
     this.changeController(getControllerIDFromHash(location.hash));
   }
 
   changeController(route = ``) {
-    const Controller = this.routes[route];
+    const Controller = this._routes[route];
 
     if (new Controller() instanceof ScreenPresenter) {
-      new Controller(this.currentState).init();
+      new Controller(this._currentState).init();
     }
   }
 
-  static showIntro() {
-    // new IntroScreen().init();
+  showIntro() {
+    this._currentState = initialState;
     location.hash = ControllerID.INTRO;
   }
 
-  static showGreeting(state) {
-    // new GreetingScreen(state).init();
-    this.currentState = state;
+  showGreeting(state) {
+    this._currentState = state;
     location.hash = ControllerID.GREETING;
   }
 
-  static showRules(state) {
-    // new RulesScreen(state).init();
-    this.currentState = state;
+  showRules(state) {
+    this._currentState = state;
     location.hash = ControllerID.RULES;
   }
 
-  static showGame(state) {
-    // new GameScreen(state).init();
-    this.currentState = state;
+  showGame(state) {
+    this._currentState = state;
+    location.hash = ``; // to reflow game screen, location.hash must actually change
     location.hash = ControllerID.GAME;
   }
 
-  static showStats(stats) {
-    // new StatsScreen(stats).init();
-    this.currentState = stats;
+  showStats(stats) {
+    this._currentState = stats;
     location.hash = ControllerID.STATS;
   }
 }
 
-new Application(initialState).init();
+const app = new Application();
 
-// Application.showIntro();
+app.init();
+
+export default app;

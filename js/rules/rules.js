@@ -2,7 +2,7 @@ import {views} from '../data/gamedata';
 import RulesView from './rules-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
-import App from '../main';
+import app from '../main';
 
 
 export default class RulesScreen extends ScreenPresenter {
@@ -23,7 +23,7 @@ export default class RulesScreen extends ScreenPresenter {
         template: views.game
       });
 
-      App.showGame(this._state);
+      app.showGame(this._state);
     };
   }
 }
