@@ -4,8 +4,8 @@ import ScreenPresenter from '../screen';
 
 
 export default class StatsScreen extends ScreenPresenter {
-  constructor(state) {
-    super(state);
+  constructor() {
+    super();
     this._view = new StatsView(this._state);
   }
 

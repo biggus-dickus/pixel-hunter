@@ -1,13 +1,14 @@
 import {views} from '../data/gamedata';
+import routes from '../main';
 import GreetingView from './greeting-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
-import app from '../main';
+import gameState from '../game-state';
 
 
 export default class GreetingScreen extends ScreenPresenter {
-  constructor(state) {
-    super(state);
+  constructor() {
+    super();
     this._view = new GreetingView();
   }
 
@@ -16,20 +17,14 @@ export default class GreetingScreen extends ScreenPresenter {
 
     // Go to rules
     this._view.onProceedBtnClick = () => {
-      this._state = Object.assign({}, this._state, {
-        template: views.rules
-      });
-
-      app.showRules(this._state);
+      gameState.changeState({template: views.rules});
+      location.hash = routes.RULES;
     };
 
     // Go to stats
     this._view.onStatsBtnClick = () => {
-      this._state = Object.assign({}, this._state, {
-        template: views.stats
-      });
-
-      app.showStats(this._state);
+      gameState.changeState({template: views.stats});
+      location.hash = routes.STATS;
     };
   }
 }

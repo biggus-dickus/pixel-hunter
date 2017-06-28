@@ -1,8 +1,9 @@
 import {views} from '../data/gamedata';
+import routes from '../main';
 import IntroView from './intro-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
-import app from '../main';
+import gameState from '../game-state';
 
 
 export default class IntroScreen extends ScreenPresenter {
@@ -15,11 +16,8 @@ export default class IntroScreen extends ScreenPresenter {
     insertTemplate(this._view.element);
 
     this._view.onStartClick = () => {
-      this._state = Object.assign({}, this._state, {
-        template: views.greeting
-      });
-
-      app.showGreeting(this._state);
+      gameState.changeState({template: views.greeting});
+      location.hash = routes.GREETING;
     };
   }
 }

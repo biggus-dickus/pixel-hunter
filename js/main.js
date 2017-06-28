@@ -36,39 +36,17 @@ class Application {
     this._changeController(getControllerIDFromHash(location.hash));
   }
 
-  showGreeting(state) {
-    this._currentState = state;
-    location.hash = ControllerID.GREETING;
-  }
-
-  showRules(state) {
-    this._currentState = state;
-    location.hash = ControllerID.RULES;
-  }
-
-  showGame(state) {
-    this._currentState = state;
-    location.hash = ControllerID.GAME;
-  }
-
-  showStats(stats) {
-    this._currentState = stats;
-    location.hash = ControllerID.STATS;
-  }
-
   _changeController(route = ``) {
     const Controller = this._routes[route];
 
     try {
-      new Controller(this._currentState).init();
+      new Controller().init();
     } catch (e) {
       throw new Error(`Invalid router: location.hash must be an entry of Application._routes.`);
     }
   }
 }
 
-const app = new Application();
+new Application().init();
 
-app.init();
-
-export default app;
+export default ControllerID;

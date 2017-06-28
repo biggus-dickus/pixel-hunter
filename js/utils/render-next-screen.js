@@ -1,19 +1,19 @@
-import {views, initialState, games} from '../data/gamedata';
+import {views, games} from '../data/gamedata';
+import routes from '../main';
 import Game from '../game/game';
-import app from '../main';
+import gameState from '../game-state';
 
 
 /**
  * Renders next game screen or results (based on supplied game screen number; if there are lives left).
- * @param {Object} currentState
  * @param {number} currentScreen (if > 3, will be turned to 0)
  * @param {Object} newState
  * @param {number} count
  */
-export default (currentState, currentScreen, newState, count) => {
+export default (currentScreen, newState, count) => {
   count++;
 
-  currentState = Object.assign({}, initialState, {
+  gameState.changeState({
     template: views.game,
     gameType: games[currentScreen],
     gameNumber: count,
@@ -24,10 +24,10 @@ export default (currentState, currentScreen, newState, count) => {
     fastAnswers: newState.fastCount
   });
 
-  if (count < currentState.gamesTotal && currentState.lives > 0) {
-    new Game(currentState).init();
+  if (count < gameState.props.gamesTotal && gameState.props.lives > 0) {
+    new Game(gameState).init();
   } else {
-    currentState.template = views.stats;
-    app.showStats(currentState);
+    gameState.changeState({template: views.stats});
+    location.hash = routes.STATS;
   }
 };
