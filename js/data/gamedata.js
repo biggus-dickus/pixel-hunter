@@ -32,12 +32,21 @@ const MAX_LIVES = 3;
 
 const recordedAnswers = [];
 
+// const views is for test purposes only
 const views = {
   intro: `intro`,
   greeting: `greeting`,
   rules: `rules`,
   game: `game`,
   stats: `stats`
+};
+
+const ControllerID = {
+  INTRO: ``,
+  GREETING: `greeting`,
+  RULES: `rules`,
+  GAME: `game`,
+  STATS: `stats`,
 };
 
 const games = [
@@ -84,4 +93,4 @@ const rates = {
   lifeBonusPoints: 50
 };
 
-export {initialState, picsCollection, views, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, MAX_LIVES, recordedAnswers};
+export {initialState, picsCollection, views, ControllerID, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, MAX_LIVES, recordedAnswers};

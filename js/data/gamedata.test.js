@@ -1,9 +1,8 @@
 import assert from 'assert'; // assert is a built-in NodeJS module
-import 'jsdom-global/register'; // required to invoke DOM operations in NodeJS env. without headless browser
-import {initialState, games, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG} from './gamedata';
+import {initialState, games, views, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG} from './gamedata';
 import {checkForCorrectAnswer, processUserAnswers} from '../utils/collect-and-process-answers';
 import getResults from '../utils/calculate-score';
-// import renderNextScreen from '../utils/render-next-screen';
+import gameState from '../game-state';
 
 
 describe(`Game`, () => {
@@ -53,21 +52,10 @@ describe(`Game`, () => {
     assert.equal(4, testStats.slowCount);
   });
 
-
-  // const testState = Object.assign({}, initialState);
-
-  // it(`should show game stats screen when all levels are beaten`, () => {
-  //   const testNewState = {
-  //     correctCount: testState.correctAnswers,
-  //     incorrectCount: testState.incorrectAnswers,
-  //     fastCount: testState.fastAnswers,
-  //     slowCount: testState.slowAnswers,
-  //     livesCount: testState.lives
-  //   };
-  //
-  //   renderNextScreen(testState, 1, testNewState, 9);
-  //   assert.equal(`stats`, testState.template);
-  // });
+  it(`should show game stats screen when all levels are beaten`, () => {
+    gameState.changeState({template: views.stats});
+    assert.equal(views.stats, gameState.props.template);
+  });
 
   it(`should subtract from player's lives if an answer is incorrect, and go to stats screen when there are no lives left`, () => {
     const testNewState = {
@@ -77,9 +65,9 @@ describe(`Game`, () => {
     processUserAnswers([CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG], 5, testNewState);
     assert.equal(1, testNewState.livesCount);
 
-    // testNewState.livesCount = 0;
-    // renderNextScreen(testState, 1, testNewState, 3);
-    // assert.equal(`stats`, testState.template);
+    testNewState.livesCount = 0;
+    gameState.changeState({template: views.stats});
+    assert.equal(views.stats, gameState.props.template);
   });
 
 

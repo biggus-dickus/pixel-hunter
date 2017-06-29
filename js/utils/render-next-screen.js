@@ -1,5 +1,5 @@
-import {views, games} from '../data/gamedata';
-import routes from '../main';
+import {views, ControllerID, games} from '../data/gamedata';
+import App from '../main';
 import Game from '../game/game';
 import gameState from '../game-state';
 
@@ -28,6 +28,6 @@ export default (currentScreen, newState, count) => {
     new Game(gameState).init();
   } else {
     gameState.changeState({template: views.stats});
-    location.hash = routes.STATS;
+    App.goTo(ControllerID.STATS);
   }
 };

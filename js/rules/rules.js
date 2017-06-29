@@ -1,5 +1,5 @@
-import {views} from '../data/gamedata';
-import routes from '../main';
+import {views, ControllerID} from '../data/gamedata';
+import App from '../main';
 import RulesView from './rules-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
@@ -21,7 +21,7 @@ export default class RulesScreen extends ScreenPresenter {
 
     this._view.onFormSubmit = () => {
       gameState.changeState({template: views.game});
-      location.hash = routes.GAME;
+      App.goTo(ControllerID.GAME);
     };
   }
 }
