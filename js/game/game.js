@@ -9,8 +9,8 @@ let gameScreen = 0;
 
 
 export default class GameScreen extends ScreenPresenter {
-  constructor(state) {
-    super(state);
+  constructor() {
+    super();
     this._time = this._state.time;
     this._view = new GameView(this._state);
 
@@ -22,7 +22,7 @@ export default class GameScreen extends ScreenPresenter {
       livesCount: this._state.lives
     };
 
-    this._startTimer = setInterval(() => {
+    window.gameTimer = setInterval(() => {
       this._time--;
 
       if (this._time === 0) {
@@ -31,7 +31,7 @@ export default class GameScreen extends ScreenPresenter {
         this._statsCounter.livesCount--;
         recordedAnswers.push(INCORRECT_ANSWER_FLAG);
         GameScreen._incrementGameScreen();
-        renderNextScreen(this._state, gameScreen, this._statsCounter, this._state.gameNumber);
+        renderNextScreen(gameScreen, this._statsCounter, this._state.gameNumber);
       }
     }, 1000);
   }
@@ -49,13 +49,13 @@ export default class GameScreen extends ScreenPresenter {
       if (this._view.formElem.checkValidity()) {
         processUserAnswers(userAnswers, this._stopTimer(), this._statsCounter);
         GameScreen._incrementGameScreen();
-        renderNextScreen(this._state, gameScreen, this._statsCounter, this._state.gameNumber);
+        renderNextScreen(gameScreen, this._statsCounter, this._state.gameNumber);
       }
     };
   }
 
   _stopTimer() {
-    clearInterval(this._startTimer);
+    clearInterval(window.gameTimer);
     return this._time;
   }
 

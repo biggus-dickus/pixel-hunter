@@ -1,9 +1,9 @@
-import {initialState} from './data/gamedata';
+import gameState from './game-state';
 
 
 export default class ScreenPresenter {
-  constructor(state = initialState) {
-    this._state = state;
+  constructor() {
+    this._state = gameState.props;
   }
 
   init() {

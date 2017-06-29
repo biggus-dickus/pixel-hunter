@@ -1,18 +1,20 @@
-import {initialState, views, recordedAnswers} from '../data/gamedata';
+import {views, recordedAnswers} from '../data/gamedata';
+import routes from '../main';
 import BackToStartView from './back-to-start-view';
-import App from '../main';
+import gameState from '../game-state';
 
 
 export default () => {
   const goBack = new BackToStartView();
 
-  const state = Object.assign({}, initialState, {
-    template: views.greeting
-  });
-
   goBack.onBtnClick = () => {
+    if (window.gameTimer) {
+      window.clearInterval(window.gameTimer);
+    }
+
     recordedAnswers.length = 0;
-    App.showGreeting(state);
+    gameState.changeState({template: views.greeting});
+    location.hash = routes.GREETING;
   };
 
   return goBack.element;
