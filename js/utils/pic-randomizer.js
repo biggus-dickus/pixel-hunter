@@ -1,21 +1,22 @@
-import {picsCollection, TYPE_PICTURE} from '../data/gamedata';
+import {TYPE_PICTURE} from '../data/gamedata';
 
 /**
  * Get a random array of unique objects with image urls and their origins
  * (ex.: {origin: 'pictures', url: '//imgur.com/blablabla.jpg'} ).
  *
+ * @param {Array} images
  * @param {number} quantity
  * @param {string} gameType
  *
  * @return {Array}
  */
-export default (quantity, gameType) => {
+export default (images, quantity, gameType) => {
   const picSet = [];
   const addedIndex = [];
 
   while (picSet.length < quantity) {
     let key = (Math.round(Math.random()) === 0) ? `paintings` : `photos`;
-    let picIndex = Math.floor(Math.random() * picsCollection[key].length);
+    let picIndex = Math.floor(Math.random() * images[key].length);
 
     if (addedIndex.indexOf(picIndex) >= 0) {
       continue;
@@ -24,7 +25,7 @@ export default (quantity, gameType) => {
     addedIndex.push(picIndex);
     addedIndex.push(key);
 
-    let urlString = picsCollection[key][picIndex];
+    let urlString = images[key][picIndex];
 
     picSet.push({origin: key, url: urlString});
   }
@@ -35,10 +36,10 @@ export default (quantity, gameType) => {
     if (areAllKeysIdentical(keysArr)) {
       const redundantKey = keysArr[0];
       const newKey = (redundantKey === `photos`) ? `paintings` : `photos`;
-      let index = Math.floor(Math.random() * picsCollection[newKey].length);
+      let index = Math.floor(Math.random() * images[newKey].length);
 
       picSet.pop();
-      picSet.push({origin: newKey, url: picsCollection[newKey][index]});
+      picSet.push({origin: newKey, url: images[newKey][index]});
     }
 
     // The idea here is that correct answer is the answer, which length is different from two others,

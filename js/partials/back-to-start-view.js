@@ -1,4 +1,6 @@
 import AbstractView from '../view';
+import {views} from '../data/gamedata';
+import gameState from '../game-state';
 
 export default class BackToStartView extends AbstractView {
   get template() {
@@ -12,10 +14,29 @@ export default class BackToStartView extends AbstractView {
 
   bind() {
     const btnBack = this.element.querySelector(`.header__back`);
+    const modal = document.querySelector(`.modal`);
+    const innerModal = modal.querySelector(`.modal__inner`);
+
+    innerModal.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+
+      if (evt.target.classList.contains(`js-modal-close`)) {
+        modal.classList.remove(`open`);
+      } else if (evt.target.classList.contains(`js-game-abort`)) {
+        modal.classList.remove(`open`);
+        this.onBtnClick();
+      }
+    });
 
     btnBack.onclick = (evt) => {
       evt.preventDefault();
-      this.onBtnClick();
+
+      // If game has already started, ask for confirmation before aborting
+      if (gameState.props.template === views.game) {
+        modal.classList.add(`open`);
+      } else {
+        this.onBtnClick();
+      }
     };
   }
 

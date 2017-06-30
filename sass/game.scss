@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  animation: fadeIn .5s ease-out;
 
   &__heart {
     width: 32px;

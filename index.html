@@ -18,7 +18,9 @@
 <body>
 
 <main class="central">
-  <p class="central__loading-msg">Спокойствие, игра скоро загрузится&hellip;</p>
+  <p class="central__msg">
+    Терпение, игра загружается&hellip;
+  </p>
 </main>
 
 <footer class="footer">
@@ -31,6 +33,19 @@
     <a target="_blank" href="//vk.com/htmlacademy" class="social-link  social-link--vk" title="Вконтакте">Вконтакте</a>
   </div>
 </footer>
+
+<article class="modal">
+  <div class="modal__inner">
+    <a href="#" class="modal__close js-modal-close" title="Закрыть">Закрыть</a>
+    <p>Текущий прогресс будет потерян. Вы&nbsp;уверены, что хотите вернуться в&nbsp;начало?</p>
+    <form class="abort-form" name="abort-form" action="?" method="get">
+      <input id="abort-true" type="radio" name="abort-option" value="true">
+      <label class="abort-form__label js-game-abort" for="abort-true">Да</label>
+      <input id="abort-false" type="radio" name="abort-option" value="false">
+      <label class="abort-form__label js-modal-close" for="abort-false">Нет</label>
+    </form>
+  </div>
+</article>
 
 <script src="js/bundle.min.js"></script>
 </body>

@@ -3,6 +3,7 @@ import AbstractView from '../view';
 import renderInfoBar from '../partials/info-bar';
 import renderStatusBar from '../partials/status-bar';
 import getRandomPic from '../utils/pic-randomizer';
+import gameState from '../game-state';
 
 
 export default class GameView extends AbstractView {
@@ -46,7 +47,7 @@ export default class GameView extends AbstractView {
  */
 function renderGameOptions(options, type) {
   let templateString;
-  let randomPics = getRandomPic(options, type);
+  let randomPics = getRandomPic(gameState.props.images, options, type);
 
   switch (type) {
     case TYPE_RADIO_1:

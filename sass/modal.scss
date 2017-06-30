@@ -1,0 +1,88 @@
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: visibility, opacity 0.4s ease-in-out;
+
+  &__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 17px;
+    height: 17px;
+    text-decoration: none;
+    text-indent: -999em;
+    background: url("../img/close-cross.svg") 50% 50% no-repeat;
+    opacity: .5;
+
+    &:hover {  opacity: 1;  }
+
+    &:active {  transform: translateY(1px);  }
+  }
+
+  &__inner {
+    display: none;
+    position: absolute;
+    top: 15vh;
+    right: 0;
+    left: 0;
+    width: 90%;
+    max-width: 480px;
+    max-height: 100%;
+    padding: 20px 25px 25px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 22px;
+    line-height: 1.5;
+    border-radius: 10px;
+    text-align: center;
+    overflow: auto;
+    background-color: #f8f7f4;
+
+    p {  margin-bottom: 1.5em;  }
+  }
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1000;
+
+    .modal__inner {
+      display: block;
+      animation: bounce 0.5s;
+    }
+  }
+}
+
+.abort-form {
+  &__label {
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: baseline;
+    min-width: 85px;
+    padding: .25em 1em;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: .25em;
+    cursor: pointer;
+
+    &:first-of-type {  margin-right: 1em;  }
+
+    &:hover {  background-color: rgba(0,0,0,0.1);  }
+  }
+
+
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+}
