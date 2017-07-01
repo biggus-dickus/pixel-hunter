@@ -20,7 +20,10 @@ export default class RulesScreen extends ScreenPresenter {
     };
 
     this._view.onFormSubmit = () => {
-      gameState.changeState({template: views.game});
+      gameState.changeState({
+        player: this._view.input.value,
+        template: views.game
+      });
       App.goTo(ControllerID.GAME);
     };
   }

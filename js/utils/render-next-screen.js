@@ -17,11 +17,7 @@ export default (currentScreen, newState, count) => {
     template: views.game,
     gameType: games[currentScreen],
     gameNumber: count,
-    lives: newState.livesCount,
-    correctAnswers: newState.correctCount,
-    incorrectAnswers: newState.incorrectCount,
-    slowAnswers: newState.slowCount,
-    fastAnswers: newState.fastCount
+    lives: newState.livesCount
   });
 
   if (count < gameState.props.gamesTotal && gameState.props.lives > 0) {

@@ -1,4 +1,4 @@
-import {rates} from '../data/gamedata';
+import {rates, recordedAnswers, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, CORRECT_ANSWER_FLAG} from '../data/gamedata';
 import AbstractView from '../view';
 import renderBackBtn from '../partials/back-to-start';
 import renderStatusBar from '../partials/status-bar';
@@ -12,6 +12,15 @@ export default class StatsView extends AbstractView {
   }
 
   get template() {
+    const fastAnswersCount = recordedAnswers.filter((answer) => answer === FAST_ANSWER_FLAG).length;
+    const regularSpeedAnswersCount = recordedAnswers.filter((answer) => answer === CORRECT_ANSWER_FLAG).length;
+    const slowAnswersCount = recordedAnswers.filter((answer) => answer === SLOW_ANSWER_FLAG).length;
+
+    this._state.correctAnswers = regularSpeedAnswersCount + fastAnswersCount + slowAnswersCount;
+    this._state.slowAnswers = slowAnswersCount;
+    this._state.fastAnswers = fastAnswersCount;
+
+
     const results = getResults(this._state);
 
     return `<header class="header"></header>

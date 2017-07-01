@@ -3,7 +3,7 @@ const TYPE_RADIO_2 = `Выбор типа для каждого из двух в
 const TYPE_PICTURE = `Выбор из трех вариантов изображения одного типа: фотографии или фотореалистичного рисунка.`;
 
 const CORRECT_ANSWER_FLAG = `correct`;
-const INCORRECT_ANSWER_FLAG = `incorrect`;
+const INCORRECT_ANSWER_FLAG = `wrong`;
 const SLOW_ANSWER_FLAG = `slow`;
 const FAST_ANSWER_FLAG = `fast`;
 
@@ -50,16 +50,13 @@ const games = [
 ];
 
 const initialState = Object.freeze({
+  player: `Unknown Raccoon`,
   template: views.intro,
   gameType: games[0],
   gameNumber: 0,
   gamesTotal: 10,
   lives: MAX_LIVES,
   time: 30,
-  correctAnswers: 0,
-  incorrectAnswers: 0,
-  slowAnswers: 0,
-  fastAnswers: 0,
   slowAnswerThreshold: 10,
   fastAnswerThreshold: 20
 });

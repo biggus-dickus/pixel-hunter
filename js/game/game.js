@@ -6,7 +6,8 @@ import {collectAnswerTypes, processUserAnswers} from '../utils/collect-and-proce
 import ScreenPresenter from '../screen';
 
 let gameScreen = 0;
-
+let timer;
+export {timer};
 
 export default class GameScreen extends ScreenPresenter {
   constructor() {
@@ -15,19 +16,14 @@ export default class GameScreen extends ScreenPresenter {
     this._view = new GameView(this._state);
 
     this._statsCounter = {
-      correctCount: this._state.correctAnswers,
-      incorrectCount: this._state.incorrectAnswers,
-      fastCount: this._state.fastAnswers,
-      slowCount: this._state.slowAnswers,
       livesCount: this._state.lives
     };
 
-    window.gameTimer = setInterval(() => {
+    timer = setInterval(() => {
       this._time--;
 
       if (this._time === 0) {
         this._stopTimer();
-        this._statsCounter.incorrectCount++;
         this._statsCounter.livesCount--;
         recordedAnswers.push(INCORRECT_ANSWER_FLAG);
         GameScreen._incrementGameScreen();
@@ -55,7 +51,7 @@ export default class GameScreen extends ScreenPresenter {
   }
 
   _stopTimer() {
-    clearInterval(window.gameTimer);
+    clearInterval(timer);
     return this._time;
   }
 
