@@ -1,5 +1,5 @@
-import {views, recordedAnswers} from '../data/gamedata';
-import routes from '../main';
+import {initialState, views, ControllerID, recordedAnswers} from '../data/gamedata';
+import App from '../main';
 import BackToStartView from './back-to-start-view';
 import gameState from '../game-state';
 
@@ -13,8 +13,10 @@ export default () => {
     }
 
     recordedAnswers.length = 0;
+    gameState.changeState(initialState);
     gameState.changeState({template: views.greeting});
-    location.hash = routes.GREETING;
+
+    App.goTo(ControllerID.GREETING);
   };
 
   return goBack.element;

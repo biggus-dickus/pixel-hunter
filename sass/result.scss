@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  animation: bounceIn .8s ease-out;
 }
 
 .result__table {

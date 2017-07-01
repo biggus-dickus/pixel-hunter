@@ -17,6 +17,15 @@ class GameState {
   changeState(newState) {
     this.props = Object.assign({}, this.props, newState);
   }
+
+  /**
+   * Create a collection of image urls of such pattern:
+   * [{photos: [url1, url2...]}, {paintings: [url1, url2...]}]
+   * @param {Array} pics
+   */
+  collectPics(pics) {
+    this.props = Object.assign({}, this.props, {images: pics});
+  }
 }
 
 const gameState = new GameState(initialState);

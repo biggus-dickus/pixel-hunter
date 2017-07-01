@@ -1,5 +1,5 @@
-import {views} from '../data/gamedata';
-import routes from '../main';
+import {views, ControllerID} from '../data/gamedata';
+import App from '../main';
 import GreetingView from './greeting-view';
 import insertTemplate from '../utils/insert-template';
 import ScreenPresenter from '../screen';
@@ -18,13 +18,13 @@ export default class GreetingScreen extends ScreenPresenter {
     // Go to rules
     this._view.onProceedBtnClick = () => {
       gameState.changeState({template: views.rules});
-      location.hash = routes.RULES;
+      App.goTo(ControllerID.RULES);
     };
 
-    // Go to stats
+    // Go to stats (best results)
     this._view.onStatsBtnClick = () => {
       gameState.changeState({template: views.stats});
-      location.hash = routes.STATS;
+      App.goTo(ControllerID.STATS);
     };
   }
 }
