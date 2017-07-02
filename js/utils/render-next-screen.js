@@ -1,4 +1,4 @@
-import {views, ControllerID, games} from '../data/gamedata';
+import {views, ControllerID, games, recordedAnswers} from '../data/gamedata';
 import App from '../main';
 import Game from '../game/game';
 import gameState from '../game-state';
@@ -22,8 +22,18 @@ export default (currentScreen, newState, count) => {
 
   if (count < gameState.props.gamesTotal && gameState.props.lives > 0) {
     new Game(gameState).init();
+  } else if (count === gameState.props.gamesTotal && gameState.props.lives > 0) {
+    const dataToSend = {
+      stats: recordedAnswers,
+      lives: gameState.props.lives
+    };
+
+    gameState.changeState({template: views.stats});
+
+    // Stats is sent to server only if player has won
+    App.uploadStats(dataToSend, gameState.props.player);
   } else {
     gameState.changeState({template: views.stats});
-    App.goTo(ControllerID.STATS);
+    App.goTo(`${ControllerID.STATS}=${gameState.props.player}`);
   }
 };

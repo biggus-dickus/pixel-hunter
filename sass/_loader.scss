@@ -1,0 +1,50 @@
+.loader,
+.loader::before,
+.loader::after {
+  position: absolute;
+  width: 1em;
+  height: 4em;
+  color: fade-out(#de1f1f, .25);
+  background: currentColor;
+  animation: load1 1s infinite ease-in-out;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  top: 0;
+}
+
+.loader:before {
+  left: -1.5em;
+  animation-delay: -0.32s;
+}
+
+.loader {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  z-index: 100;
+  text-indent: -9999em;
+  font-size: 11px;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+
+.loader:after {
+  left: 1.5em;
+}
+
+// Preferred element - <body>
+.loader-backdrop {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;  right: 0;  bottom: 0;  left: 0;
+    z-index: 99;
+    background: rgba(255,255,255,.33);
+    cursor: progress;
+  }
+}
