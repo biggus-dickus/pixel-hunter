@@ -1,5 +1,5 @@
 import assert from 'assert'; // assert is a built-in NodeJS module
-import {initialState, games, views, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG} from './gamedata';
+import {initialState, games, views, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG} from './gamedata';
 import {checkForCorrectAnswer, processUserAnswers} from '../utils/collect-and-process-answers';
 import getResults from '../utils/calculate-score';
 import gameState from '../game-state';
@@ -37,19 +37,17 @@ describe(`Game`, () => {
   });
 
 
-  it(`should increment the fast answers count if it took the player less than 10 seconds to respond, and the slow answers count if it took more than 20 seconds`, () => {
-    const testStats = {
-      fastCount: 1,
-      slowCount: 3
-    };
+  it(`should count player's answer as a fast one if it took them less than 10 seconds to respond, and as a slow one if they were pondering over 20 seconds`, () => {
+    const collectedAnswers = [];
 
     // Fast answer test
-    processUserAnswers([CORRECT_ANSWER_FLAG, CORRECT_ANSWER_FLAG], 22, testStats);
-    assert.equal(2, testStats.fastCount);
+    processUserAnswers([CORRECT_ANSWER_FLAG, CORRECT_ANSWER_FLAG], 22, collectedAnswers);
+    assert.equal(-1, collectedAnswers.indexOf(SLOW_ANSWER_FLAG));
 
     // Slow answer test
-    processUserAnswers([CORRECT_ANSWER_FLAG, CORRECT_ANSWER_FLAG], 5, testStats);
-    assert.equal(4, testStats.slowCount);
+    collectedAnswers.length = 0;
+    processUserAnswers([CORRECT_ANSWER_FLAG, CORRECT_ANSWER_FLAG], 5, collectedAnswers);
+    assert.equal(-1, collectedAnswers.indexOf(FAST_ANSWER_FLAG));
   });
 
   it(`should show game stats screen when all levels are beaten`, () => {

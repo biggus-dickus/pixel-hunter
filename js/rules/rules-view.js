@@ -26,6 +26,7 @@ export default class RulesView extends AbstractView {
   bind() {
     this.header = this.element.querySelector(`.header`);
     this.form = this.element.querySelector(`.rules__form`);
+    this.input = this.element.querySelector(`.rules__input`);
     this.submit = this.element.querySelector(`.rules__button`);
 
     this.header.insertBefore(renderBackBtn(), this.header.childNodes[0]);

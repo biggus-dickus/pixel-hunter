@@ -1,7 +1,8 @@
-import {views, ControllerID, games} from '../data/gamedata';
+import {views, ControllerID, games, recordedAnswers} from '../data/gamedata';
 import App from '../main';
 import Game from '../game/game';
 import gameState from '../game-state';
+import Spinner from './spinner';
 
 
 /**
@@ -17,15 +18,24 @@ export default (currentScreen, newState, count) => {
     template: views.game,
     gameType: games[currentScreen],
     gameNumber: count,
-    lives: newState.livesCount,
-    correctAnswers: newState.correctCount,
-    incorrectAnswers: newState.incorrectCount,
-    slowAnswers: newState.slowCount,
-    fastAnswers: newState.fastCount
+    lives: newState.livesCount
   });
 
   if (count < gameState.props.gamesTotal && gameState.props.lives > 0) {
     new Game(gameState).init();
+  } else if (count === gameState.props.gamesTotal && gameState.props.lives > 0) {
+    const dataToSend = {
+      stats: recordedAnswers,
+      lives: gameState.props.lives
+    };
+
+    Spinner.show();
+    gameState.changeState({template: views.stats});
+
+    // Stats is sent to server only if player has won
+    App.uploadStats(dataToSend, gameState.props.player)
+      .then(() => Spinner.hide())
+      .then(() => App.goTo(ControllerID.STATS));
   } else {
     gameState.changeState({template: views.stats});
     App.goTo(ControllerID.STATS);

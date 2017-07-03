@@ -1,5 +1,6 @@
 class Adapter {
-  // Preprocess server data and return only pic URLS split into categories.
+  // Preprocess server data and return only pic URLs split into categories.
+  // Levels are generated on client side.
   static preprocess(data) {
     const pics = [];
     const myCollection = {
@@ -20,7 +21,9 @@ class Adapter {
     return myCollection;
   }
 
-  static toServer(data) {}
+  static toServer(data) {
+    return JSON.stringify(data);
+  }
 }
 
 export default class Model {
@@ -38,16 +41,22 @@ export default class Model {
       .then(Adapter.preprocess);
   }
 
-  send(data, adapter) {
+  /**
+   * Send data to server API. The data must be a json string with two props:
+   * {"lives": "3", "stats": "['slow', 'fast', 'wrong', 'correct'...]"}
+   * @param {Object} data
+   * @param {string} playerName
+   * @return {Promise}
+   */
+  send(data, playerName) {
     const requestSettings = {
-      body: adapter.toServer(data),
+      body: Adapter.toServer(data),
       headers: {
         'Content-Type': `application/json`
       },
       method: `POST`
     };
 
-    return fetch(this.urlWrite, requestSettings)
-      .then(this.onUpload);
+    return fetch(this.urlWrite.replace(`username`, playerName), requestSettings);
   }
 }

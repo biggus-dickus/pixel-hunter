@@ -24,7 +24,7 @@ export default class GreetingScreen extends ScreenPresenter {
     // Go to stats (best results)
     this._view.onStatsBtnClick = () => {
       gameState.changeState({template: views.stats});
-      App.goTo(ControllerID.STATS);
+      App.goTo(`${ControllerID.STATS}=Unknown Raccoon`);
     };
   }
 }

@@ -6,7 +6,12 @@ import GreetingScreen from './greeting/greeting';
 import RulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import StatsScreen from './stats/stats';
+// import Spinner from './utils/spinner';
 
+const API = {
+  read: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
+  write: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats/:username`
+};
 
 const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
@@ -15,11 +20,7 @@ export default class Application {
   constructor() {
     this._model = new class extends Model {
       get urlRead() {
-        return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`;
-      }
-
-      get urlWrite() {
-        return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats`;
+        return API.read;
       }
     }();
 
@@ -46,10 +47,11 @@ export default class Application {
   }
 
   _changeController(route = ``) {
-    const Controller = this._routes[route];
+    let [id, params] = route.split(`=`);
+    const Controller = this._routes[id];
 
     try {
-      new Controller().init();
+      new Controller(params).init();
     } catch (e) {
       throw new Error(`Invalid router: location.hash must be an entry of Application._routes.`);
     }
@@ -61,6 +63,21 @@ export default class Application {
 
   static goTo(route) {
     location.hash = route;
+  }
+
+  static uploadStats(data, name) {
+    this._model = new class extends Model {
+      get urlWrite() {
+        return API.write;
+      }
+    }();
+
+    return this._model.send(data, name);
+  }
+
+  static downloadStats(playerName) {
+    return fetch(API.write.replace(`username`, playerName))
+      .then((resp) => resp.json());
   }
 }
 

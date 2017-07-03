@@ -2,14 +2,15 @@ import {initialState, views, ControllerID, recordedAnswers} from '../data/gameda
 import App from '../main';
 import BackToStartView from './back-to-start-view';
 import gameState from '../game-state';
+import {timer} from '../game/game';
 
 
 export default () => {
   const goBack = new BackToStartView();
 
   goBack.onBtnClick = () => {
-    if (window.gameTimer) {
-      window.clearInterval(window.gameTimer);
+    if (timer) {
+      clearInterval(timer);
     }
 
     recordedAnswers.length = 0;

@@ -77,19 +77,15 @@ const checkForCorrectAnswer = (arr) => {
  */
 const processUserAnswers = (receivedAnswers, time, answerStats) => {
   if (checkForCorrectAnswer(receivedAnswers)) {
-    answerStats.correctCount++;
 
     if (time >= initialState.slowAnswerThreshold && time <= initialState.fastAnswerThreshold) {
       recordedAnswers.push(CORRECT_ANSWER_FLAG);
     } else if (time > initialState.fastAnswerThreshold) {
-      answerStats.fastCount++;
       recordedAnswers.push(FAST_ANSWER_FLAG);
     } else if (time < initialState.slowAnswerThreshold) {
-      answerStats.slowCount++;
       recordedAnswers.push(SLOW_ANSWER_FLAG);
     }
   } else {
-    answerStats.incorrectCount++;
     answerStats.livesCount--;
     recordedAnswers.push(INCORRECT_ANSWER_FLAG);
   }
