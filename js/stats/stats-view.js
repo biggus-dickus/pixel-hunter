@@ -11,9 +11,17 @@ export default class StatsView extends AbstractView {
     this._state = state;
   }
 
+  insertPlayerName() {
+    if (this._state.playerName && this._state.serverStats) {
+      return `<p>Статистика по&nbsp;пользователю: ${this._state.playerName}</p>`;
+    }
+
+    return ``;
+  }
+
   get template() {
-    // We show the last successful game for certain player.
-    // If no such name exists on server or if player has lost, we show what we've got so far.
+    // We show the last successful game for certain player only if statistics was directly accessed via URL (e. g. origin/#stats=Vasya).
+    // In all other cases we render stats based on local data.
     const stats = (this._state.serverStats) ? this._state.serverStats[this._state.serverStats.length - 1].stats : recordedAnswers;
 
     const fastAnswersCount = stats.filter((answer) => answer === FAST_ANSWER_FLAG).length;
@@ -31,6 +39,7 @@ export default class StatsView extends AbstractView {
     return `<header class="header"></header>
       <div class="result">
         <h1>${results.caption}</h1>
+        ${this.insertPlayerName()}
         <table class="result__table">
           <tr>
             <td class="result__number">1.</td>

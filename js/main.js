@@ -6,7 +6,7 @@ import GreetingScreen from './greeting/greeting';
 import RulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import StatsScreen from './stats/stats';
-import Spinner from './utils/spinner';
+// import Spinner from './utils/spinner';
 
 const API = {
   read: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
@@ -72,16 +72,10 @@ export default class Application {
       }
     }();
 
-    Spinner.show();
-
-    this._model.send(data, name)
-      .then(Spinner.hide())
-      .then(Application.goTo(`${ControllerID.STATS}=${name}`));
+    return this._model.send(data, name);
   }
 
   static downloadStats(playerName) {
-    Spinner.show();
-
     return fetch(API.write.replace(`username`, playerName))
       .then((resp) => resp.json());
   }

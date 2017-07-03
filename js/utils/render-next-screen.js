@@ -2,6 +2,7 @@ import {views, ControllerID, games, recordedAnswers} from '../data/gamedata';
 import App from '../main';
 import Game from '../game/game';
 import gameState from '../game-state';
+import Spinner from './spinner';
 
 
 /**
@@ -28,12 +29,15 @@ export default (currentScreen, newState, count) => {
       lives: gameState.props.lives
     };
 
+    Spinner.show();
     gameState.changeState({template: views.stats});
 
     // Stats is sent to server only if player has won
-    App.uploadStats(dataToSend, gameState.props.player);
+    App.uploadStats(dataToSend, gameState.props.player)
+      .then(() => Spinner.hide())
+      .then(() => App.goTo(ControllerID.STATS));
   } else {
     gameState.changeState({template: views.stats});
-    App.goTo(`${ControllerID.STATS}=${gameState.props.player}`);
+    App.goTo(ControllerID.STATS);
   }
 };
