@@ -10,16 +10,15 @@
 }
 
 .intro__asterisk {
+  position: relative;
+  top: 220px;
+  left: 30px;
   text-align: center;
-
   font-size: 172px;
   color: $main-red-color;
   // cursor: pointer;
   cursor: wait;
 
-  position: relative;
-  top: 220px;
-  left: 30px;
 
   // &:hover {
   //   color: $link-hover-color;

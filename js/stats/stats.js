@@ -12,7 +12,7 @@ export default class StatsScreen extends ScreenPresenter {
     this._state.playerName = playerName;
   }
 
-  localInit() {
+  _localInit() {
     Spinner.hide();
     this._view = new StatsView(this._state);
     insertTemplate(this._view.element);
@@ -30,10 +30,15 @@ export default class StatsScreen extends ScreenPresenter {
         .then((data) => this._collectStats(data))
         .then(() => insertTemplate(this._view.element))
         .then(() => Spinner.hide())
-        .catch((e) => this.localInit());
+        .catch((e) => this._localInit());
     } else {
-      this.localInit();
+      this._localInit();
     }
+  }
+
+  clearData() {
+    delete this._state.serverStats;
+    delete this._state.playerName;
   }
 
   _collectStats(data) {
