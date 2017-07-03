@@ -14,19 +14,20 @@
 
   font-size: 172px;
   color: $main-red-color;
-  cursor: pointer;
+  // cursor: pointer;
+  cursor: wait;
 
   position: relative;
   top: 220px;
   left: 30px;
 
-  &:hover {
-    color: $link-hover-color;
-  }
-
-  &:active {
-    color: $link-active-color;
-  }
+  // &:hover {
+  //   color: $link-hover-color;
+  // }
+  //
+  // &:active {
+  //   color: $link-active-color;
+  // }
 }
 
 .intro__motto {

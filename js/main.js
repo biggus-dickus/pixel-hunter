@@ -6,7 +6,6 @@ import GreetingScreen from './greeting/greeting';
 import RulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import StatsScreen from './stats/stats';
-// import Spinner from './utils/spinner';
 
 const API = {
   read: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
@@ -25,7 +24,7 @@ export default class Application {
     }();
 
     this._model.load()
-      .then((data) => Application.getPics(data))
+      .then((data) => Application.preloadData(data))
       .catch((err) => document.write(`Не удалось загрузить данные с сервера по причине <b>${err}.</b>. Попробуйте сыграть позже.`));
 
     this._routes = {
@@ -57,7 +56,24 @@ export default class Application {
     }
   }
 
-  static getPics(data) {
+  static preloadData(data) {
+    const images = [
+      ...data.paintings,
+      ...data.photos
+    ];
+
+    const preloadImage = (path) => new Promise((resolve, reject) => {
+      const image = new Image();
+
+      image.addEventListener(`load`, () => resolve(image));
+      image.addEventListener(`error`, reject);
+
+      image.src = path;
+    });
+
+    Promise.all(images.map(preloadImage))
+      .then(Application.goTo(ControllerID.GREETING));
+
     gameState.collectPics(data);
   }
 
