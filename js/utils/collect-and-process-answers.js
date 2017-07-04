@@ -1,4 +1,5 @@
 import {initialState, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../data/gamedata';
+import gameState from '../game-state';
 
 
 /**
@@ -89,6 +90,8 @@ const processUserAnswers = (receivedAnswers, time, answerStats) => {
     answerStats.livesCount--;
     recordedAnswers.push(INCORRECT_ANSWER_FLAG);
   }
+
+  gameState.changeState({playerAnswers: recordedAnswers});
 
   return answerStats;
 };

@@ -10,6 +10,18 @@ export default class StatsView extends AbstractView {
     super();
     this._state = state;
     this.caption = (this._state.lives > 0) ? `Победа!` : `POTRACHENO!`;
+
+    this._getAnswers();
+  }
+
+  _getAnswers() {
+    if (this._state.playerName && this._state.serverStats) {
+      this._state.serverStats.forEach((item) => {
+        this._state.playerAnswers.push(item.stats);
+      });
+    }
+
+    return null;
   }
 
   _insertCaption(caption) {
@@ -28,7 +40,7 @@ export default class StatsView extends AbstractView {
     return ``;
   }
 
-  // TODO: enable direct transfer to stats
+  // TODO: enable direct navigation to stats
   _generateStatsLink() {
     if (this._state.victory) {
       return `<p>Поздравляем! Ваш результат будет доступен по&nbsp;<a href="${location.href}=${this._state.player}">этой ссылке</a>.</p>`;
@@ -60,7 +72,7 @@ export default class StatsView extends AbstractView {
 <table class="result__table">
         <tr>
           <td class="result__number">${++i}.</td>
-          <td colspan="2" id="stats-td"></td>
+          <td colspan="2" class="stats-td"></td>
           <td class="result__points">×&nbsp;${rates.correctAnswerPoints}</td>
           <td class="result__total">${results.correctPoints}</td>
         </tr>
@@ -105,10 +117,13 @@ export default class StatsView extends AbstractView {
 
   bind() {
     const header = this.element.querySelector(`.header`);
-    const statsContainer = this.element.getElementById(`stats-td`);
+    const statsContainer = this.element.querySelectorAll(`.stats-td`);
 
     // TODO: fix status dots issue for server stats, get rid of recordedAnswers
     header.insertBefore(renderBackBtn(), header.childNodes[0]);
-    statsContainer.appendChild(renderStatusBar(this._state));
+    // statsContainer.appendChild(renderStatusBar(this._state));
+    statsContainer.forEach((container, i) => {
+      container.appendChild(renderStatusBar(this._state));
+    });
   }
 }

@@ -58,7 +58,9 @@ const initialState = Object.freeze({
   lives: MAX_LIVES,
   time: 30,
   slowAnswerThreshold: 10,
-  fastAnswerThreshold: 20
+  fastAnswerThreshold: 20,
+  victory: false,
+  playerAnswers: []
 });
 
 const rates = {
