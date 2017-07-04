@@ -30,7 +30,10 @@ export default (currentScreen, newState, count) => {
     };
 
     Spinner.show();
-    gameState.changeState({template: views.stats});
+    gameState.changeState({
+      template: views.stats,
+      victory: true
+    });
 
     // Stats is sent to server only if player has won
     App.uploadStats(dataToSend, gameState.props.player)

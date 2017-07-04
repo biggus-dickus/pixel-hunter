@@ -9,8 +9,6 @@ import {rates} from '../data/gamedata';
 export default (gameState) => {
   const score = {};
 
-  score.caption = (gameState.lives > 0) ? `Победа!` : `POTRACHENO!`;
-
   score.correctPoints = gameState.correctAnswers * rates.correctAnswerPoints;
 
   score.fastPoints = gameState.fastAnswers * rates.fastAnswerPoints;
