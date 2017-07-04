@@ -1,4 +1,4 @@
-import {rates, recordedAnswers, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, CORRECT_ANSWER_FLAG} from '../data/gamedata';
+import {rates, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, CORRECT_ANSWER_FLAG} from '../data/gamedata';
 import AbstractView from '../view';
 import renderBackBtn from '../partials/back-to-start';
 import renderStatusBar from '../partials/status-bar';
@@ -53,7 +53,7 @@ export default class StatsView extends AbstractView {
     const tableMarkup = [];
 
     const stats = (this._state.serverStats) ? this._state.serverStats : [
-      {lives: this._state.lives, stats: recordedAnswers}];
+      {lives: this._state.lives, stats: this._state.playerAnswers}];
 
     for (let [i, item] of stats.entries()) {
       const fastAnswersCount = item.stats.filter((answer) => answer === FAST_ANSWER_FLAG).length;
@@ -69,7 +69,7 @@ export default class StatsView extends AbstractView {
       const results = getResults(this._state);
 
       tableMarkup.push(`${this._insertTimeStamp(new Date(item.date).toLocaleString(`ru`))}
-<table class="result__table">
+      <table class="result__table">
         <tr>
           <td class="result__number">${++i}.</td>
           <td colspan="2" class="stats-td"></td>
@@ -119,10 +119,9 @@ export default class StatsView extends AbstractView {
     const header = this.element.querySelector(`.header`);
     const statsContainer = this.element.querySelectorAll(`.stats-td`);
 
-    // TODO: fix status dots issue for server stats, get rid of recordedAnswers
+    // TODO: fix status dots issue for server stats
     header.insertBefore(renderBackBtn(), header.childNodes[0]);
-    // statsContainer.appendChild(renderStatusBar(this._state));
-    statsContainer.forEach((container, i) => {
+    statsContainer.forEach((container) => {
       container.appendChild(renderStatusBar(this._state));
     });
   }

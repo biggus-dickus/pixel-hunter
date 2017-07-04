@@ -24,7 +24,7 @@ export default class InfoBarView extends AbstractView {
     const header = this.element.querySelector(`.header`);
     const timerElem = this.element.querySelector(`.game__timer`);
 
-    header.insertBefore(renderBackBtn(), header.childNodes[0]);
+    header.insertBefore(renderBackBtn(this._state), header.childNodes[0]);
 
     setTimer(timerElem);
   }

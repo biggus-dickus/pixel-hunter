@@ -1,4 +1,4 @@
-import {views, ControllerID, games, recordedAnswers} from '../data/gamedata';
+import {views, ControllerID, games} from '../data/gamedata';
 import App from '../main';
 import Game from '../game/game';
 import gameState from '../game-state';
@@ -25,7 +25,7 @@ export default (currentScreen, newState, count) => {
     new Game(gameState).init();
   } else if (count === gameState.props.gamesTotal && gameState.props.lives > 0) {
     const dataToSend = {
-      stats: recordedAnswers,
+      stats: gameState.props.playerAnswers,
       lives: gameState.props.lives
     };
 

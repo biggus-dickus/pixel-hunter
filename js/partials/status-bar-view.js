@@ -1,4 +1,4 @@
-import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, recordedAnswers} from '../data/gamedata';
+import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG} from '../data/gamedata';
 import AbstractView from '../view';
 
 const statsMarkup = new Map([
@@ -14,7 +14,7 @@ export default class StatusBarView extends AbstractView {
     super();
     this._state = state;
 
-    this._answersMarkup = recordedAnswers.map((item) => statsMarkup.get(item));
+    this._answersMarkup = this._state.playerAnswers.map((answer) => statsMarkup.get(answer));
   }
 
   get template() {

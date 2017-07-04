@@ -1,4 +1,4 @@
-import {initialState, views, ControllerID, recordedAnswers} from '../data/gamedata';
+import {initialState, views, ControllerID} from '../data/gamedata';
 import App from '../main';
 import BackToStartView from './back-to-start-view';
 import Stats from '../stats/stats';
@@ -6,7 +6,7 @@ import gameState from '../game-state';
 import {timer} from '../game/game';
 
 
-export default () => {
+export default (state) => {
   const goBack = new BackToStartView();
 
   goBack.onBtnClick = () => {
@@ -14,7 +14,10 @@ export default () => {
       clearInterval(timer);
     }
 
-    recordedAnswers.length = 0;
+    if (state) {
+      state.playerAnswers.length = 0;
+    }
+
     gameState.changeState(initialState);
     gameState.changeState({template: views.greeting});
     new Stats().clearData();
