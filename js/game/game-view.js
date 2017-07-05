@@ -28,7 +28,7 @@ export default class GameView extends AbstractView {
     // Header
     this.element.insertBefore(renderInfoBar(this._state), this.element.childNodes[0]);
     // Footer
-    gameElem.appendChild(renderStatusBar(this._state));
+    gameElem.appendChild(renderStatusBar(this._state, this._state.playerAnswers));
 
     this.formElem.onclick = (evt) => {
       this.onFormClick(evt);

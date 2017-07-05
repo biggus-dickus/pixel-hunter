@@ -1,4 +1,4 @@
-import {CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG} from '../data/gamedata';
+import {views, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG} from '../data/gamedata';
 import AbstractView from '../view';
 
 const statsMarkup = new Map([
@@ -10,17 +10,25 @@ const statsMarkup = new Map([
 
 
 export default class StatusBarView extends AbstractView {
-  constructor(state) {
+  constructor(state, answers) {
     super();
     this._state = state;
 
-    this._answersMarkup = this._state.playerAnswers.map((answer) => statsMarkup.get(answer));
+    this._answersMarkup = answers.map((answer) => statsMarkup.get(answer));
+  }
+
+  _renderProgressBar() {
+    if (this._state.template === views.game || this._state.lives === 0) {
+      return new Array(this._state.gamesTotal - this._state.gameNumber).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``);
+    }
+
+    return ``;
   }
 
   get template() {
     return `<ul class="stats">
               ${this._answersMarkup.join(``)}
-              ${new Array(this._state.gamesTotal - this._state.gameNumber).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
-            </ul>`;
+              ${this._renderProgressBar()}
+              </ul>`;
   }
 }

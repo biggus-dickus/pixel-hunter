@@ -119,10 +119,12 @@ export default class StatsView extends AbstractView {
     const header = this.element.querySelector(`.header`);
     const statsContainer = this.element.querySelectorAll(`.stats-td`);
 
-    // TODO: fix status dots issue for server stats
-    header.insertBefore(renderBackBtn(), header.childNodes[0]);
-    statsContainer.forEach((container) => {
-      container.appendChild(renderStatusBar(this._state));
+    header.insertBefore(renderBackBtn(this._state), header.childNodes[0]);
+
+    statsContainer.forEach((container, i) => {
+      const dots = (this._state.victory === true || this._state.lives === 0) ? this._state.playerAnswers : this._state.playerAnswers[i];
+
+      container.appendChild(renderStatusBar(this._state, dots));
     });
   }
 }
