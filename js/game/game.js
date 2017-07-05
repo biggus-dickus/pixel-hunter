@@ -1,4 +1,4 @@
-import {games, recordedAnswers, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
+import {games, INCORRECT_ANSWER_FLAG} from '../data/gamedata';
 import insertTemplate from '../utils/insert-template';
 import GameView from './game-view';
 import renderNextScreen from '../utils/render-next-screen';
@@ -25,7 +25,7 @@ export default class GameScreen extends ScreenPresenter {
       if (this._time === 0) {
         this._stopTimer();
         this._statsCounter.livesCount--;
-        recordedAnswers.push(INCORRECT_ANSWER_FLAG);
+        this._state.playerAnswers.push(INCORRECT_ANSWER_FLAG);
         GameScreen._incrementGameScreen();
         renderNextScreen(gameScreen, this._statsCounter, this._state.gameNumber);
       }

@@ -9,8 +9,6 @@ const FAST_ANSWER_FLAG = `fast`;
 
 const MAX_LIVES = 3;
 
-const recordedAnswers = [];
-
 const views = {
   intro: `intro`,
   greeting: `greeting`,
@@ -58,7 +56,9 @@ const initialState = Object.freeze({
   lives: MAX_LIVES,
   time: 30,
   slowAnswerThreshold: 10,
-  fastAnswerThreshold: 20
+  fastAnswerThreshold: 20,
+  victory: false,
+  playerAnswers: []
 });
 
 const rates = {
@@ -68,4 +68,4 @@ const rates = {
   lifeBonusPoints: 50
 };
 
-export {initialState, views, ControllerID, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, MAX_LIVES, recordedAnswers};
+export {initialState, views, ControllerID, games, rates, TYPE_RADIO_1, TYPE_RADIO_2, TYPE_PICTURE, CORRECT_ANSWER_FLAG, INCORRECT_ANSWER_FLAG, SLOW_ANSWER_FLAG, FAST_ANSWER_FLAG, MAX_LIVES};
