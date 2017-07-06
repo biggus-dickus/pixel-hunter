@@ -17,7 +17,7 @@ export default class BackToStartView extends AbstractView {
     const modal = document.querySelector(`.modal`);
     const innerModal = modal.querySelector(`.modal__inner`);
 
-    innerModal.addEventListener(`click`, (evt) => {
+    const modalClickHandler = (evt) => {
       evt.preventDefault();
 
       if (evt.target.classList.contains(`js-modal-close`)) {
@@ -26,7 +26,10 @@ export default class BackToStartView extends AbstractView {
         modal.classList.remove(`open`);
         this.onBtnClick();
       }
-    });
+    };
+
+    // DOM-0 не позволяет вешать более одного обработчика, и теперь коллбэк срабатывает один раз. Я думаю, это быстрое решение вполне подходит для такого случая.
+    innerModal.onclick = modalClickHandler;
 
     btnBack.onclick = (evt) => {
       evt.preventDefault();

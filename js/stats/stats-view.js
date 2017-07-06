@@ -14,6 +14,35 @@ export default class StatsView extends AbstractView {
     this._getAnswers();
   }
 
+  get template() {
+    return `<header class="header"></header>
+      <div class="result">${this._showMainContent()}</div>`;
+  }
+
+  bind() {
+    const header = this.element.querySelector(`.header`);
+    const statsContainer = this.element.querySelectorAll(`.stats-td`);
+
+    header.insertBefore(renderBackBtn(this._state), header.childNodes[0]);
+
+    statsContainer.forEach((container, i) => {
+      const dots = (this._state.victory === true || this._state.lives === 0) ? this._state.playerAnswers : this._state.playerAnswers[i];
+
+      container.appendChild(renderStatusBar(this._state, dots));
+    });
+  }
+
+  _showMainContent() {
+    if (this._state.playerAnswers.length === 0) {
+      const player = location.hash.split(`=`)[1];
+      return `<p>Нет статистики по&nbsp;игроку ${player}. Сыграйте, и&nbsp;она появится!</p>`;
+    } else {
+      return `<h1>${this._insertCaption(this.caption)}</h1>
+          ${this._generateStatsLink()}
+          ${this._renderStatsTable()}`;
+    }
+  }
+
   _getAnswers() {
     if (this._state.playerName && this._state.serverStats) {
       this._state.serverStats.forEach((item) => {
@@ -104,27 +133,5 @@ export default class StatsView extends AbstractView {
     }
 
     return tableMarkup.join(``);
-  }
-
-  get template() {
-    return `<header class="header"></header>
-      <div class="result">
-        <h1>${this._insertCaption(this.caption)}</h1>
-        ${this._generateStatsLink()}
-        ${this._renderStatsTable()}
-      </div>`;
-  }
-
-  bind() {
-    const header = this.element.querySelector(`.header`);
-    const statsContainer = this.element.querySelectorAll(`.stats-td`);
-
-    header.insertBefore(renderBackBtn(this._state), header.childNodes[0]);
-
-    statsContainer.forEach((container, i) => {
-      const dots = (this._state.victory === true || this._state.lives === 0) ? this._state.playerAnswers : this._state.playerAnswers[i];
-
-      container.appendChild(renderStatusBar(this._state, dots));
-    });
   }
 }
