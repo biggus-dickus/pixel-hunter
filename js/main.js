@@ -8,8 +8,8 @@ import GameScreen from './game/game';
 import StatsScreen from './stats/stats';
 
 const API = {
-  read: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
-  write: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats/:username`
+  readUrl: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
+  writeUrl: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats/:username`
 };
 
 const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
@@ -19,13 +19,9 @@ export default class Application {
   constructor() {
     this._model = new class extends Model {
       get urlRead() {
-        return API.read;
+        return API.readUrl;
       }
     }();
-
-    this._model.load()
-      .then((data) => Application.preloadData(data))
-      .catch((err) => document.write(`Не удалось загрузить данные с сервера по причине <b>${err}.</b>. Попробуйте сыграть позже.`));
 
     this._routes = {
       [ControllerID.INTRO]: IntroScreen,
@@ -41,6 +37,16 @@ export default class Application {
   }
 
   init() {
+    if (location.hash.split(`=`)[0] === `#${ControllerID.STATS}`) {
+      gameState.changeState({playerName: location.hash.split(`=`)[1]});
+      this._changeController(getControllerIDFromHash(location.hash));
+      return;
+    }
+
+    this._model.load()
+      .then((data) => Application.preloadData(data))
+      .catch((err) => document.write(`Не удалось загрузить данные с сервера по причине <b>${err}.</b>. Попробуйте сыграть позже.`));
+
     location.hash = ControllerID.INTRO;
     this._changeController(getControllerIDFromHash(location.hash));
   }
@@ -49,11 +55,13 @@ export default class Application {
     let [id, params] = route.split(`=`);
     const Controller = this._routes[id];
 
-    try {
-      new Controller(params).init();
-    } catch (e) {
-      throw new Error(`Invalid router: location.hash must be an entry of Application._routes.`);
-    }
+    new Controller(params).init();
+
+    // try {
+    //   new Controller(params).init();
+    // } catch (e) {
+    //   throw new Error(`Invalid router: location.hash must be an entry of Application._routes.`);
+    // }
   }
 
   static preloadData(data) {
@@ -84,7 +92,7 @@ export default class Application {
   static uploadStats(data, name) {
     this._model = new class extends Model {
       get urlWrite() {
-        return API.write;
+        return API.writeUrl;
       }
     }();
 
@@ -92,7 +100,7 @@ export default class Application {
   }
 
   static downloadStats(playerName) {
-    return fetch(API.write.replace(`username`, playerName))
+    return fetch(API.writeUrl.replace(`username`, playerName))
       .then((resp) => resp.json());
   }
 }

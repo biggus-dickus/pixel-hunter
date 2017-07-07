@@ -28,7 +28,6 @@ export default class BackToStartView extends AbstractView {
       }
     };
 
-    // DOM-0 не позволяет вешать более одного обработчика, и теперь коллбэк срабатывает один раз. Я думаю, это быстрое решение вполне подходит для такого случая.
     innerModal.onclick = modalClickHandler;
 
     btnBack.onclick = (evt) => {
