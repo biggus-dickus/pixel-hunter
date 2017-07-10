@@ -24,6 +24,7 @@ export default class RulesScreen extends ScreenPresenter {
         player: this._view.input.value,
         template: views.game
       });
+
       App.goTo(ControllerID.GAME);
     };
   }

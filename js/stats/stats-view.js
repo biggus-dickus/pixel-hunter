@@ -69,10 +69,9 @@ export default class StatsView extends AbstractView {
     return ``;
   }
 
-  // TODO: enable direct navigation to stats
   _generateStatsLink() {
     if (this._state.victory) {
-      return `<p>Поздравляем! Ваш результат будет доступен по&nbsp;<a href="${location.href}=${this._state.player}">этой ссылке</a>.</p>`;
+      return `<p>Поздравляем! Ваш результат будет доступен по&nbsp;<a href="${location.href}=${this._state.player}" onclick="location.reload()">этой ссылке</a>.</p>`;
     }
 
     return ``;

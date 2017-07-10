@@ -14,11 +14,30 @@
   top: 220px;
   left: 30px;
   text-align: center;
-  font-size: 172px;
+  font-size: 0;
   color: $main-red-color;
   // cursor: pointer;
   cursor: wait;
 
+  &::before,
+  &::after {  position: absolute;  }
+
+  &::before {
+    content: "*";
+    top: 95px;
+    left: 362px;
+    font-size: 172px;
+    animation: spin 1.05s linear infinite;
+    transform-origin: 51% -28%;
+  }
+
+  &::after {
+    content: "Загрузка…";
+    font-size: 28px;
+    bottom: -145px;
+    left: 337px;
+    text-shadow: -1px 0 3px #eddaa3;
+  }
 
   // &:hover {
   //   color: $link-hover-color;

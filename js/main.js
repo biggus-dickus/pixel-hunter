@@ -37,8 +37,12 @@ export default class Application {
   }
 
   init() {
+    // Fetch stats by direct link
     if (location.hash.split(`=`)[0] === `#${ControllerID.STATS}`) {
-      gameState.changeState({playerName: location.hash.split(`=`)[1]});
+      gameState.changeState({
+        playerName: location.hash.split(`=`)[1]
+      });
+
       this._changeController(getControllerIDFromHash(location.hash));
       return;
     }
@@ -56,12 +60,6 @@ export default class Application {
     const Controller = this._routes[id];
 
     new Controller(params).init();
-
-    // try {
-    //   new Controller(params).init();
-    // } catch (e) {
-    //   throw new Error(`Invalid router: location.hash must be an entry of Application._routes.`);
-    // }
   }
 
   static preloadData(data) {

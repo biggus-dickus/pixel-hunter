@@ -18,6 +18,14 @@ export default (state) => {
       state.playerAnswers.length = 0;
     }
 
+    // Start new game if we go back from stats (pics are re-fetched)
+    if (gameState.props.template === views.stats) {
+      location.hash = ``;
+      new App().init();
+
+      return;
+    }
+
     gameState.changeState(initialState);
     gameState.changeState({template: views.greeting});
     new Stats().clearData();
