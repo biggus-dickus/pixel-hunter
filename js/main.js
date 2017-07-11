@@ -7,6 +7,10 @@ import RulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import StatsScreen from './stats/stats';
 
+// Polyfills
+import 'babel-polyfill';
+import 'whatwg-fetch';
+
 const API = {
   readUrl: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions`,
   writeUrl: `https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats/:username`

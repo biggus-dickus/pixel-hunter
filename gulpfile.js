@@ -12,14 +12,18 @@ const del = require('del'),
       rename = require('gulp-rename'),
       imagemin = require('gulp-imagemin'),
       htmlmin = require('gulp-htmlmin'),
-      rollup = require('gulp-better-rollup'),
-      babel = require('rollup-plugin-babel'),
       sourcemaps = require('gulp-sourcemaps'),
       uglify = require('gulp-uglify'),
-      mocha = require('gulp-mocha');
+      mocha = require('gulp-mocha'),
+
+      // Babel-huyabel
+      babel = require('rollup-plugin-babel'),
+      commonjs = require('rollup-plugin-commonjs'),
+      rollup = require('gulp-better-rollup'),
+      resolve = require('rollup-plugin-node-resolve');
 
 
-gulp.task('test', function () {
+gulp.task('test', () => {
   gulp.src(['js/**/*.test.js'], { read: false })
     .pipe(mocha({
       compilers: ['js:babel-register'],
@@ -27,7 +31,7 @@ gulp.task('test', function () {
     }));
 });
 
-gulp.task('style', function () {
+gulp.task('style', () => {
   gulp.src('sass/style.scss')
     .pipe(plumber())
     .pipe(sass({ sourceComments: true })
@@ -51,19 +55,28 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('scripts', function () {
+gulp.task('scripts', () => {
   return gulp.src('js/main.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    // .pipe(rollup({plugins: [babel()]}, 'iife'))
-    .pipe(rollup('iife'))
-    // .pipe(uglify())
+    .pipe(rollup({
+      plugins: [
+        resolve({browser: true}), // resolve node_modules
+        commonjs(), // resolve commonjs imports
+        babel({  // use babel to transpile into ES5
+          babelrc: false,
+          exclude: 'node_modules/**',
+          presets: [['env', {modules: false}]],
+          plugins: ['external-helpers']
+        })]
+      }, 'iife'))
+    .pipe(uglify())
     .pipe(rename('bundle.min.js'))
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('imagemin', ['copy'], function () {
+gulp.task('imagemin', ['copy'], () => {
   return gulp.src('build/img/**/*.{jpg,png,gif}')
     .pipe(imagemin([
       imagemin.optipng({optimizationLevel: 3}),
@@ -73,14 +86,14 @@ gulp.task('imagemin', ['copy'], function () {
 });
 
 
-gulp.task('copy-html', function () {
+gulp.task('copy-html', () => {
   return gulp.src('*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('build'))
     .pipe(server.stream());
 });
 
-gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
+gulp.task('copy', ['copy-html', 'scripts', 'style'], () => {
   return gulp.src([
     'fonts/**/*.{woff,woff2}',
     'img/**/*.*'
@@ -88,16 +101,16 @@ gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', () => {
   return del('build');
 });
 
-gulp.task('js-watch', ['scripts'], function (done) {
+gulp.task('js-watch', ['scripts'], (done) => {
   server.reload();
   done();
 });
 
-gulp.task('serve', ['assemble'], function () {
+gulp.task('serve', ['assemble'], () => {
   server.init({
     server: './build',
     notify: false,
@@ -115,7 +128,7 @@ gulp.task('serve', ['assemble'], function () {
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
-gulp.task('assemble', ['clean'], function () {
+gulp.task('assemble', ['clean'], () => {
   gulp.start('copy', 'style');
 });
 
